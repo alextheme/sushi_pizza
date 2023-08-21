@@ -1,0 +1,51 @@
+body {
+  font-family: Navigo, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #fff;
+}
+
+.container {
+  max-width: 1230px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.site-header, header {
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 100px;
+}
+.header ul li.current-menu-item a, .header ul li.current_page_item a {
+  color: #FCB326;
+}
+.header ul li a {
+  padding: 0 13px;
+}
+.header ul li a:hover {
+  color: #FCB326;
+}
+
+.navbar-menu .menu-item a {
+  color: inherit;
+}
+.navbar-menu .menu-item.current-menu-item {
+  color: #FCB326;
+}
+
+.navbar-shop-buttons a:hover {
+  color: #FCB326;
+}
+
+.change-lang {
+  display: none;
+}
+
+/*# sourceMappingURL=general.css.map */

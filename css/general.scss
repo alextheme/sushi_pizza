@@ -1,0 +1,83 @@
+// Colors
+$color_text: #fff;
+$color_text2: #000;
+$accent_color: #FCB326;
+
+body {
+  font-family: Navigo, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: $color_text;
+}
+
+.container {
+  max-width: 1230px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.site-header, header {
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+// Header
+
+.header {
+  display: flex;
+  align-items: center;
+
+  height: 100px;
+
+  ul {
+    li {
+      &.current-menu-item a,
+      &.current_page_item a {
+        color: $accent_color;
+      }
+      a {
+        padding: 0 13px;
+
+
+        &:hover {
+          color: $accent_color;
+        }
+      }
+    }
+  }
+}
+
+
+// Navigation menu
+
+.navbar-menu {
+  .menu-item {
+    a {
+      color: inherit;
+    }
+
+    &.current-menu-item {
+      color: $accent_color;
+    }
+  }
+}
+
+
+// Navigation bar shop buttons
+
+.navbar-shop-buttons {
+  a {
+    &:hover {
+      color: $accent_color;
+    }
+  }
+}
+
+
+// Language selector
+
+.change-lang {
+  display: none;
+}
