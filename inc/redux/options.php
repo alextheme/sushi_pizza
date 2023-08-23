@@ -319,6 +319,7 @@ Redux::set_section( $opt_name, array(
         )
     )
 );
+
 // HERO
 Redux::set_section( $opt_name, array(
         'title'            => esc_html__( 'Hero', 'sushi_pizza' ),
@@ -327,25 +328,20 @@ Redux::set_section( $opt_name, array(
         'desc'             => esc_html__( '', 'sushi_pizza' ),
         'fields' => array(
             array(
-                'id'       => 'header_hero_img',
-                'type'     => 'media',
-                'title'    => esc_html__( 'Hero Image', 'sushi_pizza' ),
-                'desc'     => esc_html__( 'Upload Image for hero section', 'sushi_pizza' ),
-                'subtitle' => esc_html__( '', 'sushi_pizza' ),
-                'url'      => false,
-                'preview'  => true,
-            ),
-            array(
-                'id'       => 'header_hero_title',
-                'type'     => 'text',
-                'title'    => esc_html__( 'Header Title', 'your-textdomain-here' ),
-                'subtitle' => esc_html__( '', 'your-textdomain-here' ),
-                'desc'     => esc_html__( 'use the delimiter "|" to break a line', 'your-textdomain-here' ),
-                'default'  => 'Dostawa|na terenie Wrocławia',
+                'id'       => 'header_hero_slide',
+                'type'     => 'slides',
+                'title'    => esc_html__( 'Hero Slide', 'sushi_pizza' ),
+                'desc'     => esc_html__( 'Upload Images for hero section', 'sushi_pizza' ),
+                'placeholder' => array(
+                    'title'       => esc_html__('This is a title', 'your-textdomain-here'),
+                    'description' => esc_html__('Description Here', 'your-textdomain-here'),
+                    'url'         => esc_html__('Give us a link!', 'your-textdomain-here'),
+                ),
             ),
         )
     )
 );
+
 // BASIC WORK DATA
 Redux::set_section( $opt_name, array(
         'title'            => esc_html__( 'Basic work data', 'sushi_pizza' ),
@@ -356,41 +352,45 @@ Redux::set_section( $opt_name, array(
             array(
                 'id'          => 'hours_work',
                 'type'        => 'text',
-                'title'       => esc_html__( 'Hours of work (from/to)', 'your-textdomain-here' ),
+                'title'       => esc_html__( 'Czas pracy', 'your-textdomain-here' ),
                 'placeholder' => '',
-                'data'        => array('9:00','18:00'),
+                'default'  => '15:00 - 00:00',
             ),
             array(
-                'id'       => 'min_price',
+                'id'       => 'min_order',
                 'type'     => 'text',
-                'title'    => esc_html__( 'Minimum price', 'your-textdomain-here' ),
-                'subtitle' => esc_html__( '', 'your-textdomain-here' ),
-                'desc'     => esc_html__( '', 'your-textdomain-here' ),
-                'default'  => '40 zł',
+                'title'    => esc_html__( 'Min zam.', 'your-textdomain-here' ),
+                'default'  => 'min : 40 zł',
             ),
             array(
                 'id'       => 'delivery_time',
                 'type'     => 'text',
-                'title'    => esc_html__( 'Delivery time', 'your-textdomain-here' ),
-                'subtitle' => esc_html__( '', 'your-textdomain-here' ),
-                'desc'     => esc_html__( '', 'your-textdomain-here' ),
+                'title'    => esc_html__( 'Czas dostawy', 'your-textdomain-here' ),
                 'default'  => '40 - 70 min',
             ),
             array(
                 'id'       => 'shipping_price',
                 'type'     => 'text',
-                'title'    => esc_html__( 'Shipping price', 'your-textdomain-here' ),
-                'subtitle' => esc_html__( '', 'your-textdomain-here' ),
-                'desc'     => esc_html__( '', 'your-textdomain-here' ),
+                'title'    => esc_html__( ' Przewoz', 'your-textdomain-here' ),
                 'default'  => '0-5 km 10 pln | 10km > + 2 pln / km',
             ),
             array(
                 'id'       => 'address',
                 'type'     => 'text',
-                'title'    => esc_html__( 'Our address', 'your-textdomain-here' ),
-                'subtitle' => esc_html__( '', 'your-textdomain-here' ),
-                'desc'     => esc_html__( '', 'your-textdomain-here' ),
+                'title'    => esc_html__( 'Adres', 'your-textdomain-here' ),
                 'default'  => 'ul. Żeromskiego 60, Wrocław 50-312',
+            ),
+            array(
+                'id'       => 'email',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Email', 'your-textdomain-here' ),
+                'default'  => 'americansushisklep@gmail.com',
+            ),
+            array(
+                'id'       => 'tel',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Telefon', 'your-textdomain-here' ),
+                'default'  => '+48 733 954 773',
             ),
         )
     )

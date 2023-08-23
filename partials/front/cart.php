@@ -55,11 +55,13 @@ include($path.'wp-load.php');
 			esc_attr( $product->get_sku() ),
 			esc_attr( $cart_item_key )
 			), $cart_item_key );
+			$btn_plus  = get_template_directory_uri() . '/images/icons/icon_plus.svg';
+			$btn_minus = get_template_directory_uri() . '/images/icons/icon_minus.svg';
 			echo '<div class="lg100 d-flex align-center justify-spaceb">';
 			echo '<div class="buttons-qnt d-flex align-center">';
-			echo '<button type="button" class="plus-btn"><img src="/wp-content/uploads/2022/10/Group-18912470.svg" alt="+"></button>';
+			echo '<button type="button" class="plus-btn"><img src="' .$btn_plus. '" alt="+"></button>';
 			echo '<input type="text" data-product_id="'.$product_id.'" data-cart_item_key="'.$cart_item_key.'" class="input-text qty qty-cart text" step="1" min="-1" max="100"  value="'.$quantity.'" title="Szt." size="4" placeholder="" inputmode="numeric">';
-			echo '<button type="button" class="minus-btn" ><img src="/wp-content/uploads/2022/10/Vector-2-1.svg" alt="+"></button>';	
+			echo '<button type="button" class="minus-btn" ><img src="' .$btn_minus. '" alt="+"></button>';
 			echo '</div></div></div></div></div>';
 		}				
 	?>

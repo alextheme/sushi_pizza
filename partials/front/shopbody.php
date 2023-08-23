@@ -55,7 +55,7 @@ $categories = get_categories( $args );
 			}	
 			
 		foreach( $categories as $category ): if($category->slug != $category1) :
-		echo '<div class="row row-margin products alignerContainer" id="'.$category->slug.'"><h3 class="lg100 padding-15 xs-offset-top">'.$category->name.'</h3>';
+		echo '<div class="row row-margin products alignerContainer" id="'.$category->slug.'"><h3 class="text_uppercase lg100 padding-15 xs-offset-top">'.$category->name.'</h3>';
 		$args = array( 'post_type' => 'product',  'product_cat' =>  $category->slug, 'orderby' => 'menu_order', 'posts_per_page' => 20);
 		$query = new WP_Query( $args );
 			if($query->have_posts()):

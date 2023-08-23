@@ -241,6 +241,139 @@ body {
 }
 
 
+// HERO
+
+.hero_box {
+  padding: 41px 0 45px 0;
+
+  .hero_box__slider {
+    padding-right: 18px;
+
+    .slider-home {
+      height: 250px;
+    }
+
+    .slick-list {
+      height: 250px;
+    }
+
+    .slide.slick-slide {
+      img {
+        height: 250px;
+        border-radius: 0;
+        object-position: top center;
+        -o-object-position: top center;
+      }
+    }
+  }
+
+  .hero_box__schedule {
+    padding-left: 10px;
+
+    .row {
+      height: 100%;
+    }
+  }
+
+  .hero_box__schedule_w {
+    position: relative;
+    padding: 28px 25px 21px;
+    font-size: 16px;
+    font-weight: 500;
+
+    color: $color_text2;
+    border-radius: 10px;
+    background: $accent_color url("../images/bg_decor_2.svg") top left ;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+
+      border-radius: 10px;
+      background: rgb(30,29,26);
+      background: linear-gradient(136deg, rgba($accent_color, 0.3) -20%, $accent_color 90%);
+    }
+
+    .hero_box__schedule_title {
+      position: relative;
+      font-size: 26px;
+      margin-bottom: 5px;
+    }
+
+    .hero_box__schedule_time {
+      position: relative;
+      font-weight: 500;
+      padding-bottom: 12px;
+    }
+
+    .hero_box__schedule_info_w {
+      padding-bottom: 6px;
+      border-bottom: 1px solid $color_text;
+    }
+
+    .hero_box__schedule_info {
+      display: inline-block;
+      margin-bottom: 6px;
+
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+
+}
+
+
+// OTHER STYLES
+
+.text_uppercase {
+  text-transform: uppercase;
+}
+
+#product-sidebar-cart {
+  margin-top: 58px;
+}
+
+
+// BUTTONS
+
+.product-footer .button.add_to_cart_button {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background: rebeccapurple;
+  }
+
+  &:hover {
+    display: block;
+  }
+}
+
+.button2 {
+  & > span {
+    position: relative;
+    display: inline-block;
+    margin: 1px 0 0 22px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -35px;
+      width: 24px;
+      height: 25px;
+      background: url("../images/icons/icon_shop.svg") center center no-repeat;
+    }
+  }
+}
+
 @media (max-width: 992px) {
   .menu_mobile__handlers {
     display: flex;
@@ -312,7 +445,7 @@ body {
             width: 10px;
             height: 8px;
 
-            background: url("../images/arrow.svg") center center no-repeat;
+            background: url("../images/icons/arrow.svg") center center no-repeat;
             transform: rotate(180deg);
           }
         }

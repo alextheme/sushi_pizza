@@ -45,10 +45,6 @@ global $sushi_pizza_option;
 //		$url = '/ua/';
 //	}
 
-//echo '<pre>';
-//print_r( $sushi_pizza_option );
-//echo '</pre>';
-//die();
 ?>
 <div class="header lg100">
   <div class="container">

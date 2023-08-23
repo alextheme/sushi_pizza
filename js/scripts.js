@@ -202,7 +202,7 @@ $(".close-btn-temp").bind( "click", function(event) {
 $(".slider-home").slick({
   slidesToShow: 1,
   slidesToScroll: 1,
-  autoplay: true,
+  autoplay: ! true,
   autoplaySpeed: 5000,
   dots: true,
   arrows: false,

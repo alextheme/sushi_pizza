@@ -758,5 +758,21 @@ if ( class_exists( 'ReduxFramework' ) && file_exists( dirname( __FILE__ ) . '/in
 	add_filter( 'woodmart_redux_settings', '__return_false' );
 }
 
+/**
+ * TEMP TODO
+ */
+function pre_print( $obj ) {
+	echo '<pre>';
+	print_r( $obj );
+	echo '</pre>';
+}
+
+function pre_print_d( $obj ) {
+	echo '<pre>';
+	print_r( $obj );
+	echo '</pre>';
+	die(-1);
+}
+
 
 
