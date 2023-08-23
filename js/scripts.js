@@ -177,8 +177,14 @@ AOS.init();
 /*Burger*/
 $("#burger").bind( "click", function() {
 	$(this).toggleClass("open");
-	$(".header").toggleClass("menu-active");
-});	
+	$("body").toggleClass("menu-active");
+});
+
+/*Mobile Lang Top*/
+$(".menu_mobile__lang_top li.current-lang").on( "click", function(e) {
+	e.preventDefault();
+	$(".menu_mobile__lang_top").toggleClass("lang_top_open");
+});
 	
 /*Close btn*/
 $(".close-btn").bind( "click", function() {

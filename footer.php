@@ -1,6 +1,8 @@
+<?php global $sushi_pizza_option; ?>
+
 <footer class="lg100 footer bckg-white p-top p-bottom-30">
 	<div class="container">
-		<div class="row align-center justify-spaceb copyright">
+		<div class="row copyright">
 			<div class="left-copy">
 				<?php wp_nav_menu( array( 'theme_location' => 'footer-menu', ) ); ?>
 			</div>
@@ -8,6 +10,15 @@
 				<span><?php echo pll__( 'Strona stworzona i prowadzona przez' ); ?> <a class="txt-red" href="https://entsolve.pl" target="_blank">entsolve.pl</a></span>
 			</div>
 		</div>
+
+		<ul class="payment_methods__list">
+			<?php $arr = explode( ',', $sushi_pizza_option['footer_payments'] );
+			foreach ( $arr as $id ) { ?>
+				<li class="payment_method__item">
+					<?php echo wp_get_attachment_image( $id ); ?>
+				</li>
+			<?php } ?>
+		</ul>
 	</div>
 </footer>	
 
