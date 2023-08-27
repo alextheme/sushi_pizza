@@ -29,7 +29,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 ?>
 <div class="lg100 p-top-30 d-flex p-bottom-30 breadcrumbs">
-	<a class="button d-flex align-center" href="/"><img src="<?php echo esc_url( get_template_directory() . '/images/10/Group-33.svg' ); ?>" alt=""><?php echo pll__( 'Wróć do menu' ); ?></a>
+	<a class="button d-flex align-center" href="/"><img src="<?php echo esc_url( get_template_directory() . '/images/icons/Group-33.svg' ); ?>" alt=""><?php echo pll__( 'Wróć do menu' ); ?></a>
 </div>
 <form name="checkout" method="post" class="checkout woocommerce-checkout p-bottom" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
