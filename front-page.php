@@ -9,12 +9,12 @@
 	</div>
 	<span class="basket-mobile">
 		<span class="cart-amount h-amount"><?php echo $woocommerce->cart->cart_contents_count; ?></span>
-		<img src="/wp-content/uploads/2022/11/basket.svg" alt="basket">
+		<img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket.svg' ); ?>" alt="basket">
 	</span>
 </div>
 
 <div class="lg100 promotion-products" id="promotion"></div>
 
-<div class="lg100 before-checkout-products" id="before-checkout"></div>
+<div class="lg100 before-checkout-products"  id="before-checkout"></div>
 
 <?php get_footer();?>   

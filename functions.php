@@ -16,6 +16,8 @@ function mojeStyleiSkrypty() {
 	wp_enqueue_script( 'themejs', get_template_directory_uri() . '/js/theme.js', array ( 'jquery' ), 1.1, true);
 	wp_enqueue_script( 'ajax-load', get_template_directory_uri() . '/js/ajax-load.js', array ( 'jquery' ), 1.1, true);
 	wp_enqueue_script( 'translations', get_template_directory_uri() . '/js/translations.js', array ( 'jquery' ), 1.1, true);
+
+	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/js/scripts.js', array ( 'jquery' ), 1.1, true);
 }
 function mojeStyleiSkryptyAdmin() {
 	if (is_admin()) {
@@ -754,20 +756,31 @@ require_once get_template_directory() . '/inc/tgm/options.php';
  * Redux Option Include
  */
 if ( class_exists( 'ReduxFramework' ) && file_exists( dirname( __FILE__ ) . '/inc/redux/options.php' ) ) {
-	require_once get_template_directory() . '/inc/redux/options.php';
+	require_once get_template_directory() . '/inc/redux_framework/options.php';
 	add_filter( 'woodmart_redux_settings', '__return_false' );
 }
 
 /**
+ * AJAX
+ */
+require_once get_template_directory() . '/inc/ajax/index.php';
+
+
+/**
  * TEMP TODO
  */
-function pre_print( $obj ) {
+function print_pre( $obj ) {
 	echo '<pre>';
 	print_r( $obj );
 	echo '</pre>';
 }
+function var_dump_pre( $obj ) {
+	echo '<pre>';
+	var_dump( $obj );
+	echo '</pre>';
+}
 
-function pre_print_d( $obj ) {
+function print_pre_die( $obj ) {
 	echo '<pre>';
 	print_r( $obj );
 	echo '</pre>';

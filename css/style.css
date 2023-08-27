@@ -11,6 +11,7 @@ body {
     --color_black: #000000;
     --color_gray: #a09f9f;
     --color_gray_2: #d7d7d7;
+    --bg-color-button: transparent; /* #C53643 */
 
   color: var(--color_white);
   background-color: var(--color_black);
@@ -250,6 +251,8 @@ hr {
   overflow: hidden;
 }
 .button img{
+    position: relative;
+    z-index: 1;
 	margin-right: 10px;
 	display: inline-block;
 }
@@ -260,7 +263,7 @@ hr {
 .button:hover, .woocommerce a.button:hover, .right-product-content .button-woo:hover, .woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover, .woocommerce a.button.alt:hover, .woocommerce button.button.alt:hover, .woocommerce input.button.alt:hover{
   color: var(--color_white);
   border: 1px solid var(--color_white);
-  background-color: #C53643;
+  background-color: var(--bg-color-button);
 }
 .border-button {
   border: none;
@@ -336,7 +339,7 @@ textarea.standard-textarea{
   text-align: justify;
 }
 .txt-content a{
-	color: #C53643;
+	color: var(--bg-color-button);
 }
 .txt-center{
 	text-align: center;
@@ -399,7 +402,7 @@ textarea.standard-textarea{
 	z-index: 100;
 }
 .show-all{
-	color: #C53643;
+	color: var(--bg-color-button);
 	font-size: 20px;
 	font-weight: 700;
 	display: block;
@@ -609,7 +612,7 @@ img.floating {
     background-color: var(--color_white);
 }
 .bckg-red{
-    background-color: #C53643;
+    background-color: var(--bg-color-button);
 }
 .bckg-black{
 	background-color: var(--color_black);
@@ -1918,9 +1921,6 @@ body{
 	padding-right: 0;
 	margin-bottom: 30px;
 }
-.right-banner-info {
-    margin-top: 0;
-}
 .right-navbar{
 	transform: scale(0);
 	opacity: 0;
@@ -1947,11 +1947,12 @@ body{
 	display: block;
 	text-align: center;
 }
-	.right-navbar ul li:after, .right-navbar ul li:before{
-		display: none;
-	}
-
-
+.right-navbar ul li:after, .right-navbar ul li:before{
+    display: none;
+}
+.right-banner-info {
+    margin-top: 30px;
+}
 .navbar-shop-buttons {
     justify-content: center;
 }
@@ -2142,14 +2143,6 @@ input[type="submit"]{
 .home #category-name1{
 	display: inline-block;
 }
-.slick-dots{
-	transform: translatey(8px);
-}
-.product-simple-content .right-product-text .add_to_cart_button{
-	/*background-color: var(--accent_color)!important;*/
-	/*color: var(--color_white);*/
-}
-
 #delivery_date{
 	margin-top: 15px;
 	margin-bottom: 0;

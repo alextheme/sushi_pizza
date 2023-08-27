@@ -316,6 +316,11 @@ Redux::set_section( $opt_name, array(
                 'type'     => 'text',
                 'title'    => esc_html__( 'Instagram link', 'your-textdomain-here' ),
             ),
+            array(
+                'id'       => 'social_fb',
+                'type'     => 'text',
+                'title'    => esc_html__( 'Facebook link', 'your-textdomain-here' ),
+            ),
         )
     )
 );
@@ -337,60 +342,6 @@ Redux::set_section( $opt_name, array(
                     'description' => esc_html__('Description Here', 'your-textdomain-here'),
                     'url'         => esc_html__('Give us a link!', 'your-textdomain-here'),
                 ),
-            ),
-        )
-    )
-);
-
-// BASIC WORK DATA
-Redux::set_section( $opt_name, array(
-        'title'            => esc_html__( 'Basic work data', 'sushi_pizza' ),
-        'id'               => 'header-basic_work_data',
-        'subsection'       => true,
-        'desc'             => esc_html__( 'Brief information in the header of the page about the site\'s operation', 'sushi_pizza' ),
-        'fields' => array(
-            array(
-                'id'          => 'hours_work',
-                'type'        => 'text',
-                'title'       => esc_html__( 'Czas pracy', 'your-textdomain-here' ),
-                'placeholder' => '',
-                'default'  => '15:00 - 00:00',
-            ),
-            array(
-                'id'       => 'min_order',
-                'type'     => 'text',
-                'title'    => esc_html__( 'Min zam.', 'your-textdomain-here' ),
-                'default'  => 'min : 40 zł',
-            ),
-            array(
-                'id'       => 'delivery_time',
-                'type'     => 'text',
-                'title'    => esc_html__( 'Czas dostawy', 'your-textdomain-here' ),
-                'default'  => '40 - 70 min',
-            ),
-            array(
-                'id'       => 'shipping_price',
-                'type'     => 'text',
-                'title'    => esc_html__( ' Przewoz', 'your-textdomain-here' ),
-                'default'  => '0-5 km 10 pln | 10km > + 2 pln / km',
-            ),
-            array(
-                'id'       => 'address',
-                'type'     => 'text',
-                'title'    => esc_html__( 'Adres', 'your-textdomain-here' ),
-                'default'  => 'ul. Żeromskiego 60, Wrocław 50-312',
-            ),
-            array(
-                'id'       => 'email',
-                'type'     => 'text',
-                'title'    => esc_html__( 'Email', 'your-textdomain-here' ),
-                'default'  => 'americansushisklep@gmail.com',
-            ),
-            array(
-                'id'       => 'tel',
-                'type'     => 'text',
-                'title'    => esc_html__( 'Telefon', 'your-textdomain-here' ),
-                'default'  => '+48 733 954 773',
             ),
         )
     )
