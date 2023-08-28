@@ -662,6 +662,7 @@
             $('#before-checkout').html( getPreloaderHtml() );
 
             let productId = $(this).data('product_id');
+            let cartItemKey = $(this).data('product_id');
 
             // Get Popup for select variant product
             $.ajax({
@@ -672,6 +673,7 @@
                     nonce: ajax_data.nonce,
                     lang: Cookies.get('pll_language'),
                     product_id: productId,
+                    cart_item_key: '',
                 },
                 success: function (result) {
                     // $('#before-checkout').html(result);

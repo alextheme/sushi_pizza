@@ -160,6 +160,8 @@ function o10_remove_product_from_cart() {
 
         echo '100';
     }
+
+    die();
 }
 add_action('wp_ajax_o10_remove_product_from_cart', 'o10_remove_product_from_cart');
 add_action('wp_ajax_nopriv_o10_remove_product_from_cart', 'o10_remove_product_from_cart');

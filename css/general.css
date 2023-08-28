@@ -762,19 +762,4 @@ body.preloader_update {
   user-select: none;
 }
 
-.basket-mobile {
-  display: block !important;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 95;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 50px;
-  display: inline-block;
-  cursor: pointer;
-  box-shadow: 0px 4px 9px rgba(255, 255, 255, 0.27);
-}
-
 /*# sourceMappingURL=general.css.map */
