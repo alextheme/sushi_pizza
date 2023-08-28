@@ -325,27 +325,27 @@ Redux::set_section( $opt_name, array(
     )
 );
 
-// HERO
-Redux::set_section( $opt_name, array(
-        'title'            => esc_html__( 'Hero', 'sushi_pizza' ),
-        'id'               => 'header-hero',
-        'subsection'       => true,
-        'desc'             => esc_html__( '', 'sushi_pizza' ),
-        'fields' => array(
-            array(
-                'id'       => 'header_hero_slide',
-                'type'     => 'slides',
-                'title'    => esc_html__( 'Hero Slide', 'sushi_pizza' ),
-                'desc'     => esc_html__( 'Upload Images for hero section', 'sushi_pizza' ),
-                'placeholder' => array(
-                    'title'       => esc_html__('This is a title', 'your-textdomain-here'),
-                    'description' => esc_html__('Description Here', 'your-textdomain-here'),
-                    'url'         => esc_html__('Give us a link!', 'your-textdomain-here'),
-                ),
-            ),
-        )
-    )
-);
+//// HERO
+//Redux::set_section( $opt_name, array(
+//        'title'            => esc_html__( 'Hero', 'sushi_pizza' ),
+//        'id'               => 'header-hero',
+//        'subsection'       => true,
+//        'desc'             => esc_html__( '', 'sushi_pizza' ),
+//        'fields' => array(
+//            array(
+//                'id'       => 'header_hero_slide',
+//                'type'     => 'slides',
+//                'title'    => esc_html__( 'Hero Slide', 'sushi_pizza' ),
+//                'desc'     => esc_html__( 'Upload Images for hero section', 'sushi_pizza' ),
+//                'placeholder' => array(
+//                    'title'       => esc_html__('This is a title', 'your-textdomain-here'),
+//                    'description' => esc_html__('Description Here', 'your-textdomain-here'),
+//                    'url'         => esc_html__('Give us a link!', 'your-textdomain-here'),
+//                ),
+//            ),
+//        )
+//    )
+//);
 
 // FOOTER
 Redux::set_section( $opt_name, array(

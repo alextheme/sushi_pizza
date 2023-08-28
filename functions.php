@@ -755,7 +755,7 @@ require_once get_template_directory() . '/inc/tgm/options.php';
 /**
  * Redux Option Include
  */
-if ( class_exists( 'ReduxFramework' ) && file_exists( dirname( __FILE__ ) . '/inc/redux/options.php' ) ) {
+if ( class_exists( 'ReduxFramework' ) && file_exists( dirname( __FILE__ ) . '/inc/redux_framework/options.php' ) ) {
 	require_once get_template_directory() . '/inc/redux_framework/options.php';
 	add_filter( 'woodmart_redux_settings', '__return_false' );
 }
