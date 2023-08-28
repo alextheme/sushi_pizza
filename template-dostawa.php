@@ -19,7 +19,6 @@
 </div>
 </div>
 
-
 <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo 'api key'?>&v=weekly" defer></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="/wp-content/themes/americansushi/js/maps.js"></script>
