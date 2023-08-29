@@ -988,6 +988,9 @@ body.body--preloader_show {
 // BEFORE CHECKOUT
 
 .before_checkout__header {
+  align-items: center;
+  margin: 30px 0 20px 0;
+
   @media screen and (max-width: 767px) {
     position: fixed;
     top: 0;
@@ -1008,6 +1011,8 @@ body.body--preloader_show {
 }
 
 .before_checkout__header_title {
+  margin-bottom: 0;
+
   @media screen and (max-width: 767px) {
     font-size: 18px;
     font-weight: 700;
@@ -1038,6 +1043,8 @@ body.body--preloader_show {
 }
 
 .before_checkout__header_btn_w {
+  margin-left: auto;
+
   @media screen and (max-width: 767px) {
     position: fixed;
     bottom: 0;
@@ -1058,6 +1065,33 @@ body.body--preloader_show {
 
 .before_checkout__header_btn {
   min-width: 320px;
+
+  span {
+    margin-top: 3px;
+    img {
+      margin: -7px 12px 0 0;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    span img:nth-child(1) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    span img:nth-child(2) {
+      display: none;
+    }
+
+    &.button-before {
+      color: #000;
+
+      &:before {
+        display: block;
+      }
+    }
+  }
 }
 
 

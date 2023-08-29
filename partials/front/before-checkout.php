@@ -35,8 +35,12 @@ if ($lang == 'ru') {
         <h2 class="before_checkout__header_title"><?php echo $header; ?></h2>
 
         <div class="before_checkout__header_btn_w">
-            <a href="<?php echo $url; ?>" class="before_checkout__header_btn button2 button-before">
-                <span><img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/icon_shop.svg' ); ?>" alt=""> <?php echo $order; ?></span>
+            <a href="<?php echo $url; ?>" class="before_checkout__header_btn button button2 button-before">
+                <span>
+                    <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/icon_shop.svg' ); ?>" alt="">
+                    <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket_w.svg' ); ?>" alt="">
+                    <?php echo $order; ?>
+                </span>
             </a>
         </div>
 
