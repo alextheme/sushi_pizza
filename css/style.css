@@ -553,7 +553,7 @@ img.floating {
 
 .page-blackcontent{
 	/*background-color: var(--color_black);*/
-	z-index: 10;
+	z-index: 9;
 	position: relative;
 }
 .home .pagewhitecontent{
@@ -625,9 +625,9 @@ img.floating {
 }
 /*Header Top*/
 .header{
-	z-index: 999;
+	z-index: 10;
 	background: var(--color_black);
-	box-shadow: 0px 4px 9px rgba(255, 255, 255, 0.27);
+	box-shadow: 0 4px 9px rgba(255, 255, 255, 0.27);
 }
 .header ul{
 	list-style: none;
@@ -1797,7 +1797,7 @@ li[szbd="true"].activeDel{
 	top: auto;
 	right: 0;
 	width: 337px;
-	z-index: 99;
+	z-index: 1000;
 	max-height: 425px;
 	padding: 15px;
 	transform: translatex(337px);
@@ -1834,7 +1834,7 @@ li[szbd="true"].activeDel{
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
-	z-index: 95;
+	z-index: 1000;
 	width: 50px;
 	height: 50px;
 	text-align: center;

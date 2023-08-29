@@ -1,4 +1,5 @@
 body {
+  --width-scrollbar: 0;
   position: relative;
   color: #fff;
 }
@@ -50,6 +51,42 @@ body:before {
 @media (max-width: 992px) {
   .header .header_buttons_w {
     margin-left: auto;
+  }
+}
+.header .menu__socials {
+  margin-left: 24px;
+  margin-top: 3px;
+}
+.header .menu__socials .menu__social {
+  margin: 0;
+}
+.header .menu__socials .menu__social:not(:last-child) {
+  margin-right: 15px;
+}
+.header .menu__socials .menu__social_link {
+  width: 27px;
+  height: 27px;
+}
+.header .menu__socials .menu__social_link:hover {
+  opacity: 0.7;
+}
+.header .menu__socials .menu__social_img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media screen and (max-width: 992px) {
+  .header .menu__socials .menu__social_img {
+    display: none;
+  }
+}
+.header .menu__socials .menu__social_img.menu__social_img--mobile_mod {
+  display: none;
+}
+@media screen and (max-width: 992px) {
+  .header .menu__socials .menu__social_img.menu__social_img--mobile_mod {
+    display: block;
   }
 }
 .header ul li:not(:last-child) {
@@ -384,9 +421,6 @@ body:before {
   .menu-active .header .container {
     position: static;
   }
-  body.menu-active {
-    overflow: hidden;
-  }
   .navbar-shop-buttons > a {
     margin: 0;
   }
@@ -467,11 +501,20 @@ body:before {
   .main_menu_box .main_menu_wrapper .menu_mobile__address svg path {
     fill: #FCB326;
   }
-  .main_menu_box .main_menu_wrapper .menu_mobile__insta {
+  .main_menu_box .main_menu_wrapper .menu_mobile__socials {
     margin-bottom: 24px;
   }
-  .main_menu_box .main_menu_wrapper .menu_mobile__insta svg path {
-    fill: #ffffff;
+  .main_menu_box .main_menu_wrapper .menu_mobile__socials .menu_mobile__social_link {
+    width: 30px;
+    height: 30px;
+  }
+  .main_menu_box .main_menu_wrapper .menu_mobile__socials .menu_mobile__social_link:hover {
+    opacity: 0.7;
+  }
+  .main_menu_box .main_menu_wrapper .menu_mobile__socials .menu_mobile__social_img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
   .main_menu_box .main_menu_wrapper .menu_mobile__lang_bottom {
     display: flex;
@@ -740,26 +783,102 @@ body:before {
   }
 }
 
-body.variable_popup {
+body.body--preloader_show {
+  padding-right: var(--width-scrollbar, 0);
   overflow: hidden;
   user-select: none;
 }
 
-body.preloader_update {
+.body--preloader_show .before-checkout-products {
+  display: block;
+  height: 100vh;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
   user-select: none;
 }
 
-.variable_popup .before-checkout-products, .preloader_show .before-checkout-products {
-  display: block;
-  height: 100vh;
+.cart_content_preloader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
 }
-.variable_popup .before-checkout-products {
-  padding: 10px;
+.cart_content_preloader .preloader {
+  margin: 0;
 }
-.preloader_show .before-checkout-products {
-  padding: 0;
-  user-select: none;
+.cart_content_preloader.show {
+  display: flex;
+}
+
+@media screen and (max-width: 767px) {
+  .before_checkout__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 80px;
+    padding: 40px 20px 20px;
+    background: #000000;
+    background: var(--color_black);
+    box-shadow: 0 4px 9px rgba(255, 255, 255, 0.27);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .before_checkout__header_title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 4px 0 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .before_checkout__close_btn {
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 300ms ease-in-out;
+  }
+  .before_checkout__close_btn:hover {
+    background-color: var(--accent_color, #FCB326);
+  }
+  .before_checkout__close_btn span {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../images/icons/icon_close.svg) center center no-repeat;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .before_checkout__header_btn_w {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    background: #000000;
+    background: var(--color_black);
+    box-shadow: 0 -4px 9px rgba(255, 255, 255, 0.27);
+  }
+}
+
+.before_checkout__header_btn {
+  min-width: 320px;
 }
 
 /*# sourceMappingURL=general.css.map */

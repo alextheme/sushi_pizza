@@ -100,7 +100,7 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
             // CLOSED POPUP SELECT VARIANT
             (() => {
                 $('.variable_product__close_btn').on('click', e => {
-                    $('body').removeClass('variable_popup');
+                    $('body').removeClass('body--preloader_show');
                 });
             })();// - CLOSED POPUP SELECT VARIANT
 
@@ -161,40 +161,40 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
             })(); // - GET Variant Product ID
 
 
-            // ADD TO CART VARIABLE PRODUCT
+            // ADD TO CART -- VARIABLE PRODUCT
             (() => {
                 $('.variable_product__btn_submit .single_add_to_cart_button').on('click', function(e) {
                     e.preventDefault();
 
-                    console.log( 'single_add_to_cart_button | variable-producn.php' )
+                    console.log( 'variable-producn.php' )
 
+                    var product_id = $('.variations_form').find('input[name="product_id"]').val();
                     var variation_id = $('.variations_form').find('input[name="variation_id"]').val();
-                    var quantity = 1;
 
+                    console.log( product_id, variation_id )
                     $.ajax({
                         type: 'POST',
                         url: ajax_data.ajaxUrl,
                         data: {
-                            action: 'o10_add_to_cart_variable_product',
+                            action: 'o10_woocommerce_ajax_add_to_cart',
                             nonce: ajax_data.nonce,
                             lang: Cookies.get('pll_language'),
-                            product_id: variation_id,
-                            quantity: quantity,
+                            product_id: product_id,
+                            variation_id: variation_id,
+                            quantity: 1,
+                        },
+                        beforeSend: function () {
+                            $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
                         },
                         success: function(response) {
-                            // Оновити міні-кошик або виконати інші дії
                             console.log( response || 'Товар додано до кошика.');
-
-                            $('body').removeClass('variable_popup');
-
                             updateShoppingCart();
                         },
                         error: function (error) {
                             console.error(error);
-                            $('body').removeClass('variable_popup');
                         },
-                        beforeSend: function () {
-                            $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+                        complete: function () {
+                            $('body').removeClass('body--preloader_show').css({ paddingRight: '0px' })
                         }
                     });
                 });
@@ -206,6 +206,7 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                 console.log( 'update Shopping Cart | before-checkout-variable-product' )
 
                 $.ajax({
+                    // url: wc_add_to_cart_params.ajax_url,
                     url: ajax_data.ajaxUrl,
                     type: 'get',
                     data: {
@@ -219,10 +220,15 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                     error: function (response) {
                         console.error(response.statusText);
                         console.error(response.responseText);
+                    },
+                    beforeSend: function () {
+                        $('.cart_content_preloader').addClass('show');
+                    },
+                    complete: function () {
+                        $('.cart_content_preloader').removeClass('show');
                     }
                 })
             }
-
         })
     })(jQuery);
 </script>

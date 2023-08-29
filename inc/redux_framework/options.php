@@ -289,16 +289,16 @@ Redux::set_section( $opt_name, array(
             array(
                 'id'       => 'header_logo_alt',
                 'type'     => 'text',
-                'title'    => esc_html__( 'Header Title', 'your-textdomain-here' ),
-                'subtitle' => esc_html__( '', 'your-textdomain-here' ),
-                'desc'     => esc_html__( 'use the delimiter "|" to break a line', 'your-textdomain-here' ),
+                'title'    => esc_html__( 'Header Title', 'sushi_pizza' ),
+                'subtitle' => esc_html__( '', 'sushi_pizza' ),
+                'desc'     => esc_html__( 'use the delimiter "|" to break a line', 'sushi_pizza' ),
                 'default'  => 'logo',
             ),
             array(
                 'id'       => 'header_logo_around',
                 'type'     => 'checkbox',
-                'title'    => esc_html__( 'Make the logo round', 'your-textdomain-here' ),
-                'desc'     => esc_html__( 'Make the logo round to cut off the square shadow.', 'your-textdomain-here' ),
+                'title'    => esc_html__( 'Make the logo round', 'sushi_pizza' ),
+                'desc'     => esc_html__( 'Make the logo round to cut off the square shadow.', 'sushi_pizza' ),
                 'default'  => '1', // 1 = on | 0 = off.
             ),
         )
@@ -312,14 +312,54 @@ Redux::set_section( $opt_name, array(
         'desc'             => esc_html__( '', 'sushi_pizza' ),
         'fields' => array(
             array(
+                'id'   =>'divider_1',
+                'title' => esc_html__('Instagram', 'your-textdomain-here'),
+                'type' => 'divide'
+            ),
+            array(
+                'id'       => 'social_insta_icon_m',
+                'type'     => 'media',
+                'desc'    => esc_html__( 'Icon mobile', 'sushi_pizza' ),
+                'url'      => false,
+                'preview'  => true,
+            ),
+            array(
+                'id'       => 'social_insta_icon',
+                'type'     => 'media',
+                'desc'    => esc_html__( 'Icon desktop', 'sushi_pizza' ),
+                'url'      => false,
+                'preview'  => true,
+            ),
+            array(
                 'id'       => 'social_insta',
                 'type'     => 'text',
-                'title'    => esc_html__( 'Instagram link', 'your-textdomain-here' ),
+                'desc'    => esc_html__( 'Link', 'sushi_pizza' ),
+            ),
+
+
+            array(
+                'id'   =>'divider_2',
+                'title' => esc_html__('Facebook', 'your-textdomain-here'),
+                'type' => 'divide'
+            ),
+            array(
+                'id'       => 'social_fb_icon_m',
+                'type'     => 'media',
+                'desc'    => esc_html__( 'Icon mobile', 'sushi_pizza' ),
+                'url'      => false,
+                'preview'  => true,
+            ),
+            array(
+                'id'       => 'social_fb_icon',
+                'type'     => 'media',
+                'desc'    => esc_html__( 'Icon desktop', 'sushi_pizza' ),
+                'url'      => false,
+                'preview'  => true,
             ),
             array(
                 'id'       => 'social_fb',
                 'type'     => 'text',
-                'title'    => esc_html__( 'Facebook link', 'your-textdomain-here' ),
+                'desc'    => esc_html__( 'Link', 'sushi_pizza' ),
             ),
         )
     )
@@ -338,9 +378,9 @@ Redux::set_section( $opt_name, array(
 //                'title'    => esc_html__( 'Hero Slide', 'sushi_pizza' ),
 //                'desc'     => esc_html__( 'Upload Images for hero section', 'sushi_pizza' ),
 //                'placeholder' => array(
-//                    'title'       => esc_html__('This is a title', 'your-textdomain-here'),
-//                    'description' => esc_html__('Description Here', 'your-textdomain-here'),
-//                    'url'         => esc_html__('Give us a link!', 'your-textdomain-here'),
+//                    'title'       => esc_html__('This is a title', 'sushi_pizza'),
+//                    'description' => esc_html__('Description Here', 'sushi_pizza'),
+//                    'url'         => esc_html__('Give us a link!', 'sushi_pizza'),
 //                ),
 //            ),
 //        )
@@ -357,8 +397,8 @@ Redux::set_section( $opt_name, array(
             array(
                 'id'       => 'footer_payments',
                 'type'     => 'gallery',
-                'title'    => esc_html__('Payment methods', 'your-textdomain-here'),
-                'desc'     => esc_html__('Add payment method logos.', 'your-textdomain-here'),
+                'title'    => esc_html__('Payment methods', 'sushi_pizza'),
+                'desc'     => esc_html__('Add payment method logos.', 'sushi_pizza'),
             ),
         )
     )

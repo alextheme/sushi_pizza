@@ -615,7 +615,7 @@ remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_
 add_action( 'woocommerce_review_order_after_order_total_coupon', 'woocommerce_checkout_coupon_form', 10 );
 
 /*Redirect*/
-add_action('template_redirect','redirect_visitor');
+//add_action('template_redirect','redirect_visitor');
 function redirect_visitor(){
 	global $wpdb;
     $data = $wpdb->get_results("SELECT * FROM `wp_block_site` WHERE 1");
@@ -763,7 +763,12 @@ if ( class_exists( 'ReduxFramework' ) && file_exists( dirname( __FILE__ ) . '/in
 /**
  * AJAX
  */
-require_once get_template_directory() . '/inc/ajax/index.php';
+require_once get_template_directory() . '/inc/ajax/ajax.php';
+
+/**
+ * WOOCOMMERCE SETTINGS
+ */
+require_once get_template_directory() . '/inc/woocommerce/settings_theme.php';
 
 
 /**

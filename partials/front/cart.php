@@ -64,7 +64,7 @@ if ($lang == 'ru') {
             echo '<div class="lg100 d-flex align-center justify-spaceb">';
             echo '<div class="buttons-qnt d-flex align-center">';
 
-            echo '<button type="button" class="minus-btn" ><img src="' . $btn_minus . '" alt="+"></button>';
+            echo '<button type="button" class="minus-btn"><img src="' . $btn_minus . '" alt="+"></button>';
             echo '<input type="text" data-product_id="' . $product_id . '" data-cart_item_key="' . $cart_item_key . '" class="input-text qty qty-cart text" step="1" min="-1" max="100"  value="' . $quantity . '" title="Szt." size="4" placeholder="" inputmode="numeric">';
             echo '<button type="button" class="plus-btn"><img src="' . $btn_plus . '" alt="+"></button>';
 
@@ -85,13 +85,18 @@ if ($lang == 'ru') {
 		 </span>
         </div>
     <?php endif; ?>
+
+
+    <div class="cart_content_preloader hide">
+        <div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>
+    </div>
+
 </div>
 <script>
     (function ($) {
-
-        // Change qantity in the cart
+        // Change quantity in the cart
         $('button.plus-btn, button.minus-btn').on('click', function () {
-
+            console.log( '+++/---' )
             let product_id = $(this).attr("data-product_id"),
                 cart_item_key = $(this).attr("data-cart_item_key");
 
@@ -116,35 +121,149 @@ if ($lang == 'ru') {
                     qty.val(val - step).trigger('change');
                 }
             }
+
+
         });
 
-        // Remove Goods from shopping cart
-        $('.remove-item-button').on('click', function () {
+        $('input[type="text"].qty-cart').on('change', function () {
+            var product_id = $(this).attr("data-product_id")
+            var cart_item_key = $(this).attr("data-cart_item_key")
+            var amount = $(this).val();
+            var action = amount <= 0 ? 'product_remove' : 'product_update'
 
-            var cart_item_key = $(this).data('cart_item_key');
-
-            console.log('del product: ', cart_item_key )
+            console.log( wc_add_to_cart_params, product_id, cart_item_key, amount, action)
 
             $.ajax({
                 type: 'POST',
-                url: ajax_data.ajaxUrl,
+                dataType: 'json',
+                url: wc_add_to_cart_params.ajax_url,
                 data: {
-                    action: 'update_cart_after_item_removed_handler',
+                    action: "product_remove",
+                    todo: action,
+                    product_id: product_id,
                     cart_item_key: cart_item_key,
-                    nonce: ajax_data.nonce,
-                    lang: Cookies.get('pll_language'),
+                    amount: amount
                 },
                 success: function (response) {
-                    // Оновити кількість товарів у шапці чи іншому місці
-                    $('.cart-count').text(response.cart_count);
-
-                    // Оновити список товарів у кошику, наприклад, в боковій панелі
-                    $('.cart-contents').html(response.cart_html);
+                    $('.cart-item').removeClass('disabled-product');
+                    updateShoppingCartAjax();
                 }
             });
         });
 
+        /* Remove product from cart -- Product */
+        $('.remove-in-cart').on('click', function (event) {
+            event.preventDefault();
+
+            console.log( 'remove', $(this).data('product_id')  )
+
+            let productId = $(this).data('product_id');
+            let cartItemKey = $(this).data('cart_item_key');
+
+            // Get Popup for select variant product
+            $.ajax({
+                // url: wc_add_to_cart_params.ajax_url,
+                url: ajax_data.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'o10_remove_product_from_cart',
+                    nonce: ajax_data.nonce,
+                    lang: Cookies.get('pll_language'),
+                    product_id: productId,
+                    cart_item_key: cartItemKey,
+                },
+                success: function (result) {
+                    updateShoppingCartAjax();
+                },
+                error: function (msg) {
+                    console.log(msg);
+                },
+                beforeSend: function () {
+                    $('.cart_content_preloader').addClass('show');
+                },
+                complete: function () {
+                    $('.cart_content_preloader').removeClass('show');
+                }
+            })
+        })
+
+        // UPDATE Cart
+        function updateShoppingCartAjax() {
+
+            console.log( 'update Cart | cart.php' )
+
+            $.ajax({
+                // url: wc_add_to_cart_params.ajax_url,
+                url: ajax_data.ajaxUrl,
+                type: 'get',
+                data: {
+                    action: 'o10_update_cart',
+                    nonce: ajax_data.nonce,
+                    lang: Cookies.get('pll_language'),
+                },
+                success: function (response) {
+                    $('#product-sidebar-cart').html(response);
+                },
+                error: function (response) {
+                    console.error(response.statusText);
+                    console.error(response.responseText);
+                },
+                beforeSend: function () {
+                    $('.cart_content_preloader').addClass('show');
+                },
+                complete: function () {
+                    $('.cart_content_preloader').removeClass('show');
+                    $('.product-sidebar .cart-content').addClass('active-cart');
+                }
+            })
+        }
+
         // Update Cart Amount
-        $('.basket-mobile .cart-amount').text($('.cart-content').data('cart_count'));
+        $('.basket-mobile .cart-amount').text( $('.cart-content').data('cart_count') );
+
+        // Zamawiam!
+        $('#checkout1').on('click', function (e) {
+            e.preventDefault();
+
+            console.log('Zamawiam! | cart.php')
+
+            let productId = $(this).attr('data-product_id');
+
+            // Get Popup for select variant product
+            $.ajax({
+                // url: wc_add_to_cart_params.ajax_url,
+                url: ajax_data.ajaxUrl,
+                data: {
+                    action: 'o10_before_checkout',
+                    nonce: ajax_data.nonce,
+                    lang: Cookies.get('pll_language'),
+                },
+                success: function (result) {
+                    $('#before-checkout').html(result);
+                    $('body').css( { overflow: 'hidden' })
+                },
+                error: function (msg) {
+                    console.log(msg)
+                },
+                beforeSend: function () {
+                    $('.before-checkout-products').addClass('active-prom');
+                    $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+                    $('.product-sidebar .cart-content').removeClass('active-cart');
+                    $('body')
+                        .css({ paddingRight: `${window.innerWidth - document.body.offsetWidth}px` })
+                        .addClass('body--preloader_show');
+                },
+                complete: function () {
+                    $('body')
+                        .css({ paddingRight: '0px' })
+                        .removeClass('body--preloader_show');
+                }
+            })
+        })
+
+        // Click button close cart
+        $('.close-cart-mobile').on('click', function (e) {
+            $('.product-sidebar .cart-content').removeClass('active-cart');
+        })
     })(jQuery);
 </script>
