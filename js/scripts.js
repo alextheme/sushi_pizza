@@ -227,63 +227,6 @@
             speed: 500
         });
 
-        //Home page Ajax
-        function reloadCart() {
-            console.log('reloadCart( ??????????????? ) | script.js')
-
-
-            // $.ajax({
-            // // url: wc_add_to_cart_params.ajax_url,
-            // url: ajax_data.ajaxUrl,
-            //     type: 'get',
-            //     data: {
-            //         action: 'o10_update_cart',
-            //         nonce: ajax_data.nonce,
-            //         lang: Cookies.get('pll_language'),
-            //     },
-            //     success: function (result) {
-            //
-            //         if (result) {
-            //             $('#product-sidebar-cart').html(result);
-            //         }
-            //
-            //         // Ajax change qantity product in the cart
-            //         $('.qty-cart').on('change', function () {
-            //             let product_id = $(this).attr("data-product_id"),
-            //                 cart_item_key = $(this).attr("data-cart_item_key"),
-            //                 amount = $(this).val();
-            //             ajax_product_modify("product_update", product_id, cart_item_key, amount);
-            //         });
-            //
-            //         $('.close-cart-mobile').bind('click', function () {
-            //             $('.product-sidebar .cart-content').toggleClass('active-cart');
-            //         });
-            //
-            //         $('a.remove-in-cart').on('click', function (e) {
-            //             e.preventDefault();
-            //             let product_id = $(this).attr("data-product_id"),
-            //                 cart_item_key = $(this).attr("data-cart_item_key");
-            //             ajax_product_modify("product_remove", product_id, cart_item_key, 0);
-            //         });
-            //
-            //         if ($(window).width() < 992) {}
-            //
-            //         $('.plus-btn').on('click', function () {
-            //             console.log( '+++' )
-            //             let amount = parseInt($('.h-amount').text());
-            //             $('.h-amount').html(parseInt(amount) + 1);
-            //         });
-            //
-            //         $('.minus-btn').on('click', function () {
-            //             console.log( '---' )
-            //             let amount = parseInt($('.h-amount').text());
-            //             $('.h-amount').html(parseInt(amount) - 1);
-            //         });
-            //
-            //     }
-            // })
-        }
-
         let max = 0;
 
         function alignHeights() {
@@ -404,8 +347,6 @@
         function ajax_product_modify(actionp, product_idp, cart_item_keyp, amountp) {
 
             let product_container = $(this).parents('.cart_item');
-
-            console.log(amountp);
 
             // Add loader
             product_container.block({
@@ -528,8 +469,6 @@
         $('.product_type_variable.add_to_cart_button').on('click', function (event) {
             event.preventDefault();
 
-            console.log( 'add Variable Product | from front page | script.js' )
-
             if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
             let productId = $(this).attr('data-product_id');
@@ -573,8 +512,6 @@
         $('.product_type_simple.add_to_cart_button').on('click', function (event) {
             event.preventDefault();
 
-            console.log( 'add Simple Product | script.js' )
-
             if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
             let product_id = $(this).attr('data-product_id');
@@ -616,8 +553,6 @@
 
         // UPDATE Cart
         function updateShoppingCartAjax() {
-
-            console.log( 'update Cart | script.js' )
 
             $.ajax({
                 // url: wc_add_to_cart_params.ajax_url,

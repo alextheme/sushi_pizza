@@ -817,7 +817,7 @@ body.body--preloader_show {
 
 .before_checkout__header {
   align-items: center;
-  margin: 30px 0 20px 0;
+  margin: 0 0 20px 0;
 }
 @media screen and (max-width: 767px) {
   .before_checkout__header {
@@ -891,17 +891,25 @@ body.body--preloader_show {
   min-width: 320px;
 }
 .before_checkout__header_btn span {
-  margin-top: 3px;
+  display: block;
+  margin-top: 5px;
+  font-size: 18px;
 }
 .before_checkout__header_btn span img {
   margin: -7px 12px 0 0;
 }
 @media screen and (min-width: 768px) {
+  .before_checkout__header_btn span {
+    color: #fff;
+  }
   .before_checkout__header_btn span img:nth-child(1) {
     display: none;
   }
 }
 @media screen and (max-width: 767px) {
+  .before_checkout__header_btn span {
+    color: #000;
+  }
   .before_checkout__header_btn span img:nth-child(2) {
     display: none;
   }

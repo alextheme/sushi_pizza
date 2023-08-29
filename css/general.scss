@@ -989,7 +989,7 @@ body.body--preloader_show {
 
 .before_checkout__header {
   align-items: center;
-  margin: 30px 0 20px 0;
+  margin: 0 0 20px 0;
 
   @media screen and (max-width: 767px) {
     position: fixed;
@@ -1067,21 +1067,32 @@ body.body--preloader_show {
   min-width: 320px;
 
   span {
-    margin-top: 3px;
+    display: block;
+    margin-top: 5px;
+    font-size: 18px;
+
     img {
       margin: -7px 12px 0 0;
     }
   }
 
   @media screen and (min-width: 768px) {
-    span img:nth-child(1) {
-      display: none;
+    span {
+      color: #fff;
+
+      img:nth-child(1) {
+        display: none;
+      }
     }
   }
 
   @media screen and (max-width: 767px) {
-    span img:nth-child(2) {
-      display: none;
+    span {
+      color: #000;
+
+      img:nth-child(2) {
+        display: none;
+      }
     }
 
     &.button-before {

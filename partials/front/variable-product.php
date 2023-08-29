@@ -166,12 +166,9 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                 $('.variable_product__btn_submit .single_add_to_cart_button').on('click', function(e) {
                     e.preventDefault();
 
-                    console.log( 'variable-producn.php' )
-
                     var product_id = $('.variations_form').find('input[name="product_id"]').val();
                     var variation_id = $('.variations_form').find('input[name="variation_id"]').val();
 
-                    console.log( product_id, variation_id )
                     $.ajax({
                         type: 'POST',
                         url: ajax_data.ajaxUrl,
@@ -187,7 +184,6 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                             $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
                         },
                         success: function(response) {
-                            console.log( response || 'Товар додано до кошика.');
                             updateShoppingCart();
                         },
                         error: function (error) {
@@ -202,8 +198,6 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
 
 
             function updateShoppingCart() {
-
-                console.log( 'update Shopping Cart | before-checkout-variable-product' )
 
                 $.ajax({
                     // url: wc_add_to_cart_params.ajax_url,

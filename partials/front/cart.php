@@ -96,7 +96,7 @@ if ($lang == 'ru') {
     (function ($) {
         // Change quantity in the cart
         $('button.plus-btn, button.minus-btn').on('click', function () {
-            console.log( '+++/---' )
+
             let product_id = $(this).attr("data-product_id"),
                 cart_item_key = $(this).attr("data-cart_item_key");
 
@@ -131,8 +131,6 @@ if ($lang == 'ru') {
             var amount = $(this).val();
             var action = amount <= 0 ? 'product_remove' : 'product_update'
 
-            console.log( wc_add_to_cart_params, product_id, cart_item_key, amount, action)
-
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -154,8 +152,6 @@ if ($lang == 'ru') {
         /* Remove product from cart -- Product */
         $('.remove-in-cart').on('click', function (event) {
             event.preventDefault();
-
-            console.log( 'remove', $(this).data('product_id')  )
 
             let productId = $(this).data('product_id');
             let cartItemKey = $(this).data('cart_item_key');
@@ -190,8 +186,6 @@ if ($lang == 'ru') {
         // UPDATE Cart
         function updateShoppingCartAjax() {
 
-            console.log( 'update Cart | cart.php' )
-
             $.ajax({
                 // url: wc_add_to_cart_params.ajax_url,
                 url: ajax_data.ajaxUrl,
@@ -224,8 +218,6 @@ if ($lang == 'ru') {
         // Zamawiam!
         $('#checkout1').on('click', function (e) {
             e.preventDefault();
-
-            console.log('Zamawiam! | cart.php')
 
             let productId = $(this).attr('data-product_id');
 

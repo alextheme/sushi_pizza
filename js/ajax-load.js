@@ -5,7 +5,7 @@ $(document).ready(function() {
 let path = location.protocol + '//' + document.location.hostname + '/wp-content/themes/osec/partials//archive-product.php';
 //Home page Ajax
 $('#category, #sortby, #status').on('change', function(event) {
-	console.log($("#courses-form-sort").serialize());
+
   event.preventDefault();
 	let selected =  $(this).val();
 	$.ajax({
@@ -14,7 +14,6 @@ $('#category, #sortby, #status').on('change', function(event) {
 		 data:$("#courses-form-sort").serialize(),
     success: function( result ) {
 		 $('#courses-list').html(result);
-		console.log(result);	
     }
   }) 	
 });
@@ -35,8 +34,7 @@ $('#show-films').on('click', function() {
   }) 	
 });	
 
-$('.woo-page .search-submit').on('click',function(){
-	console.log('/?s=' + $('.search-form').serialize() + '&' + $("#courses-form-sort").serialize());
+$('.woo-page .search-submit').on('click',function(event){
   event.preventDefault();
 	let selected =  $(this).val();
 	$.ajax({
@@ -45,7 +43,6 @@ $('.woo-page .search-submit').on('click',function(){
 		 data: $('.search-form').serialize() + '&' + $("#courses-form-sort").serialize(),
     success: function( result ) {
 		 $('#courses-list').html(result);
-		console.log(result);	
     }
   }) 	
 });		
@@ -59,7 +56,6 @@ $('.events .search-submit').on('click',function(){
 		 data: $('.search-form').serialize(),
     success: function( result ) {
 		 $('#events-list').html(result);
-		console.log(result);	
     }
   }) 	
 });	
@@ -73,7 +69,6 @@ $('#more-posts-arch').on('click',function(){
 		 data: '',
     success: function( result ) {
 		 $('#news-archive').html(result);
-		console.log(result);	
     }
   }) 	
 });	
