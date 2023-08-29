@@ -27,10 +27,8 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	return;
 }
 
-echo '(form checkout php) To be continued...';
-
-
-$google_map_key = $_ENV['GOOGLE_MAP_KEY']
+$google_map_key = $_ENV['GOOGLE_MAP_KEY'];
+echo $google_map_key;
 
 ?>
 
@@ -77,6 +75,6 @@ $google_map_key = $_ENV['GOOGLE_MAP_KEY']
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo esc_attr($google_map_key)?>=weekly&libraries=places&callback=initMap" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo esc_attr($google_map_key)?>&v=weekly&libraries=places&callback=initMap" defer></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="<?php echo esc_url( get_template_directory() . '/js/maps.js' ); ?>"></script>

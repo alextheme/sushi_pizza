@@ -109,48 +109,6 @@ if ($lang == 'ru') {
                 $('body').css( { overflow: 'unset' })
             })
 
-
-            /* Add to from cart -- Simple Product */
-            /* Add to from cart -- Simple Product */
-            /* Add to from cart -- Simple Product */
-            // $('.product_type_simple.add_to_cart_button').on('click', function (event) {
-            //     event.preventDefault();
-            //
-            //     console.log( 'add Simple Product | before-checkout.php')
-            //
-            //     setTimeout(()=>{
-            //         $.ajax({
-            //             url: ajax_data.ajaxUrl,
-            //             type: 'get',
-            //             data: {
-            //                 action: 'o10_update_cart',
-            //                 nonce: ajax_data.nonce,
-            //                 lang: Cookies.get('pll_language'),
-            //             },
-            //             success: function (response) {
-            //                 $('#product-sidebar-cart').html(response);
-            //             },
-            //             error: function (response) {
-            //                 console.error(response.statusText);
-            //                 console.error(response.responseText);
-            //             },
-            //             beforeSend: function () {
-            //                 $('.cart_content_preloader').addClass('show');
-            //             },
-            //             complete: function () {
-            //                 $('.cart_content_preloader').removeClass('show');
-            //             }
-            //         })
-            //     }, 600);
-            //
-            //
-            // });
-
-
-
-
-
-
         })
     })(jQuery);
 
