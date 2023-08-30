@@ -337,8 +337,11 @@ body:before {
   display: inline-block;
   margin-bottom: 6px;
 }
+.hero_box__schedule_w .hero_box__schedule_info:nth-child(1) {
+  margin-right: 15px;
+}
 .hero_box__schedule_w .hero_box__schedule_info img {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .contact_template .hero_box__schedule_w {
@@ -1004,10 +1007,14 @@ body.body--preloader_show {
 }
 
 @media (min-width: 991px) {
+  .shop-header-tabs .category-filtr a, .shop-header-tabs .category-filtr span {
+    padding: 8px 20px;
+    font-size: 18px;
+  }
   .shop-header-tabs.shadow .category-filtr {
-    -webkit-box-shadow: 0px 0px 80px 60px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 80px 60px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 80px 60px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0 0 80px 60px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 0 80px 60px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 80px 60px rgba(0, 0, 0, 0.75);
   }
   .shop-header-tabs.shadow .category-filtr a, .shop-header-tabs.shadow .category-filtr span {
     background: #1E1D1A;
@@ -1016,9 +1023,9 @@ body.body--preloader_show {
 @media (max-width: 992px) {
   .shop-header-tabs.shadow {
     background: #000000;
-    -webkit-box-shadow: 0px 0px 60px 60px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 60px 60px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 60px 60px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0 0 60px 60px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 0 60px 60px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 60px 60px rgba(0, 0, 0, 0.75);
   }
   .shop-header-tabs.shadow a, .shop-header-tabs.shadow span {
     background: #1E1D1A;

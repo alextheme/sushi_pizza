@@ -41,19 +41,19 @@ $blocked = is_blocked();
 						<span class="hero_box__schedule_time work-time"><?php the_field('czas_pracy', $id);?></span>
 						<div class="hero_box__schedule_info_w lg100 info-tabs text-center">
 					<span class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_bag.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/bag_yellow.svg' ?>" alt="">
 						<?php the_field('min_zam', $id);?>
 					</span>
 							<span class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_clock.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/timer_yellow.svg' ?>" alt="">
 						<?php the_field('czas_dostawy', $id);?>
 					</span>
 							<span class="hero_box__schedule_info lg100">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_car.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/car_yellow.svg' ?>" alt="">
 						<?php the_field('przewoz', $id);?>
 					</span>
 							<span id="addr1" class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_mark.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/location_yellow.svg' ?>" alt="">
 						<?php the_field('adres', $id);?>
 					</span>
 						</div>
