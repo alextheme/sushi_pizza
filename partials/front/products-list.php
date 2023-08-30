@@ -114,3 +114,76 @@ echo '<h3 class="category-name" id="category-name1">' . $categoryname . '</h3>';
         <div class="lg100"><h2 class="p-top text-center"><?php echo $dfind; ?></h2></div>
     <?php endif; ?>
 </div>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+
+
+            // ADD TO CART -- PRODUCT
+            (() => {
+                $('.add_to_cart_button').on('click', function(e) {
+                    e.preventDefault();
+
+                    console.log( 'product-list.php | add to cart')
+
+                    var product_id = $('.variations_form').find('input[name="product_id"]').val();
+                    var variation_id = $('.variations_form').find('input[name="variation_id"]').val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: ajax_data.ajaxUrl,
+                        data: {
+                            action: 'o10_woocommerce_ajax_add_to_cart',
+                            nonce: ajax_data.nonce,
+                            lang: Cookies.get('pll_language'),
+                            product_id: product_id,
+                            variation_id: variation_id,
+                            quantity: 1,
+                        },
+                        beforeSend: function () {
+                            $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+                        },
+                        success: function(response) {
+                            updateShoppingCart();
+                        },
+                        error: function (error) {
+                            console.error(error);
+                        },
+                        complete: function () {
+                            $('body').removeClass('body--preloader_show').css({ paddingRight: '0px' })
+                        }
+                    });
+                });
+            })(); // - ADD TO CART PRODUCT
+
+
+            function updateShoppingCart() {
+
+                $.ajax({
+                    // url: wc_add_to_cart_params.ajax_url,
+                    url: ajax_data.ajaxUrl,
+                    type: 'get',
+                    data: {
+                        action: 'o10_update_cart',
+                        nonce: ajax_data.nonce,
+                        lang: Cookies.get('pll_language'),
+                    },
+                    success: function (response) {
+                        $('#product-sidebar-cart').html(response);
+                    },
+                    error: function (response) {
+                        console.error(response.statusText);
+                        console.error(response.responseText);
+                    },
+                    beforeSend: function () {
+                        $('.cart_content_preloader').addClass('show');
+                    },
+                    complete: function () {
+                        $('.cart_content_preloader').removeClass('show');
+                    }
+                })
+            }
+        })
+    })(jQuery);
+</script>

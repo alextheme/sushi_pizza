@@ -512,6 +512,8 @@
         $('.product_type_simple.add_to_cart_button').on('click', function (event) {
             event.preventDefault();
 
+            console.log('script.js | add to cart single')
+
             if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
             let product_id = $(this).attr('data-product_id');

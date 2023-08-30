@@ -1122,8 +1122,8 @@ img.floating {
 }
 
 .product.disabled-product, .cart-item.disabled-product, #product-sidebar-cart {
-    pointer-events: none;
-    opacity: 0.6;
+    /*pointer-events: none;*/
+    /*opacity: 0.6;*/
 }
 
 .cart-items-sc.disabled-product, .cproduct-footer.disabled-product {
