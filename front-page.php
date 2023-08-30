@@ -9,7 +9,7 @@
 	</div>
 	<span class="basket-mobile">
 		<span class="cart-amount h-amount"><?php echo $woocommerce->cart->cart_contents_count; ?></span>
-		<img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket.svg' ); ?>" alt="basket">
+		<img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket_yellow.svg' ); ?>" alt="basket">
 	</span>
 </div>
 

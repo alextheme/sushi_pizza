@@ -58,7 +58,7 @@ if (get_locale() == 'ru_RU') {
         <div class="row row-margin">
             <div class="lg70 sm100 xs100 products product-list-left padding-15" id="products-list">
                 <div class="lg100 d-flex p-bottom-30 breadcrumbs">
-                    <a class="button d-flex align-center" href="/">
+                    <a class="button d-flex align-center" href="<?php echo esc_url( home_url('/') ); ?>">
                         <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/Group-33.svg' ); ?>"
                             alt=""><?php echo pll__('Wróć do menu'); ?></a>
                 </div>
@@ -110,7 +110,7 @@ if (get_locale() == 'ru_RU') {
     </div>
     <span class="basket-mobile">
 		<span class="cart-amount h-amount"><?php echo $woocommerce->cart->cart_contents_count; ?></span>
-		<img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket-buy-cart.svg' ); ?>" alt="basket">
+		<img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket_yellow.svg' ); ?>" alt="basket">
 	</span>
     <div class="lg100 before-checkout-products pbefore-checkout-products p-bottom offset-header" id="before-checkout"></div>
 </div>

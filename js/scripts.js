@@ -626,6 +626,31 @@
 
         });
 
+        // Cart & menu category scroll position sticky
+        var $headerTabs = $('.shop-header-tabs')
+        function setTopPositionCart() {
+            $('.cart-content').css({ top: `${$headerTabs.height() + 30}px` })
+        }
+
+        $( window ).on( "resize", function() {
+            setTopPositionCart();
+        })
+
+        $( window ).on( "scroll", function(e) {
+            var scrollTop = $(window).scrollTop();
+            var elementTop = $headerTabs.offset().top;
+
+            if ( scrollTop >= elementTop - 50 ) {
+                if (!$headerTabs.hasClass('shadow')) {
+                    $headerTabs.addClass('shadow')
+                }
+            } else {
+                $headerTabs.removeClass('shadow');
+            }
+        })
+
+        setTopPositionCart();
+
     });
 })(jQuery);
 

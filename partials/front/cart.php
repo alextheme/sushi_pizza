@@ -79,8 +79,7 @@ if ($lang == 'ru') {
             <span class="total-header"><?php echo $amount; ?>:</span> <span
                 class="total-price"><?php echo WC()->cart->get_total(); ?></span>
             <span class="button button2 lg100" id="checkout1">
-			 <img src="<?php echo esc_url(get_template_directory_uri() . '/images/icons/icon_shop.svg'); ?>"
-                  alt="basket">
+<!--			 <img src="--><?php //echo esc_url(get_template_directory_uri() . '/images/icons/icon_shop.svg'); ?><!--" alt="basket">-->
 			 <span><?php echo $order; ?></span>
 		 </span>
         </div>
