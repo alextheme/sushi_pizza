@@ -58,15 +58,15 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                     <li class="variable_product__item">
                         <input type="radio"
                                name="variable_<?php echo esc_attr( $attribute_name ); ?>"
-                               class="variable_product__radio variable_product__radio_<?php echo esc_attr( $attr_i ); ?>"
+                               class="variable_product__input variable_product__input_<?php echo esc_attr( $attr_i ); ?>"
                                id="variable_<?php echo esc_attr( $attribute_name.'_'.$option ); ?>"
                                data-attribute_name="<?php echo esc_attr( $attribute_name ); ?>"
                                data-term_id="<?php echo esc_attr( $term->term_id ); ?>"
                                data-term_slug="<?php echo esc_attr( $term->slug ); ?>"
                             <?php echo $default_select ? 'checked="checked"' : ''; ?>
                         >
-                        <label class="variable_product__radio_label" for="variable_<?php echo esc_attr( $attribute_name.'_'.$option ); ?>">
-                            <span class="variable_product__radio_title"><?php echo esc_html( $term->name ); ?></span>
+                        <label class="variable_product__label" for="variable_<?php echo esc_attr( $attribute_name.'_'.$option ); ?>">
+                            <span class="variable_product__item_title"><?php echo esc_html( $term->name ); ?></span>
                             <span class="variable_product__icon"></span>
                         </label>
                     </li>
@@ -109,8 +109,8 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
             (() => {
                 $('input[name="variation_id"]').val(getVariantId());
 
-                $('.variable_product__radio').on('change', function() {
-                    var selected = $('.variable_product__radio_0:checked');
+                $('.variable_product__input').on('change', function() {
+                    var selected = $('.variable_product__input_0:checked');
                     $('input[name="variation_id"]').val( getVariantId() );
                 });
 
@@ -118,7 +118,7 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                     var variations = $('.variable_product__form').data('product_variations');
                     var attributes = {};
 
-                    $('.variable_product__radio').each( (i, elem) => {
+                    $('.variable_product__input').each( (i, elem) => {
                         var $elem = $(elem);
 
                         if ( $elem.is(':checked' ) ) {
