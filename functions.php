@@ -21,9 +21,6 @@ function mojeStyleiSkrypty() {
 	wp_enqueue_style('accordion-css', get_template_directory_uri() . '/libs/accordion_js/accordion.min.css');
 	wp_enqueue_script('accordion-js', get_template_directory_uri() . '/libs/accordion_js/accordion.min.js', array('jquery'), null, true);
 
-	// Scrollbar
-	wp_enqueue_script('perfect-scrollbar-js', get_template_directory_uri() . '/libs/perfect-scrollbar.min.js', array('jquery'), null, true);
-
 	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/js/scripts.js', array ( 'jquery' ), 1.1, true);
 }
 function mojeStyleiSkryptyAdmin() {
