@@ -256,5 +256,33 @@ if ($lang == 'ru') {
         $('.close-cart-mobile').on('click', function (e) {
             $('.product-sidebar .cart-content').removeClass('active-cart');
         })
+
+
+        // Cart & menu category scroll position sticky
+        var $headerTabs = $('.shop-header-tabs')
+        if( $headerTabs.length ) {
+            function setTopPositionCart() {
+                $('.cart-content').css({ top: `${$headerTabs.height() + 30}px` })
+            }
+
+            $( window ).on( "resize", function() {
+                setTopPositionCart();
+            })
+
+            $( window ).on( "scroll", function(e) {
+                var scrollTop = $(window).scrollTop();
+                var elementTop = $headerTabs.offset().top;
+
+                if ( scrollTop >= elementTop - 50 ) {
+                    if (!$headerTabs.hasClass('shadow')) {
+                        $headerTabs.addClass('shadow')
+                    }
+                } else {
+                    $headerTabs.removeClass('shadow');
+                }
+            })
+
+            setTopPositionCart();
+        }
     })(jQuery);
 </script>
