@@ -1344,4 +1344,8 @@ body.body--preloader_show .before-checkout-products {
   margin-top: auto;
 }
 
+.variable_product.variable_product--additional_product .variable_product__btn_submit .single_add_to_cart_button span {
+  line-height: 42px;
+}
+
 /*# sourceMappingURL=general.css.map */

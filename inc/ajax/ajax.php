@@ -172,9 +172,9 @@ add_action('wp_ajax_nopriv_o10_add_products_to_cart', 'o10_add_products_to_cart'
 function o10_add_products_to_cart() {
     if(isset($_POST['products']) && is_array($_POST['products'])) {
         foreach($_POST['products'] as $product) {
-            $product_id = absint( $product['id'] );
+            $product_id = absint( $product['product_id'] );
             $quantity = absint( $product['quantity'] );
-            $variation_id = absint( $product['variation'] );
+            $variation_id = absint( $product['variation_id'] );
 
             if($variation_id) {
                 WC()->cart->add_to_cart($product_id, $quantity, $variation_id);
