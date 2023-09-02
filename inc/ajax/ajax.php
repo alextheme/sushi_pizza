@@ -150,7 +150,7 @@ function o10_woocommerce_ajax_add_to_cart() {
             wc_add_to_cart_message(array($product_id => $quantity), true);
         }
 
-        WC_AJAX :: get_refreshed_fragments();
+        WC_AJAX::get_refreshed_fragments();
     } else {
 
         $data = array(
@@ -164,3 +164,30 @@ function o10_woocommerce_ajax_add_to_cart() {
 }
 add_action('wp_ajax_o10_woocommerce_ajax_add_to_cart', 'o10_woocommerce_ajax_add_to_cart');
 add_action('wp_ajax_nopriv_o10_woocommerce_ajax_add_to_cart', 'o10_woocommerce_ajax_add_to_cart');
+
+
+
+add_action('wp_ajax_o10_add_products_to_cart', 'o10_add_products_to_cart');
+add_action('wp_ajax_nopriv_o10_add_products_to_cart', 'o10_add_products_to_cart');
+function o10_add_products_to_cart() {
+    if(isset($_POST['products']) && is_array($_POST['products'])) {
+        foreach($_POST['products'] as $product) {
+            $product_id = absint( $product['id'] );
+            $quantity = absint( $product['quantity'] );
+            $variation_id = absint( $product['variation'] );
+
+            if($variation_id) {
+                WC()->cart->add_to_cart($product_id, $quantity, $variation_id);
+            } else {
+                WC()->cart->add_to_cart($product_id, $quantity);
+            }
+        }
+
+        // Відповідь AJAX запиту
+        echo 'Продукти успішно додано до кошика!';
+    } else {
+        echo 'Помилка: немає даних про продукти.';
+    }
+
+    wp_die();
+}

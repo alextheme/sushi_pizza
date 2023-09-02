@@ -535,8 +535,9 @@
                 success: function (result) {
                     $('#before-checkout').html(result);
                 },
-                error: function (msg) {
-                    console.log(msg)
+                error: function (response) {
+                    console.log(response)
+                    $('#before-checkout').html(response.responseText);
                 },
                 beforeSend: function () {
                     $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
@@ -676,28 +677,31 @@
 
         // Cart & menu category scroll position sticky
         var $headerTabs = $('.shop-header-tabs')
-        function setTopPositionCart() {
-            $('.cart-content').css({ top: `${$headerTabs.height() + 30}px` })
+        if( $headerTabs.length ) {
+            function setTopPositionCart() {
+                $('.cart-content').css({ top: `${$headerTabs.height() + 30}px` })
+            }
+
+            $( window ).on( "resize", function() {
+                setTopPositionCart();
+            })
+
+            $( window ).on( "scroll", function(e) {
+                var scrollTop = $(window).scrollTop();
+                var elementTop = $headerTabs.offset().top;
+
+                if ( scrollTop >= elementTop - 50 ) {
+                    if (!$headerTabs.hasClass('shadow')) {
+                        $headerTabs.addClass('shadow')
+                    }
+                } else {
+                    $headerTabs.removeClass('shadow');
+                }
+            })
+
+            setTopPositionCart();
         }
 
-        $( window ).on( "resize", function() {
-            setTopPositionCart();
-        })
-
-        $( window ).on( "scroll", function(e) {
-            var scrollTop = $(window).scrollTop();
-            var elementTop = $headerTabs.offset().top;
-
-            if ( scrollTop >= elementTop - 50 ) {
-                if (!$headerTabs.hasClass('shadow')) {
-                    $headerTabs.addClass('shadow')
-                }
-            } else {
-                $headerTabs.removeClass('shadow');
-            }
-        })
-
-        setTopPositionCart();
 
     });
 })(jQuery);

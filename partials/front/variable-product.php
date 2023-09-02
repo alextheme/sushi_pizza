@@ -31,7 +31,10 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
 
 <div class="variable_product">
     <div class="variable_product__wrapper">
-        <span class="variable_product__close_btn" aria-label="button close popup variable product"><span></span></span>
+
+        <span onclick="document.body.classList.remove('body--preloader_show')"
+              class="variable_product__close_btn"
+              aria-label="button close popup variable product"><span></span></span>
 
         <form
             class="variable_product__form variations_form"
