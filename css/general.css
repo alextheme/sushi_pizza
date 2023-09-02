@@ -240,13 +240,13 @@ body:before {
   padding-right: 18px;
 }
 .hero_box .hero_box__slider .slider-home {
-  height: 290px;
+  height: 194px;
 }
 .hero_box .hero_box__slider .slick-list {
-  height: 290px;
+  height: 194px;
 }
 .hero_box .hero_box__slider .slide.slick-slide img {
-  height: 290px;
+  height: 194px;
   border-radius: 0;
   object-position: top center;
   -o-object-position: top center;
@@ -286,9 +286,14 @@ body:before {
 .hero_box__schedule .row {
   height: 100%;
 }
+@media (max-width: 1270px) {
+  .hero_box__schedule {
+    margin-top: 0;
+  }
+}
 @media (max-width: 992px) {
   .hero_box__schedule {
-    margin-top: 30px;
+    margin-top: 10px;
   }
 }
 @media (max-width: 767px) {
@@ -299,7 +304,7 @@ body:before {
 
 .hero_box__schedule_w {
   position: relative;
-  padding: 28px 25px 21px;
+  padding: 14px 18px 10px;
   flex: 0 0 auto;
   max-width: 100%;
   font-size: 16px;
@@ -321,26 +326,30 @@ body:before {
 }
 .hero_box__schedule_w .hero_box__schedule_title {
   position: relative;
-  font-size: 26px;
   margin-bottom: 5px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 .hero_box__schedule_w .hero_box__schedule_time {
   position: relative;
-  font-weight: 500;
-  padding-bottom: 12px;
-}
-.hero_box__schedule_w .hero_box__schedule_info_w {
-  padding-bottom: 6px;
-  border-bottom: 1px solid #fff;
+  padding-bottom: 5px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 .hero_box__schedule_w .hero_box__schedule_info {
   display: inline-block;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
+  font-weight: 400;
+  line-height: 1.2;
 }
 .hero_box__schedule_w .hero_box__schedule_info:nth-child(1) {
   margin-right: 15px;
 }
 .hero_box__schedule_w .hero_box__schedule_info img {
+  width: 25px;
+  max-height: 25px;
   margin-right: 5px;
 }
 

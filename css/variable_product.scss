@@ -287,22 +287,24 @@ body {
 // HERO
 
 .hero_box {
+  $height_slider: 194px;
+
   padding: 41px 0 45px 0;
 
   .hero_box__slider {
     padding-right: 18px;
 
     .slider-home {
-      height: 290px;
+      height: $height_slider;
     }
 
     .slick-list {
-      height: 290px;
+      height: $height_slider;
     }
 
     .slide.slick-slide {
       img {
-        height: 290px;
+        height: $height_slider;
         border-radius: 0;
         object-position: top center;
         -o-object-position: top center;
@@ -354,8 +356,12 @@ body {
     height: 100%;
   }
 
+  @media (max-width: 1270px) {
+    margin-top: 0;
+  }
+
   @media (max-width: 992px) {
-    margin-top: 30px;
+    margin-top: 10px;
   }
 
   @media (max-width: 767px) {
@@ -365,7 +371,7 @@ body {
 
 .hero_box__schedule_w {
   position: relative;
-  padding: 28px 25px 21px;
+  padding: 14px 18px 10px;
   flex: 0 0 auto;
   max-width: 100%;
 
@@ -387,30 +393,44 @@ body {
 
   .hero_box__schedule_title {
     position: relative;
-    font-size: 26px;
     margin-bottom: 5px;
+
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .hero_box__schedule_time {
     position: relative;
-    font-weight: 500;
-    padding-bottom: 12px;
+    padding-bottom: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
   }
 
   .hero_box__schedule_info_w {
-    padding-bottom: 6px;
-    border-bottom: 1px solid $color_text;
+    //padding-bottom: 6px;
+    //border-bottom: 1px solid $color_text;
   }
 
   .hero_box__schedule_info {
     display: inline-block;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
+
+    font-weight: 400;
+    line-height: 1.2;
 
     &:nth-child(1) {
       margin-right: 15px;
     }
 
+    //&:last-child {
+    //  margin-top: 2px;
+    //}
+
     img {
+      width: 25px;
+      max-height: 25px;
       margin-right: 5px;
     }
   }
