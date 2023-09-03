@@ -9,7 +9,7 @@
 <!--    <link rel="stylesheet" href="--><?php //echo get_template_directory_uri(); ?><!--/font-awesome/css/all.min.css">-->
       <title><?php if(is_front_page()){the_title();}else{wp_title();} ?></title>
     <?php wp_head() ?>
-	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/font.css">
+
 	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/style.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/general.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">

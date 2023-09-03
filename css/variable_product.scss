@@ -2,7 +2,7 @@ body {
   --width-scrollbar: 0;
 
   position: relative;
-  color: $color_text;
+  color: var(--color_white);
 
   &:before {
     position: fixed;
@@ -121,17 +121,17 @@ body {
 
       &.current-menu-item a,
       &.current_page_item a {
-        color: $accent_color;
+        color: var(--accent_color);
       }
 
       a {
         padding: 0;
         font-size: 22px;
-        font-weight: bold;
+        font-weight: 600;
         color: inherit;
 
         &:hover {
-          color: $accent_color;
+          color: var(--accent_color);
         }
 
         @media (max-width: 1270px) {
@@ -152,13 +152,13 @@ body {
 
 .navbar-menu {
   .menu-item {
-    color: $color_text;
+    color: var(--color_white);
     a {
       color: inherit;
     }
 
     &.current-menu-item {
-      color: $accent_color;
+      color: var(--accent_color);
     }
   }
 
@@ -173,7 +173,7 @@ body {
 .navbar-shop-buttons {
   a {
     &:hover {
-      color: $accent_color;
+      color: var(--accent_color);
     }
   }
 
@@ -250,7 +250,7 @@ body {
     min-height: 64px;
 
     .right-copy a {
-      color: $accent_color;
+      color: var(--accent_color);
     }
 
     .payment_methods__list {
@@ -291,7 +291,7 @@ body {
 .hero_box {
   $height_slider: 196px;
 
-  padding: 41px 0 45px 0;
+  padding: 41px 0 30px 0;
 
   .hero_box__slider {
     padding-right: 18px;
@@ -382,9 +382,9 @@ body {
   font-size: 16px;
   font-weight: 500;
 
-  color: $color_text2;
+  color: var(--color_black);
   border-radius: 10px;
-  background: $accent_color url("../images/bg_decor_2.svg") top left ;
+  background: var(--accent_color) url("../images/bg_decor_2.svg") top left ;
   &:before {
     content: '';
     position: absolute;
@@ -392,7 +392,7 @@ body {
 
     border-radius: 10px;
     background: rgb(30,29,26);
-    background: linear-gradient(136deg, rgba($accent_color, 0.3) -20%, $accent_color 90%);
+    background: linear-gradient(136deg, rgba(#FCB326, 0.3) -20%, #FCB326 90%);
   }
 
   .hero_box__schedule_title {
@@ -414,7 +414,7 @@ body {
 
   .hero_box__schedule_info_w {
     //padding-bottom: 6px;
-    //border-bottom: 1px solid $color_text;
+    //border-bottom: 1px solid var(--color_white);
   }
 
   .hero_box__schedule_info {
@@ -481,7 +481,6 @@ body {
   .header {
     height: 60px;
     padding: 0 18px;
-    background-color: #1E1D1A;
     box-shadow: none;
 
     .container {
@@ -534,7 +533,7 @@ body {
           left: 0;
           transform: translateY(-50%);
           margin-top: 4px !important;
-          color: $accent_color;
+          color: var(--accent_color);
 
           &:before {
             content: '';
@@ -586,7 +585,7 @@ body {
     margin: 0;
 
     svg path {
-      fill: $color_text;
+      fill: var(--color_white);
     }
   }
 
@@ -616,7 +615,7 @@ body {
       padding: 24px;
 
       border-radius: 10px;
-      border: 1px solid $color_text;
+      border: 1px solid var(--color_white);
       background: #1E1D1A url("../images/bg_decor_strokes.svg") top left ;
       &:before {
         content: '';
@@ -667,14 +666,14 @@ body {
         text-align: center;
         font-size: 16px;
         font-weight: 500;
-        color: $accent_color;
+        color: var(--accent_color);
 
         span {
           margin-right: 10px;
         }
 
         svg path {
-          fill: $accent_color;
+          fill: var(--accent_color);
         }
       }
 
@@ -725,7 +724,7 @@ body {
           font-size: 12px;
           line-height: 1.5;
           text-align: center;
-          color: $color_text;
+          color: var(--color_white);
 
           &:not(:last-child) {
             margin-right: 43px;

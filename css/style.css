@@ -3,24 +3,15 @@ html {
     scroll-behavior: smooth;
 }
 
+
 body {
-    --accent_color: #FCB326;
-    --accent_color_2: #FCB326;
-    --button_hover_color: #FCB326;
-    --button_hover_color_2: #ffce72;
-    --color_white: #ffffff;
-    --color_black: #000000;
-    --color_gray: #a09f9f;
-    --color_gray_2: #d7d7d7;
-    --bg-color-button: var(--accent_color);
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
 
     color: var(--color_white);
     background-color: var(--color_black);
-    font-family: Navigo, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
 }
-
 img {
     max-width: 100%;
     height: auto;
@@ -159,7 +150,7 @@ textarea {
     -moz-box-sizing: border-box;
     font-size: 1em;
     box-sizing: border-box;
-    font-family: 'Lato', sans-serif;
+    font-family: var(--font-family);
 }
 
 strong {
@@ -168,7 +159,7 @@ strong {
 
 input[type="submit"] {
     cursor: pointer;
-    font-family: 'Lato', sans-serif;
+    font-family: var(--font-family);
     background: var(--accent_color);
     color: var(--color_white);
     border-radius: 10px;
@@ -311,7 +302,7 @@ hr {
 .button:hover, .woocommerce a.button:hover, .right-product-content .button-woo:hover, .woocommerce #respond input#submit:hover, .woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover, .woocommerce a.button.alt:hover, .woocommerce button.button.alt:hover, .woocommerce input.button.alt:hover {
     color: var(--color_white);
     border: 1px solid var(--color_white);
-    background-color: var(--bg-color-button);
+    background-color: var(--accent_color);
 }
 
 .border-button {
@@ -397,7 +388,7 @@ textarea.standard-textarea {
 }
 
 .txt-content a {
-    color: var(--bg-color-button);
+    color: var(--accent_color);
 }
 
 .txt-center {
@@ -468,7 +459,7 @@ textarea.standard-textarea {
 }
 
 .show-all {
-    color: var(--bg-color-button);
+    color: var(--accent_color);
     font-size: 20px;
     font-weight: 700;
     display: block;
@@ -718,7 +709,7 @@ img.floating {
 }
 
 .bckg-red {
-    background-color: var(--bg-color-button);
+    background-color: var(--accent_color);
 }
 
 .bckg-black {
@@ -1174,12 +1165,12 @@ img.floating {
 }
 
 .button2:after {
-    background: var(--button_hover_color_2);
+    background: #ffce72;
 }
 
 .button2:before {
     transform: none;
-    background: var(--accent_color_2);
+    background: var(--accent_color);
 }
 
 .button2 {
@@ -1293,7 +1284,7 @@ img.floating {
     top: 0;
     bottom: 0;
     right: 0;
-    background: var(--button_hover_color);
+    background: #FCB326;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1320,7 +1311,7 @@ img.floating {
 /*.product-footer .button.add_to_cart_button:hover,*/
 .product-footer .button.add_to_cart_button.added {
     color: var(--color_black);
-    background: var(--button_hover_color);
+    background: #FCB326;
     border-color: transparent;
 }
 
