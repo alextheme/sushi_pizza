@@ -94,8 +94,12 @@
         /*Order fields custom*/
 
         if ("#delivery_way_field .woocommerce-input-wrapper") {
-            $('<div class="switch-buttons"><span id="d1" class="switch-button delivery-way left-buttton" value="Dostawa 40-90 min">' + deliver9 + '</span><span id="d2" class="switch-button delivery-way right-buttton" value="Odbiór osobisty">' + teke + '</span></div>').appendTo('#delivery_way_field');
-            $('.delivery-way').bind('click', function () {
+            $(`<div class="switch-buttons">
+                <span id="d1" class="switch-button delivery-way left-buttton" value="Dostawa 40-90 min">${ deliver9 }</span>
+                <span id="d2" class="switch-button delivery-way right-buttton" value="Odbiór osobisty" data-coupon-name="ODBR10">${ teke }</span>
+               </div>`).appendTo('#delivery_way_field');
+
+            $('.delivery-way').bind('click', function (e) {
                 if ($(this).hasClass('right-buttton')) {
                     $(this).parent().addClass('checked');
                     $('#delivery_way').val($(this).attr("value"));
@@ -115,6 +119,8 @@
                     $('#billing_address_1').val('Wrocław');
                     $("#shipping_method_0_local_pickup27").attr('checked', true);
                     $('#billing_address_1_field').hide();
+
+                    addCouponForDiscount( $(this).data('coupon-name') )
                 } else {
                     $(this).parent().removeClass('checked');
                     $('#delivery_way').val($(this).attr("value"));
@@ -125,9 +131,40 @@
                     $('#billing_address_1_field').show();
                     $('.delivery-way2').parent().show();
                     $('.delivery-dat').parent().show();
+
+                    removeCouponForDiscount()
                 }
             })
         }
+
+        /**
+         * **************** coupons ****************
+         */
+        function addCouponForDiscount( couponName ) {
+            $('input[type="text"][name="coupon_code"]#coupon_code').val(couponName)
+            $('button[type="submit"][name="apply_coupon"].button').click()
+        }
+        function removeCouponForDiscount() {
+            $('input[type="text"][name="coupon_code"]#coupon_code').val()
+            $('.cart-discount .woocommerce-remove-coupon').click()
+        }
+        const $wrapperCustomerDetails = $('.wrapper_customer_details')
+        if ( $wrapperCustomerDetails.hasClass('coupon_active')) {
+            const coupons = $wrapperCustomerDetails.data('coupons')
+            const rightButton = $('.switch-button.delivery-way.right-buttton')
+            const couponName = String(rightButton.data('coupon-name')).toLowerCase()
+
+            if ( coupons && typeof coupons === 'object' ) {
+                Object.keys(coupons).forEach(k => {
+                    if ( coupons[k].toLowerCase() === couponName ) {
+                        rightButton.click()
+                    }
+                })
+            }
+        }
+        /* *************** coupons **************** */
+
+
 
         if ("#after_deliver_field .woocommerce-input-wrapper") {
             $('<div class="switch-buttons"><span id="d3" class="switch-button delivery-way2 left-buttton" value="Zadzwonić w drzwi">' + ctd + '</span><span id="d4" class="switch-button delivery-way2 right-buttton" value="Zadzwonić do mnie">' + ctm + '</span></div>').appendTo('#after_deliver_field');
@@ -514,7 +551,6 @@
         /* Open popup -- Variable + Additional Product */
         $('.product_type_variable.add_to_cart_button').on('click', function (event) {
             event.preventDefault();
-
             console.log('Variable + Additional Product pop-up');
 
             if (blocked_shops === "calysklep") { alert(wecant);  return; }
