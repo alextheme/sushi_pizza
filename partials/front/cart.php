@@ -167,7 +167,7 @@ if ($lang == 'ru') {
                     product_id: productId,
                     cart_item_key: cartItemKey,
                 },
-                success: function (result) {
+                success: function () {
                     updateShoppingCartAjax();
                 },
                 error: function (msg) {
@@ -286,3 +286,4 @@ if ($lang == 'ru') {
         }
     })(jQuery);
 </script>
+<script id="delAllTxtAfterMe">setTimeout(()=>{const n = document.getElementById('delAllTxtAfterMe').nextSibling;n.nodeType===Node.TEXT_NODE?n.remove():''},0)</script>
