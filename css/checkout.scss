@@ -1,3 +1,9 @@
+// Form
+form.checkout.woocommerce-checkout {
+  padding-bottom: 50px;
+}
+
+// Coupon messages
 .woocommerce {
   .woocommerce-form-coupon-toggle {}
   .woocommerce-message,
@@ -5,3 +11,9 @@
     display: none;
   }
 }
+
+// Button remove coupon
+.woocommerce-remove-coupon {
+  display: none;
+}
+

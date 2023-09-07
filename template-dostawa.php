@@ -1,8 +1,7 @@
 <?php
-	get_header();
-	/* Template Name: Dostawa */
+/* Template Name: Dostawa */
 
-$google_map_key = $_ENV['GOOGLE_MAP_KEY'];
+get_header();
 ?>
 
 <div class="lg100 page-blackcontent offset-header offset-bottom">
@@ -13,17 +12,9 @@ $google_map_key = $_ENV['GOOGLE_MAP_KEY'];
 		</section>
 	</div>
 	<div class="row maps">
-		<span class="zawalnaspan">Miasto Lubin</span>
-		<div class="lg100 map zawalna" id="mapz">
-			
-		</div>
+		<div class="lg100 map zawalna" id="mapz"></div>
 	</div>
 </div>
 </div>
 
-
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo esc_attr($google_map_key)?>&v=weekly" defer></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script src="/wp-content/themes/americansushi/js/maps.js"></script>
-
-<?php get_footer();?>   
+<?php get_footer();?>

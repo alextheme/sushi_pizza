@@ -96,10 +96,25 @@ $attributes = $product->get_variation_attributes();
 <!-- Checkboxes ( Ingredients )                 -->
                         <?php
 
-                        $cat_arr_slugs = ['dodatki'];
+                        /*
+                         * Choice of product options. Additional Products or Ingredients
+                         */
+                        $option_additional_products = get_field('additional_or_ingredients', $product_id);
+                        $ignore_categories = ['dodatki', 'skladniki'];
+
+                        if ( $option_additional_products === 'Dodatki' ) { // option from ACF field
+                            $cat_arr_slugs = ['dodatki']; // slug from categories products
+                        }
+                        if ( $option_additional_products === 'Składniki' ) { // option from ACF field
+                            $cat_arr_slugs = ['skladniki']; // slug from categories products
+                        }
+
+
 
                         // let's put all simple products in one array
                         $categories_with_products = array();
+
+
 
                         foreach ($cat_arr_slugs as $cat_slug) {
                             $category = get_term_by('slug', $cat_slug, 'product_cat');
@@ -107,6 +122,7 @@ $attributes = $product->get_variation_attributes();
                                 'category_name' => $category->name
                             );
                         }
+
 
                         $additional = new WP_Query(array(
                             'post_type' => 'product',
@@ -148,7 +164,6 @@ $attributes = $product->get_variation_attributes();
                             <?php endwhile; ?>
                         <?php endif; ?>
                         <?php wp_reset_postdata(); ?>
-
 
 
 
@@ -213,12 +228,14 @@ $attributes = $product->get_variation_attributes();
                         $args = array(
                             'taxonomy' => 'product_cat', // WooCommerce product category taxonomy
                             'hide_empty' => false,       // Show empty categories as well
+                            'orderby' => 'name',         // Sort by name
+                            'order' => 'ASC'             // Sort Order (Ascending)
                         );
                         $categories = get_terms($args); ?>
 
                         <?php foreach ($categories as $category) { ?>
 
-                            <?php if( in_array( $category->slug, $cat_arr_slugs ) ) { continue; } ?>
+                            <?php if( in_array( $category->slug, $ignore_categories ) ) { continue; } ?>
 
                             <?php
                             $args = array(
@@ -227,9 +244,9 @@ $attributes = $product->get_variation_attributes();
                                 'tax_query' => array(
                                     'relation' => 'AND',
                                     array(
-                                        'taxonomy' => 'product_cat', // Таксономія категорій товарів
-                                        'field' => 'term_id', // Поле для порівняння (може бути 'id', 'slug', 'name' тощо)
-                                        'terms' => $category->term_id, // ID категорії, яку ви хочете вибрати
+                                        'taxonomy' => 'product_cat',    // Taxonomy of product categories
+                                        'field' => 'term_id',           // Field to compare (can be 'id', 'slug', 'name', etc.)
+                                        'terms' => $category->term_id,  // The ID of the category you want to select
                                     ),
                                     array(
                                         'taxonomy' => 'product_type',
@@ -350,7 +367,7 @@ $attributes = $product->get_variation_attributes();
                 new Accordion(accordions, {
                     duration: 300,
                     showMultiple: true,
-                    openOnInit: [0, 1, 2, 6],//[...Array(accordions[0].childElementCount).keys()],
+                    openOnInit: [0],// [...Array(accordions[0].childElementCount).keys()],
                     onOpen: function (currentElement) {
                         console.log(currentElement);
                     }

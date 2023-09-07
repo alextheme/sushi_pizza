@@ -2,7 +2,7 @@
 if(!defined('DS_THEME')) {
 	define('DS_THEME', get_theme_root().'/'.get_template().'/');
 }
-
+global $sushi_pizza_option;
 require_once DS_THEME.'libs/utils.php';
 require_once DS_THEME.'libs/posttypes.php';
 
@@ -22,6 +22,20 @@ function mojeStyleiSkrypty() {
 	wp_enqueue_script('accordion-js', get_template_directory_uri() . '/libs/accordion_js/accordion.min.js', array('jquery'), null, true);
 
 	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/js/scripts.js', array ( 'jquery' ), 1.1, true);
+
+    wp_register_script( 'map_scripts', get_template_directory_uri() . '/js/maps.js', array ( 'jquery' ), 1.1, true);
+    wp_register_script( 'google_map_js', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $sushi_pizza_option['map_settings_key'] ) . '&v=weekly&libraries=places&callback=initMap', array ( 'jquery' ), 1.1, true);
+    wp_register_script( 'polyfill', 'https://polyfill.io/v3/polyfill.js?features=es5,es6,es7&flags=gated', array ( 'jquery' ), 1.1, true);
+
+    // Page is Checkout (pl, ru, ua), Dostava (pl, ru, ua)
+    if (is_page(27) || is_page(269) || is_page(271)
+        || is_page(102) || is_page(205) || is_page(207)) {
+
+        wp_enqueue_script('map_scripts');
+        wp_enqueue_script('google_map_js');
+        wp_enqueue_script('polyfill');
+
+    }
 }
 function mojeStyleiSkryptyAdmin() {
 	if (is_admin()) {
@@ -422,15 +436,17 @@ require_once get_template_directory() . '/inc/tgm/options.php';
 /**
  * Redux Option Include
  */
-if ( class_exists( 'ReduxFramework' ) && file_exists( dirname( __FILE__ ) . '/inc/redux_framework/options.php' ) ) {
-	require_once get_template_directory() . '/inc/redux_framework/options.php';
-	add_filter( 'woodmart_redux_settings', '__return_false' );
-}
+require_once get_template_directory() . '/inc/redux_framework/redux_options.php';
 
 /**
  * AJAX
  */
 require_once get_template_directory() . '/inc/ajax/ajax.php';
+
+/**
+ * THEME SETTINGS
+ */
+require_once get_template_directory() . '/inc/theme_settings/system.php';
 
 
 

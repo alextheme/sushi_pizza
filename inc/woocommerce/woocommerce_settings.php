@@ -309,12 +309,6 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
 
 
 
-    /*Movr button*/
-//    remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
-//    add_action( 'woocommerce_review_order_after_order_total_coupon', 'woocommerce_checkout_coupon_form', 10 );
-
-
-
     add_filter( 'woocommerce_checkout_get_value', 'bks_remove_values', 10, 2 );
     function bks_remove_values( $value, $input ) {
         $item_to_set_null = array(
@@ -367,8 +361,18 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
 
 
     /**
-     * Coupon info
+     * Checkout page
+     * - Coupon info
      */
+    add_action( 'woocommerce_before_checkout_form', 'add_button_back_to_menu' );
+    function add_button_back_to_menu( $checkout ) {
+        ?>
+            <div class="lg100 p-top-30 d-flex p-bottom-30 breadcrumbs">
+                <a class="button d-flex align-center" href="<?php echo esc_url( home_url('/') ); ?>"><img src="<?php echo esc_url( get_template_directory() . '/images/icons/Group-33.svg' ); ?>" alt=""><?php echo pll__( 'Wróć do menu' ); ?></a>
+            </div>
+        <?php
+    }
+
     add_action('woocommerce_checkout_before_customer_details', 'check_for_coupon');
     function check_for_coupon() {
         // Перевірка, чи був введений купон на сторінці оформлення замовлення
@@ -379,17 +383,24 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
             // Info coupons
             foreach ($coupons as $coupon_code) {
                 $coupon = new WC_Coupon($coupon_code);
-            }
+            } ?>
 
-            echo '<div data-coupons=\'' . wp_json_encode( $coupons ) .
-                '\' class="wrapper_customer_details coupon_active">';
+            <div class="wrapper_customer_details coupon_active" data-coupons="<?php wp_json_encode( $coupons ) ?>">
 
-        } else {
-            echo '<div data-coupons="" class="wrapper_customer_details">';
-        }
-    }
+        <?php } else { ?>
+
+            <div data-coupons="" class="wrapper_customer_details">
+
+        <?php } ?>
+
+        <div class="row row-margin">
+
+    <?php }
     add_action( 'woocommerce_checkout_after_customer_details', function () {
-        echo '</div>';
+        echo '</div></div>';
+    });
+    add_action( 'woocommerce_checkout_after_order_review', function () {
+        echo '<span id="address-filled">Filled</span>';
     });
 
 
@@ -398,57 +409,4 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
 
 
 
-
-
-
-
-
-
 }
-
-//add_action( 'woocommerce_checkout_before_customer_details', function () {
-//    // Отримайте список купонів, які застосовані до кошика
-//    $applied_coupons = WC()->cart->get_applied_coupons();
-//
-//    // Перевірте, чи масив купонів не пустий
-//    $is_coupons = !empty($applied_coupons);
-//
-//
-//    if ($is_coupons) {
-//        echo '<div class="wrapper_customer_details shipping" style="background: rgba(255,255,255,10%)" data-shipping="1">';
-//
-//        // Отримайте список купонів, застосованих до кошика
-//        $applied_coupons = WC()->cart->get_applied_coupons();
-//
-//        // Отримайте дані про кожен застосований купон
-//        foreach ($applied_coupons as $coupon_code) {
-//            // Отримайте об'єкт купона за його кодом
-//            $coupon = new WC_Coupon($coupon_code);
-//
-//            // Отримайте назву купона
-//            $coupon_name = $coupon->get_code();
-//
-//            // Отримайте дату додавання купона
-//            $coupon_date_added = $coupon->get_date_created();
-//
-//            // Отримайте строк дії купона
-//            $coupon_expiration_date = $coupon->get_date_expires();
-//
-//            // Вивести інформацію про купон
-//            echo 'Назва купона: ' . $coupon_name . '<br>';
-//            echo 'Дата додавання купона: ' . $coupon_date_added . '<br>';
-//            echo 'Термін дії купона: ' . $coupon_expiration_date . '<br>';
-//        }
-//    } else {
-//        echo '<div class="wrapper_customer_details" data-shipping="0">';
-//        echo 'Купон не був застосований.';
-//    }
-//
-//
-//});
-//
-//add_action( 'woocommerce_checkout_after_customer_details', function () {
-//   echo '</div>';
-//});
-
-

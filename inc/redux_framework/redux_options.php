@@ -1,4 +1,10 @@
 <?php
+
+if ( ! class_exists( 'ReduxFramework' ) ) {
+    return -1;
+}
+add_filter( 'woodmart_redux_settings', '__return_false' );
+
 /**
  * ReduxFramework Sample Config File
  * For full documentation, please visit: http://devs.redux.io/
@@ -365,27 +371,37 @@ Redux::set_section( $opt_name, array(
     )
 );
 
-//// HERO
-//Redux::set_section( $opt_name, array(
-//        'title'            => esc_html__( 'Hero', 'sushi_pizza' ),
-//        'id'               => 'header-hero',
-//        'subsection'       => true,
-//        'desc'             => esc_html__( '', 'sushi_pizza' ),
-//        'fields' => array(
-//            array(
-//                'id'       => 'header_hero_slide',
-//                'type'     => 'slides',
-//                'title'    => esc_html__( 'Hero Slide', 'sushi_pizza' ),
-//                'desc'     => esc_html__( 'Upload Images for hero section', 'sushi_pizza' ),
-//                'placeholder' => array(
-//                    'title'       => esc_html__('This is a title', 'sushi_pizza'),
-//                    'description' => esc_html__('Description Here', 'sushi_pizza'),
-//                    'url'         => esc_html__('Give us a link!', 'sushi_pizza'),
-//                ),
-//            ),
-//        )
-//    )
-//);
+// MAP
+Redux::set_section( $opt_name, array(
+        'title'            => esc_html__( 'Map', 'sushi_pizza' ),
+        'id'               => 'map_settings',
+        'subsection'       => true,
+        'desc'             => esc_html__( '', 'sushi_pizza' ),
+        'fields' => array(
+            array(
+                'id'       => 'map_settings_key',
+                'type'     => 'text',
+                'desc'    => esc_html__( 'key google map', 'sushi_pizza' ),
+            ),
+        )
+    )
+);
+
+// COUPONS
+Redux::set_section( $opt_name, array(
+        'title'            => esc_html__( 'Coupons', 'sushi_pizza' ),
+        'id'               => 'coupons',
+        'subsection'       => true,
+        'desc'             => esc_html__( '', 'sushi_pizza' ),
+        'fields' => array(
+            array(
+                'id'       => 'self_pickup_discount_coupon',
+                'type'     => 'text',
+                'desc'    => esc_html__( 'Coupon for a discount for an order that the customer picks up himself (the validity of the coupon is configured in the WooCommerce admin panel)', 'sushi_pizza' ),
+            ),
+        )
+    )
+);
 
 // FOOTER
 Redux::set_section( $opt_name, array(

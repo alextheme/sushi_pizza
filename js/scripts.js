@@ -138,8 +138,10 @@
         }
 
         /**
-         * **************** coupons ****************
+         * **************** coupons olbor ****************
          */
+        const coupon = $('#customer_details').data('self-pickup-discount-coupon')
+
         function addCouponForDiscount( couponName ) {
             $('input[type="text"][name="coupon_code"]#coupon_code').val(couponName)
             $('button[type="submit"][name="apply_coupon"].button').click()
@@ -152,7 +154,7 @@
         if ( $wrapperCustomerDetails.hasClass('coupon_active')) {
             const coupons = $wrapperCustomerDetails.data('coupons')
             const rightButton = $('.switch-button.delivery-way.right-buttton')
-            const couponName = String(rightButton.data('coupon-name')).toLowerCase()
+            const couponName = String(coupon).toLowerCase()
 
             if ( coupons && typeof coupons === 'object' ) {
                 Object.keys(coupons).forEach(k => {
@@ -503,48 +505,47 @@
         /* Open popup -- Variable Product */
         /* Open popup -- Variable Product */
         /* Open popup -- Variable Product */
-        $('.product_type_variable.add_to_cart_button').on('click', function (event) {
-            console.log('variable pop-up (return)');
-            return;
-
-            event.preventDefault();
-
-            if (blocked_shops === "calysklep") { alert(wecant);  return; }
-
-            let productId = $(this).attr('data-product_id');
-
-            // Get Popup for select variant product
-            $.ajax({
-                // url: wc_add_to_cart_params.ajax_url,
-                url: ajax_data.ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'o10_show_popup_select_variable_product',
-                    nonce: ajax_data.nonce,
-                    lang: Cookies.get('pll_language'),
-                    productId: productId,
-                },
-                success: function (result) {
-                    $('#before-checkout').html(result);
-                },
-                error: function (msg) {
-                    console.log(msg)
-                },
-                beforeSend: function () {
-                    $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
-                    $('body')
-                        .css({ paddingRight: `${window.innerWidth - document.body.offsetWidth}px` })
-                        .addClass('body--preloader_show');
-                },
-                complete: function (response) {
-                    if ( response.responseJSON?.error ) {
-                        $('body')
-                            .css({ paddingRight: '0px' })
-                            .removeClass('body--preloader_show');
-                    }
-                }
-            })
-        });
+        // $('.product_type_variable.add_to_cart_button').on('click', function (event) {
+        //     console.log('variable pop-up');
+        //     event.preventDefault();
+        //
+        //
+        //     if (blocked_shops === "calysklep") { alert(wecant);  return; }
+        //
+        //     let productId = $(this).attr('data-product_id');
+        //
+        //     // Get Popup for select variant product
+        //     $.ajax({
+        //         // url: wc_add_to_cart_params.ajax_url,
+        //         url: ajax_data.ajaxUrl,
+        //         type: 'POST',
+        //         data: {
+        //             action: 'o10_show_popup_select_variable_product',
+        //             nonce: ajax_data.nonce,
+        //             lang: Cookies.get('pll_language'),
+        //             productId: productId,
+        //         },
+        //         success: function (result) {
+        //             $('#before-checkout').html(result);
+        //         },
+        //         error: function (msg) {
+        //             console.log(msg)
+        //         },
+        //         beforeSend: function () {
+        //             $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+        //             $('body')
+        //                 .css({ paddingRight: `${window.innerWidth - document.body.offsetWidth}px` })
+        //                 .addClass('body--preloader_show');
+        //         },
+        //         complete: function (response) {
+        //             if ( response.responseJSON?.error ) {
+        //                 $('body')
+        //                     .css({ paddingRight: '0px' })
+        //                     .removeClass('body--preloader_show');
+        //             }
+        //         }
+        //     })
+        // });
 
         /* Open popup -- Variable + Additional Product */
         /* Open popup -- Variable + Additional Product */
