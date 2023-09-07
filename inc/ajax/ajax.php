@@ -42,7 +42,7 @@ add_action('wp_ajax_o10_before_checkout', 'o10_before_checkout');
 add_action('wp_ajax_nopriv_o10_before_checkout', 'o10_before_checkout');
 
 /**
- * PIZZA - variable product
+ * SUSHI - variable product
  * Show a pop-up window before adding the product
  * to the cart to select one of the options
  */
@@ -74,7 +74,7 @@ add_action('wp_ajax_o10_show_popup_select_variable_product', 'o10_show_popup_sel
 add_action('wp_ajax_nopriv_o10_show_popup_select_variable_product', 'o10_show_popup_select_variable_product');
 
 /**
- * SUSHI - variable product
+ * PIZZA - variable + additional products
  * Show a pop-up window before adding a product to the cart
  * to select a product variant along with additional products
  */
