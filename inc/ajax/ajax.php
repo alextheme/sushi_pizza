@@ -171,16 +171,32 @@ add_action('wp_ajax_o10_add_products_to_cart', 'o10_add_products_to_cart');
 add_action('wp_ajax_nopriv_o10_add_products_to_cart', 'o10_add_products_to_cart');
 function o10_add_products_to_cart() {
     if(isset($_POST['products']) && is_array($_POST['products'])) {
+
+//        print_pre( $_POST['products'] );
+
         foreach($_POST['products'] as $product) {
             $product_id = absint( $product['product_id'] );
             $quantity = absint( $product['quantity'] );
             $variation_id = absint( $product['variation_id'] );
+            $components = $product['components'];
+            $products = $product['products'];
+
+            $info_components = build_coment( $components );
+            $info_products = build_coment( $products );
+
+            $cart_item_data = array(
+                'components' => $info_components,
+                'products' => $info_products,
+            );
+
+            $cart_item_data['size'] = array('size'=>'test size 1');
 
             if($variation_id) {
-                WC()->cart->add_to_cart($product_id, $quantity, $variation_id);
+                WC()->cart->add_to_cart($product_id, $quantity, $variation_id, array(), $cart_item_data);
             } else {
-                WC()->cart->add_to_cart($product_id, $quantity);
+                WC()->cart->add_to_cart($product_id, $quantity, 0, array(), $cart_item_data);
             }
+
         }
 
         // Відповідь AJAX запиту
@@ -191,3 +207,33 @@ function o10_add_products_to_cart() {
 
     wp_die();
 }
+
+function build_coment( $products ) {
+    if ( ! $products ) return '';
+
+    $info_products = '<ul class="info_products__list">';
+
+    foreach ($products as $products_arr) {
+        $product = wc_get_product( $products_arr['product_id'] );
+
+        $info_products .= '<li class="info_products__item">';
+        $info_products .= '<a class="info_products__link" href="'. get_permalink( $product->get_id() ) .'">';
+        $info_products .= '<span class="info_products__title">'. $product->get_title() .'</span>';
+        $info_products .= '</a>';
+        $info_products .= '<span class="info_products__qty"> × '. $products_arr['quantity'] .'</span>';
+        $info_products .= '</li>';
+    }
+
+    $info_products .= '</ul>';
+
+    return $info_products;
+}
+
+
+//// todo temp olbor
+//add_action('wp_ajax_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
+//add_action('wp_ajax_nopriv_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
+//function o10_remove_items_from_cart() {
+//    WC()->cart->empty_cart();
+//    return 'cart empty';
+//}

@@ -1826,4 +1826,64 @@ form.checkout.woocommerce-checkout {
   color: var(--accent_color);
 }
 
+.woocommerce-order p {
+  display: inline;
+}
+
+@media screen and (max-width: 375px) {
+  .woocommerce table.shop_table {
+    margin-left: -15px;
+    width: 104%;
+  }
+}
+@media screen and (max-width: 550px) {
+  .woocommerce table.shop_table td.product-name {
+    flex-direction: column;
+  }
+}
+
+.woocommerce-table__line-item.order_item ul {
+  list-style: none;
+}
+.woocommerce-table__line-item.order_item .woocommerce-table__product-name.product-name .product-quantity {
+  margin: 0 10px 0 5px;
+}
+@media screen and (min-width: 549px) {
+  .woocommerce-table__line-item.order_item .woocommerce-table__product-name.product-name .wc-item-meta {
+    padding: 0 0 0 10px;
+    -webkit-box-shadow: -1px 0 0 0 rgba(255, 255, 255, 0.3);
+    -moz-box-shadow: -1px 0 0 0 rgba(255, 255, 255, 0.3);
+    box-shadow: -1px 0 0 0 rgba(255, 255, 255, 0.3);
+  }
+}
+@media screen and (max-width: 550px) {
+  .woocommerce-table__line-item.order_item .woocommerce-table__product-name.product-name .wc-item-meta {
+    width: 100%;
+    padding: 10px 10px 0 10px;
+    margin: 10px 0 0 0;
+    -webkit-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.3);
+    -moz-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.3);
+  }
+}
+.woocommerce-table__line-item.order_item .woocommerce-table__product-name.product-name .wc-item-meta li p {
+  color: var(--accent_color);
+}
+.woocommerce-table__line-item.order_item .woocommerce-table__product-name.product-name .wc-item-meta li .info_products__list .info_products__item {
+  width: max-content;
+  margin-left: 10px;
+}
+.woocommerce-table__line-item.order_item .woocommerce-table__product-total.product-total {
+  width: 18%;
+  padding: 10px !important;
+}
+@media screen and (max-width: 549px) {
+  .woocommerce-table__line-item.order_item .woocommerce-table__product-total.product-total {
+    padding: 0 0 0 10px;
+    -webkit-box-shadow: -1px 0 0 0 rgba(255, 255, 255, 0.3);
+    -moz-box-shadow: -1px 0 0 0 rgba(255, 255, 255, 0.3);
+    box-shadow: -1px 0 0 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
 /*# sourceMappingURL=general.css.map */

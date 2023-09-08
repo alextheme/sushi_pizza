@@ -7,17 +7,24 @@ switch ($lang) {
     case 'ua':
         $button_text = 'Купую!';
         $title_text = 'Обери складові';
+        $dodatki_title = 'Додатки';
+        $skladniki_title = 'Інгредієнти';
         break;
     case 'ru':
         $button_text = 'Покупаю!';
         $title_text = 'Выбери состав';
+        $dodatki_title = 'Дополнения';
+        $skladniki_title = 'Ингредиенты';
         break;
 
     default:
         $button_text = 'Kupuję!';
         $title_text = 'Wybierz skŁadnik';
+        $dodatki_title = 'Dodatki';
+        $skladniki_title = 'Skladniki';
 
 }
+
 
 $product = wc_get_product($product_id);
 $available_variations = $product->get_available_variations();
@@ -54,7 +61,7 @@ $attributes = $product->get_variation_attributes();
 
                     <ul class="variable_product__list accordion_box">
 
-                        <!-- Radio buttons ( Variants )                -->
+<!-- Radio buttons ( Variants ) -->
                         <?php foreach ($attributes as $attribute_name => $options) : ?>
                             <?php $attribute_label = wc_attribute_label($attribute_name); ?>
 
@@ -93,129 +100,51 @@ $attributes = $product->get_variation_attributes();
 
                         <?php endforeach; ?>
 
-<!-- Checkboxes ( Ingredients )                 -->
+<!-- Checkboxes ( Additional / Ingredients ) -->
                         <?php
 
-                        /*
-                         * Choice of product options. Additional Products or Ingredients
-                         */
-                        $option_additional_products = get_field('additional_or_ingredients', $product_id);
-                        $ignore_categories = ['dodatki', 'skladniki'];
+                        $opt_prod = get_field('additional_or_ingredients', $product_id);
+                        $_title = $opt_prod === 'Dodatki' ? $dodatki_title : $skladniki_title;
 
-                        if ( $option_additional_products === 'Dodatki' ) { // option from ACF field
-                            $cat_arr_slugs = ['dodatki']; // slug from categories products
-                        }
-                        if ( $option_additional_products === 'Składniki' ) { // option from ACF field
-                            $cat_arr_slugs = ['skladniki']; // slug from categories products
-                        }
+                        $additional_ingredients = get_field('list_related_products', $product_id);
 
-
-
-                        // let's put all simple products in one array
-                        $categories_with_products = array();
-
-
-
-                        foreach ($cat_arr_slugs as $cat_slug) {
-                            $category = get_term_by('slug', $cat_slug, 'product_cat');
-                            $categories_with_products[$category->term_id] = array(
-                                'category_name' => $category->name
-                            );
-                        }
-
-
-                        $additional = new WP_Query(array(
-                            'post_type' => 'product',
-                            'posts_per_page' => -1,
-                            'orderby' => 'parent',
-                            'tax_query' => array(
-                                array(
-                                    'taxonomy' => 'product_cat',
-                                    'field' => 'term_id',
-                                    'terms' => array_keys($categories_with_products),
-                                ),
-                            ),
-                        ));
-
-                        if ($additional->have_posts()) :
-                            while ($additional->have_posts()) :
-                                $additional->the_post();
-                                global $product; ?>
-
-<!-- simple product      -->
-                                <?php
-                                if ($product->is_type('simple')) {
-                                    foreach ($product->category_ids as $category_id) {
-
-                                        // Если массив для данной категории ещё не создан, создайте его
-                                        if (!isset($categories_with_products[$category_id])) {
-                                            $categories_with_products[$category_id] = [];
-                                        }
-
-                                        // Добавьте продукт в массив данной категории
-                                        $categories_with_products[$category_id]['products'][] = array(
-                                            'product_id' => $product->get_id(),
-                                            'product_title' => $product->get_title(),
-                                        );
-                                    }
-                                } ?>
-
-
-                            <?php endwhile; ?>
-                        <?php endif; ?>
-                        <?php wp_reset_postdata(); ?>
-
-
-
-                        <?php foreach ($categories_with_products as $cat_id => $item) { ?>
-                            <?php if (!isset($item['products']) || !$item['category_name']) {
-                                continue;
-                            } ?>
+                        if ($additional_ingredients) { ?>
 
                             <li class="ac variable_product__item variable_product__item--checkbox simpleAdditionalComponents">
                                 <h4 class="ac-header">
-                                    <button type="button"
-                                            class="ac-trigger variable_product__attr_title"><?php echo esc_html($item['category_name']); ?></button>
-                                    <div class="variable_product__attr_title_icon">
-                                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M5.86603 7.5C5.48113 8.16667 4.51887 8.16667 4.13397 7.5L0.669874 1.5C0.284974 0.833333 0.7661 -8.94676e-07 1.5359 -8.27378e-07L8.4641 -2.21695e-07C9.2339 -1.54397e-07 9.71503 0.833333 9.33013 1.5L5.86603 7.5Z"
-                                                fill="#FCB326"/>
-                                        </svg>
-                                    </div>
+                                    <button type="button" class="ac-trigger variable_product__attr_title"><?php echo esc_html( $_title ); ?></button>
+                                    <div class="variable_product__attr_title_icon"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86603 7.5C5.48113 8.16667 4.51887 8.16667 4.13397 7.5L0.669874 1.5C0.284974 0.833333 0.7661 -8.94676e-07 1.5359 -8.27378e-07L8.4641 -2.21695e-07C9.2339 -1.54397e-07 9.71503 0.833333 9.33013 1.5L5.86603 7.5Z" fill="#FCB326"/></svg></div>
                                 </h4>
                                 <div class="ac-panel">
                                     <ul class="variable_product__terms">
 
-                                        <?php foreach ($item['products'] as $pr0duct) { ?>
+                            <?php
+                            foreach ($additional_ingredients as $ingredient) {
+                                // post_title
+                                // post_name (slug)
+                                // ID
+                                ?>
 
-                                            <li class="variable_product__term">
-                                                <?php $input_id = 'cat_' . $cat_id . '_prod_' . $pr0duct['product_id']; ?>
+                                <li class="variable_product__term">
 
-                                                <input type="checkbox"
-                                                       name="product_<?php echo esc_attr($cat_id); ?>"
-                                                       class="variable_product__input"
-                                                       id="<?php echo esc_attr($input_id); ?>"
-                                                       data-product_id="<?php echo esc_attr($pr0duct['product_id']); ?>"
-                                                >
-                                                <label class="variable_product__label"
-                                                       for="<?php echo esc_attr($input_id); ?>">
-                                                    <span class="variable_product__checkbox_icon">
-                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <rect class="rect_border" stroke="#FCB326" x="0.5" y="0.5" width="18"
-                                                  height="18" rx="3.5"/>
-                                            <path class="rect_checked" fill="#FCB326"
-                                                  d="M15.2585 5.36598C15.4929 5.60039 15.6245 5.91828 15.6245 6.24973C15.6245 6.58119 15.4929 6.89907 15.2585 7.13348L9.00853 13.3835C8.77412 13.6178 8.45623 13.7495 8.12478 13.7495C7.79332 13.7495 7.47544 13.6178 7.24103 13.3835L4.74103 10.8835C4.51333 10.6477 4.38734 10.332 4.39018 10.0042C4.39303 9.67649 4.52449 9.36297 4.75625 9.13121C4.98801 8.89945 5.30153 8.76799 5.62927 8.76514C5.95702 8.76229 6.27277 8.88829 6.50853 9.11598L8.12478 10.7322L13.491 5.36598C13.7254 5.13164 14.0433 5 14.3748 5C14.7062 5 15.0241 5.13164 15.2585 5.36598Z"/>
-                                        </svg>
-                                    </span>
-                                                    <span
-                                                        class="variable_product__item_title"><?php echo esc_html($pr0duct['product_title']); ?></span>
-                                                </label>
-                                            </li>
+                                    <input type="checkbox" class="variable_product__input"
+                                           id="inpt_<?php echo esc_attr($ingredient->ID); ?>"
+                                           data-product_id="<?php echo esc_attr($ingredient->ID); ?>"
+                                    >
+                                    <label class="variable_product__label" for="inpt_<?php echo esc_attr($ingredient->ID); ?>">
+                                        <span class="variable_product__checkbox_icon">
+                                            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect class="rect_border" stroke="#FCB326" x="0.5" y="0.5" width="18"
+                                                      height="18" rx="3.5"/>
+                                                <path class="rect_checked" fill="#FCB326"
+                                                      d="M15.2585 5.36598C15.4929 5.60039 15.6245 5.91828 15.6245 6.24973C15.6245 6.58119 15.4929 6.89907 15.2585 7.13348L9.00853 13.3835C8.77412 13.6178 8.45623 13.7495 8.12478 13.7495C7.79332 13.7495 7.47544 13.6178 7.24103 13.3835L4.74103 10.8835C4.51333 10.6477 4.38734 10.332 4.39018 10.0042C4.39303 9.67649 4.52449 9.36297 4.75625 9.13121C4.98801 8.89945 5.30153 8.76799 5.62927 8.76514C5.95702 8.76229 6.27277 8.88829 6.50853 9.11598L8.12478 10.7322L13.491 5.36598C13.7254 5.13164 14.0433 5 14.3748 5C14.7062 5 15.0241 5.13164 15.2585 5.36598Z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="variable_product__item_title"><?php echo esc_html($ingredient->post_title); ?></span>
+                                    </label>
+                                </li>
 
-                                        <?php } ?>
+                            <?php } ?>
                                     </ul>
                                 </div>
                             </li>
@@ -235,7 +164,8 @@ $attributes = $product->get_variation_attributes();
 
                         <?php foreach ($categories as $category) { ?>
 
-                            <?php if( in_array( $category->slug, $ignore_categories ) ) { continue; } ?>
+                            <?php // ignore categories
+                            // if( in_array( $category->slug, $ignore_categories ) ) { continue; } ?>
 
                             <?php
                             $args = array(
@@ -293,7 +223,6 @@ $attributes = $product->get_variation_attributes();
                                                         </button>
 
                                                         <input type="text" data-product_id="<?php echo esc_attr( $product->get_id() ); ?>"
-                                                               name="variable_product__product_quantity"
                                                                class="variable_product__product_quantity"  title="Szt." size="4" placeholder=""
                                                                step="1" min="-1" max="100" value="0" inputmode="numeric" readonly="readonly">
 
@@ -429,29 +358,45 @@ $attributes = $product->get_variation_attributes();
                 }
             })();
             
-            // Add simple additional components ids in hide input
+            // Add simple Additional Components ids in hide input
             ;(() => {
                 const $checkboxes = $('.simpleAdditionalComponents input[type="checkbox"]')
 
-                function getAdditionalComponents() {
+                function getAdditionalComponents( productIds = [] ) {
 
                     const components = []
                     $checkboxes.each( (i, checkbox) => {
                         if ( checkbox.checked ) {
-                            components.push( { product_id: +checkbox.dataset.product_id, quantity: 1 } )
+                            components.push({
+                                product_id: +checkbox.dataset.product_id,
+                                quantity: 1,
+                                parent: productIds,
+                            })
                         }
                     })
                     return JSON.stringify( components )
                 }
 
-                $('input[name="additional_components"]').val(getAdditionalComponents());
+                $('input[name="additional_components"]').val(getAdditionalComponents( getProductIds() ));
 
                 $checkboxes.on('change', function (e) {
-                    $('input[name="additional_components"]').val(getAdditionalComponents());
+                    $('input[name="additional_components"]').val(getAdditionalComponents( getProductIds() ));
                 })
+
+                $('.variable_product__item--radio input[type="radio"]').on('change', function () {
+                    console.log('radio change 2')
+                    $('input[name="additional_components"]').val(getAdditionalComponents( getProductIds() ));
+                });
+
+                function getProductIds() {
+                    return {
+                        product_id: $('.variable_product__form').data('product_id'),
+                        variation_id: $('.variable_product__form').find('input[name="variation_id"]').val(),
+                    }
+                }
             })();
 
-            // Add simple additional products ids and quantity in hide input
+            // Add simple Additional Products ids and quantity in hide input
             ;(() => {
                 const $inputs = $('.simpleAdditionalProducts input[type="text"][data-product_id]')
 
@@ -494,6 +439,8 @@ $attributes = $product->get_variation_attributes();
                         },
                         success: function (response) {
                             updateShoppingCart();
+
+                            console.log( response )
                         },
                         error: function (error) {
                             console.error(error);
@@ -505,17 +452,19 @@ $attributes = $product->get_variation_attributes();
                 });
 
                 function getProducts() {
-                    var products = [];
-                    var product_id = $('.variable_product__form').data('product_id');
-                    var variation_id = $('.variable_product__form').find('input[name="variation_id"]').val();
-
-                    const additionalComponents = JSON.parse( $('input[name="additional_components"]').val() )
-                    const additionalProducts = JSON.parse( $('input[name="additional_products"]').val() )
-
-                    products = [{ product_id: product_id, quantity: 1, variation_id: variation_id }, ...additionalComponents, ...additionalProducts]
-
-                    console.log( products )
-                    return products;
+                    const components = [...JSON.parse( $('input[name="additional_components"]').val() )];
+                    const products = [...JSON.parse( $('input[name="additional_products"]').val() )];
+                    return [
+                        {
+                            product_id: $('.variable_product__form').data('product_id'),
+                            variation_id: $('.variable_product__form').find('input[name="variation_id"]').val(),
+                            quantity: 1,
+                            components,
+                            products,
+                        },
+                        ...components,
+                        ...products,
+                    ]
                 }
             })();
 
