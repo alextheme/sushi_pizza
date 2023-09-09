@@ -69,21 +69,25 @@ function americansushi_register_required_plugins() {
             'external_url' => 'https://www.advancedcustomfields.com/', // If set, overrides default API URL and points to an external URL.
         ),
 
+        array(
+            'name'         => 'Polylang',
+            'slug'         => 'polylang-pro',
+            'source'       => 'https://polylang.pro/',
+            'required'     => true,
+            'external_url' => 'https://polylang.pro/',
+        ),
+
 		array(
-			'name'      => 'BizPrint Print Manager',
-			'slug'      => 'print-google-cloud-print-gcp-woocommerce',
-			'required'  => true,
+			'name'         => 'Polylang dla WooCommerce',
+			'slug'         => 'polylang-wc',
+            'source'       => 'https://polylang.pro/downloads/polylang-for-woocommerce/',
+            'required'     => true,
+            'external_url' => 'https://polylang.pro/downloads/polylang-for-woocommerce/',
 		),
 
 		array(
 			'name'      => 'Redux Framework',
 			'slug'      => 'redux-framework',
-			'required'  => true,
-		),
-
-		array(
-			'name'      => 'Polylang',
-			'slug'      => 'polylang',
 			'required'  => true,
 		),
 

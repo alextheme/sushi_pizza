@@ -411,7 +411,7 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
         if ( isset( $values['components'] ) ) {
 
             $item->update_meta_data(
-                __( 'Components'),
+                __( 'Składniki'),
                 $values['components'],
             );
         }
@@ -419,7 +419,7 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
         if ( isset( $values['products'] ) ) {
 
             $item->update_meta_data(
-                __( 'Products'),
+                __( 'Produkty'),
                 $values['products'],
             );
         }

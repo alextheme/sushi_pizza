@@ -7,7 +7,7 @@ require_once DS_THEME.'libs/utils.php';
 require_once DS_THEME.'libs/posttypes.php';
 
 function mojeStyleiSkrypty() {
-	wp_enqueue_style( 'themecss', get_template_directory_uri() . '/css/theme.css',false,'1.1','all');
+	wp_enqueue_style( 'themecss', get_template_directory_uri() . '/css/general.css',false,'1.1','all');
 	wp_enqueue_style( 'lgcss', get_template_directory_uri() . '/css/lightgallery.min.css',false,'1.1','all');
 	wp_enqueue_style( 'aocss', get_template_directory_uri() . '/css/aos.css',false,'1.1','all');
 	wp_enqueue_script( 'lgjs', get_template_directory_uri() . '/js/lightgallery.min.js', array ( 'jquery' ), 1.1, true);

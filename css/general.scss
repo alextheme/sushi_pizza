@@ -8,10 +8,15 @@
   --color_gray_2: #d7d7d7;
 }
 
-@import "Gilroy/font_face.css";
-@import "variable_product";
-@import "variable_additional_product";
-@import "checkout";
-@import "blog";
-@import "order";
+@import "fonts/Gilroy/font_face.css";
+
+@import "basic/theme.css";
+@import "basic/style.css";
+
+@import "parts/variable_product";
+@import "parts/variable_additional_product";
+@import "parts/checkout";
+@import "parts/blog";
+@import "parts/order_overview";
+@import "parts/cart";
 
