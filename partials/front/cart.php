@@ -32,6 +32,7 @@ if ($lang == 'ru') {
 
 ?>
 <div class="lg100 cart-content corner-radius psticky" data-cart_count="<?= esc_attr($cart_count); ?>">
+    <button class="cart__clear_basket hide"></button>
     <h2 class="cart-title"><?php echo $basket; ?></h2>
     <span class="close-cart-mobile">×</span>
     <div class="lg100 cart-items-sc">
@@ -218,8 +219,8 @@ if ($lang == 'ru') {
         $('#checkout1').on('click', function (e) {
 
             // redirect TEMP TODO olbor
-            // window.location.href = 'http://localhost/sushi_pizza_d/pl/zamowienie/';
-            // return;
+            window.location.href = 'https://pizza.u326771.stronazen.pl/pl/zamowienie/';
+            return;
 
             e.preventDefault();
 
@@ -291,24 +292,25 @@ if ($lang == 'ru') {
         }
 
 
-        // // todo temp olbor
-        // //  REMOVE ITEMS FROM CART
-        // $('.cart-title').on('click', function () {
-        //     $.ajax({
-        //         url: ajax_data.ajaxUrl,
-        //         data: {
-        //             action: 'o10_remove_items_from_cart',
-        //             nonce: ajax_data.nonce,
-        //         },
-        //         success: function (result) {
-        //             console.log(result)
-        //             updateShoppingCartAjax();
-        //         },
-        //         error: function (msg) {
-        //             console.log(msg)
-        //         },
-        //     })
-        // }); // TEMP
+        //  REMOVE ALL ITEMS FROM CART
+        $('.cart__clear_basket').on('click', function () {
+            $.ajax({
+                url: ajax_data.ajaxUrl,
+                data: {
+                    action: 'o10_remove_items_from_cart',
+                    nonce: ajax_data.nonce,
+                },
+                success: function (result) {
+                    console.log(result)
+                    updateShoppingCartAjax();
+                },
+                error: function (msg) {
+                    console.log(msg)
+                },
+            })
+        });
+
+
     })(jQuery);
 </script>
 <script id="delAllTxtAfterMe">setTimeout(()=>{const n = document.getElementById('delAllTxtAfterMe').nextSibling;n.nodeType===Node.TEXT_NODE?n.remove():''},0)</script>

@@ -1,0 +1,17 @@
+.cart__clear_basket {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: rebeccapurple;
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+}

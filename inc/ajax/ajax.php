@@ -230,10 +230,10 @@ function build_coment( $products ) {
 }
 
 
-//// todo temp olbor
-//add_action('wp_ajax_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
-//add_action('wp_ajax_nopriv_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
-//function o10_remove_items_from_cart() {
-//    WC()->cart->empty_cart();
-//    return 'cart empty';
-//}
+// REMOVE ALL ITEMS FROM CART
+add_action('wp_ajax_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
+add_action('wp_ajax_nopriv_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
+function o10_remove_items_from_cart() {
+    WC()->cart->empty_cart();
+    return 'cart empty';
+}
