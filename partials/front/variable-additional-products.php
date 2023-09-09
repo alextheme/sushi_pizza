@@ -100,56 +100,80 @@ $attributes = $product->get_variation_attributes();
 
                         <?php endforeach; ?>
 
-<!-- Checkboxes ( Additional / Ingredients ) -->
+<!-- Checkboxes Components ( Additional / Ingredients ) -->
                         <?php
 
                         $opt_prod = get_field('additional_or_ingredients', $product_id);
                         $_title = $opt_prod === 'Dodatki' ? $dodatki_title : $skladniki_title;
 
-                        $additional_ingredients = get_field('list_related_products', $product_id);
+                        $arr_cat = array('skladniki', 'dodatki');
+                        $list_related_products = get_field('list_related_products', $product_id);
 
-                        if ($additional_ingredients) { ?>
+                        // Sort Components by Categories
+                        $arr_components = array(
+                            $arr_cat[0] => array(),
+                            $arr_cat[1] => array(),
+                        );
+                        if ($list_related_products) {
 
+                            foreach ($list_related_products as $prod) {
+                                foreach ( get_the_terms( $prod->ID, 'product_cat' ) as $term ) {
+
+                                    switch ($term->slug) {
+                                        case $arr_cat[0]:
+                                            $arr_components[$arr_cat[0]][] = $prod;
+                                            break;
+                                        case $arr_cat[1]:
+                                            $arr_components[$arr_cat[1]][] = $prod;
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if ($list_related_products) :
+                            foreach ($arr_components as $key_category => $arr_products) { ?>
                             <li class="ac variable_product__item variable_product__item--checkbox simpleAdditionalComponents">
                                 <h4 class="ac-header">
-                                    <button type="button" class="ac-trigger variable_product__attr_title"><?php echo esc_html( $_title ); ?></button>
+                                    <button type="button" class="ac-trigger variable_product__attr_title"><?php echo esc_html( $key_category ); ?></button>
                                     <div class="variable_product__attr_title_icon"><svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86603 7.5C5.48113 8.16667 4.51887 8.16667 4.13397 7.5L0.669874 1.5C0.284974 0.833333 0.7661 -8.94676e-07 1.5359 -8.27378e-07L8.4641 -2.21695e-07C9.2339 -1.54397e-07 9.71503 0.833333 9.33013 1.5L5.86603 7.5Z" fill="#FCB326"/></svg></div>
                                 </h4>
                                 <div class="ac-panel">
                                     <ul class="variable_product__terms">
 
-                            <?php
-                            foreach ($additional_ingredients as $ingredient) {
-                                // post_title
-                                // post_name (slug)
-                                // ID
-                                ?>
+                                <?php
+                                foreach ($arr_products as $product_item) {
+                                    // post_title
+                                    // post_name (slug)
+                                    // ID
+//                                    print_pre( $product_item );
+                                    ?>
 
-                                <li class="variable_product__term">
+                                    <li class="variable_product__term">
 
-                                    <input type="checkbox" class="variable_product__input"
-                                           id="inpt_<?php echo esc_attr($ingredient->ID); ?>"
-                                           data-product_id="<?php echo esc_attr($ingredient->ID); ?>"
-                                    >
-                                    <label class="variable_product__label" for="inpt_<?php echo esc_attr($ingredient->ID); ?>">
-                                        <span class="variable_product__checkbox_icon">
-                                            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect class="rect_border" stroke="#FCB326" x="0.5" y="0.5" width="18"
-                                                      height="18" rx="3.5"/>
-                                                <path class="rect_checked" fill="#FCB326"
-                                                      d="M15.2585 5.36598C15.4929 5.60039 15.6245 5.91828 15.6245 6.24973C15.6245 6.58119 15.4929 6.89907 15.2585 7.13348L9.00853 13.3835C8.77412 13.6178 8.45623 13.7495 8.12478 13.7495C7.79332 13.7495 7.47544 13.6178 7.24103 13.3835L4.74103 10.8835C4.51333 10.6477 4.38734 10.332 4.39018 10.0042C4.39303 9.67649 4.52449 9.36297 4.75625 9.13121C4.98801 8.89945 5.30153 8.76799 5.62927 8.76514C5.95702 8.76229 6.27277 8.88829 6.50853 9.11598L8.12478 10.7322L13.491 5.36598C13.7254 5.13164 14.0433 5 14.3748 5C14.7062 5 15.0241 5.13164 15.2585 5.36598Z"/>
-                                            </svg>
-                                        </span>
-                                        <span class="variable_product__item_title"><?php echo esc_html($ingredient->post_title); ?></span>
-                                    </label>
-                                </li>
+                                        <input type="checkbox" class="variable_product__input"
+                                               id="inpt_<?php echo esc_attr($product_item->ID); ?>"
+                                               data-product_id="<?php echo esc_attr($product_item->ID); ?>"
+                                        >
+                                        <label class="variable_product__label" for="inpt_<?php echo esc_attr($product_item->ID); ?>">
+                                            <span class="variable_product__checkbox_icon">
+                                                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect class="rect_border" stroke="#FCB326" x="0.5" y="0.5" width="18"
+                                                          height="18" rx="3.5"/>
+                                                    <path class="rect_checked" fill="#FCB326"
+                                                          d="M15.2585 5.36598C15.4929 5.60039 15.6245 5.91828 15.6245 6.24973C15.6245 6.58119 15.4929 6.89907 15.2585 7.13348L9.00853 13.3835C8.77412 13.6178 8.45623 13.7495 8.12478 13.7495C7.79332 13.7495 7.47544 13.6178 7.24103 13.3835L4.74103 10.8835C4.51333 10.6477 4.38734 10.332 4.39018 10.0042C4.39303 9.67649 4.52449 9.36297 4.75625 9.13121C4.98801 8.89945 5.30153 8.76799 5.62927 8.76514C5.95702 8.76229 6.27277 8.88829 6.50853 9.11598L8.12478 10.7322L13.491 5.36598C13.7254 5.13164 14.0433 5 14.3748 5C14.7062 5 15.0241 5.13164 15.2585 5.36598Z"/>
+                                                </svg>
+                                            </span>
+                                            <span class="variable_product__item_title"><?php echo esc_html($product_item->post_title); ?></span>
+                                        </label>
+                                    </li>
 
-                            <?php } ?>
+                                <?php } ?>
                                     </ul>
                                 </div>
                             </li>
-
-                        <?php } ?>
+                            <?php } ?>
+                        <?php endif; ?>
 
 
 <!--  Additional Products                   -->
