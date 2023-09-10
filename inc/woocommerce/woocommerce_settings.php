@@ -408,28 +408,22 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
     // Add info to after order (check)
     add_action( 'woocommerce_checkout_create_order_line_item', 'save_cart_item_data_as_order_item_meta_data', 20, 4 );
     function save_cart_item_data_as_order_item_meta_data( $item, $cart_item_key, $values, $order ) {
-        if ( isset( $values['components'] ) ) {
 
-            $item->update_meta_data(
-                __( 'Składniki'),
-                $values['components'],
-            );
-        }
+        foreach ($values as $key => $value) {
 
-        if ( isset( $values['products'] ) ) {
+            if ( in_array( $key, $values['keys'] ) ) {
+                $item->update_meta_data(
+                    __( $key ),
+                    $value,
+                );
+            }
 
-            $item->update_meta_data(
-                __( 'Produkty'),
-                $values['products'],
-            );
+
         }
     }
 
 
 
-
-
-//    https://mypanel.printerco.net/submitorder.php
 
 
 

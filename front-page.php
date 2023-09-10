@@ -17,4 +17,18 @@
 
 <div class="lg100 before-checkout-products"  id="before-checkout"></div>
 
-<?php get_footer();?>   
+<!--<script>-->
+<!--	(function ($) {-->
+<!--		$(document).ready(function () {-->
+<!---->
+<!--			$('.product_type_variable.add_to_cart_button').on('click', function (event) {-->
+<!--				event.preventDefault();-->
+<!---->
+<!--				console.log('aaa,,,')-->
+<!--			})-->
+<!--		})-->
+<!--	})(jQuery);-->
+<!---->
+<!--</script>-->
+
+<?php get_footer();?>
