@@ -4,10 +4,26 @@ function render_list_variants($product, $attributes) {
 
     foreach ($attributes as $attribute_name => $options) : ?>
 
-        <?php $attribute_label = wc_attribute_label($attribute_name); ?>
+        <?php
+        $attr_title = wc_attribute_label($attribute_name);
+        if ($attr_title === 'Size') {
+            switch (get_locale()) {
+                case 'ua_UA':
+                    $attr_title = 'Розмір';
+                    break;
+                case 'ru_RU':
+                    $attr_title = 'Размер';
+                    break;
+                default:
+                    $attr_title = 'Rozmiar';
+
+            }
+        }
+
+        ?>
 
         <li class="variable_product__item variable_product__item--radio">
-            <h4 class="variable_product__attr_title"><?php echo esc_html($attribute_label); ?></h4>
+            <h4 class="variable_product__attr_title"><?php echo esc_html($attr_title); ?></h4>
 
             <ul class="variable_product__attr_list">
                 <?php

@@ -52,7 +52,7 @@ echo '<h3 class="category-name" id="category-name1">' . $categoryname . '</h3>';
         if (get_locale() == 'ru_RU') {
             $cat = "сеты";
         } elseif (get_locale() == 'ua_UA') {
-            $lang1 = "сети";
+            $cat = "сети";
         } else {
             $cat = "zestawy";
         }
@@ -68,7 +68,7 @@ echo '<h3 class="category-name" id="category-name1">' . $categoryname . '</h3>';
                     <div class="row product-content-row justify-spaceb">
                         <div class="lg100 xs30 product-height corner-radius-img">
                             <a class="lg100 plink coverimg" href="<?php the_permalink(); ?>" id="<?php the_ID(); ?>">
-                                <?php the_post_thumbnail(); ?>
+                                <?php echo get_the_post_thumbnail( null, 'product-small'); ?>
                             </a>
                         </div>
                         <a class="plink ptext xs70" href="<?php the_permalink(); ?>" id="<?php the_ID(); ?>">

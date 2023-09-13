@@ -62,7 +62,8 @@ $blocked = is_blocked();
 			  <a href="<?php echo esc_url( home_url() );?>">
 				  <?php if ($sushi_pizza_option) { ?>
 					  <img src="<?php echo esc_url( $sushi_pizza_option['header_logo']['url'] ); ?>"
-						   alt="<?php echo esc_attr( $sushi_pizza_option['header_logo_alt'] ); ?>">
+						   alt="<?php echo esc_attr( $sushi_pizza_option['header_logo_alt'] ); ?>"
+						   loading="lazy">
 				  <?php } ?>
 			  </a>
 		  </header>
@@ -89,7 +90,7 @@ $blocked = is_blocked();
 								  <li class="menu_mobile__social">
 									  <a class="menu_mobile__social_link" href="<?php echo esc_url( $sushi_pizza_option['social_insta'] ); ?>">
 										  <?php if ($sushi_pizza_option['social_insta_icon_m']) { ?>
-											  <img class="menu_mobile__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_insta_icon_m']['url'] ); ?>" alt="logo">
+											  <img class="menu_mobile__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_insta_icon_m']['url'] ); ?>" alt="logo" loading="lazy">
 										  <?php } ?>
 									  </a>
 								  </li>
@@ -98,7 +99,7 @@ $blocked = is_blocked();
 								  <li class="menu_mobile__social">
 									  <a class="menu_mobile__social_link" href="<?php echo esc_url( $sushi_pizza_option['social_fb'] ); ?>">
 										  <?php if ($sushi_pizza_option['social_fb_icon_m']) { ?>
-											  <img class="menu_mobile__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_fb_icon_m']['url'] ); ?>" alt="logo">
+											  <img class="menu_mobile__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_fb_icon_m']['url'] ); ?>" alt="logo" loading="lazy">
 										  <?php } ?>
 									  </a>
 								  </li>
@@ -132,10 +133,10 @@ $blocked = is_blocked();
 							  <li class="menu__social">
 								  <a class="menu__social_link" href="<?php echo esc_url( $sushi_pizza_option['social_insta'] ); ?>">
 									  <?php if ( $sushi_pizza_option['social_insta_icon'] && $sushi_pizza_option['social_insta_icon']['url']  !== '' ) { ?>
-										  <img class="menu__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_insta_icon']['url'] ); ?>" alt="logo">
+										  <img class="menu__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_insta_icon']['url'] ); ?>" alt="logo" loading="lazy">
 									  <?php } ?>
 									  <?php if ( $sushi_pizza_option['social_insta_icon_m'] && $sushi_pizza_option['social_insta_icon_m']['url']  !== '' ) { ?>
-										  <img class="menu__social_img menu__social_img--mobile_mod" src="<?php echo esc_url( $sushi_pizza_option['social_insta_icon_m']['url'] ); ?>" alt="logo">
+										  <img class="menu__social_img menu__social_img--mobile_mod" src="<?php echo esc_url( $sushi_pizza_option['social_insta_icon_m']['url'] ); ?>" alt="logo" loading="lazy">
 									  <?php } ?>
 								  </a>
 							  </li>
@@ -144,10 +145,10 @@ $blocked = is_blocked();
 							  <li class="menu__social">
 								  <a class="menu__social_link" href="<?php echo esc_url( $sushi_pizza_option['social_fb'] ); ?>">
 									  <?php if ( $sushi_pizza_option['social_fb_icon'] &&  $sushi_pizza_option['social_fb_icon']['url'] !== '' ) { ?>
-										  <img class="menu__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_fb_icon']['url'] ); ?>" alt="logo">
+										  <img class="menu__social_img" src="<?php echo esc_url( $sushi_pizza_option['social_fb_icon']['url'] ); ?>" alt="logo" loading="lazy">
 									  <?php } ?>
 									  <?php if ( $sushi_pizza_option['social_fb_icon_m'] &&  $sushi_pizza_option['social_fb_icon_m']['url'] !== '' ) { ?>
-										  <img class="menu__social_img menu__social_img--mobile_mod" src="<?php echo esc_url( $sushi_pizza_option['social_fb_icon_m']['url'] ); ?>" alt="logo">
+										  <img class="menu__social_img menu__social_img--mobile_mod" src="<?php echo esc_url( $sushi_pizza_option['social_fb_icon_m']['url'] ); ?>" alt="logo" loading="lazy">
 									  <?php } ?>
 								  </a>
 							  </li>

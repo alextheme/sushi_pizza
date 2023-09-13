@@ -50,8 +50,6 @@ body {
       width: 100%;
       height: 100%;
 
-      background: #ffffff;
-
       img {
         width: 100%;
         height: auto;
@@ -1229,8 +1227,6 @@ body.body--preloader_show {
 // MENU CATEGORY LIST
 .shop-header-tabs {
 
-
-
   // desktop
   @media (min-width: 991px) {
     .category-filtr {
@@ -1252,6 +1248,12 @@ body.body--preloader_show {
 
   // mobile
   @media (max-width: 992px) {
+    ul {
+      -webkit-box-shadow: 0 12px 15px 0 rgba(0,0,0,0.75);
+      -moz-box-shadow: 0 12px 15px 0 rgba(0,0,0,0.75);
+      box-shadow: 0 12px 15px 0 rgba(0,0,0,0.75);
+    }
+
     .category-filtr {
       a, span {
 
@@ -1259,9 +1261,12 @@ body.body--preloader_show {
     }
     &.shadow {
       background: #000000;
-      -webkit-box-shadow: 0 0 60px 60px rgba(0,0,0,0.75);
-      -moz-box-shadow: 0 0 60px 60px rgba(0,0,0,0.75);
-      box-shadow: 0 0 60px 60px rgba(0,0,0,0.75);
+      -webkit-background-clip: content-box;
+      background-clip: content-box;
+
+      -webkit-box-shadow: 0 -20px 0 0 rgba(0,0,0,0.75);
+      -moz-box-shadow: 0 -20px 0 0 rgba(0,0,0,0.75);
+      box-shadow: 0 -20px 0 0 rgba(0,0,0,0.75);
 
       a, span {
         background: #1E1D1A;

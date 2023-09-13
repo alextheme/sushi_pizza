@@ -48,9 +48,11 @@ include_once '_variable-product-functions.php';
         <div class="variable_product__container">
             <div class="variable_product__inner_container">
 
-                <div class="variable_product__image_w">
-                    <img src="<?php echo wp_get_attachment_url( $product->get_image_id() ); ?>"  alt="img product"/>
-                </div>
+                <?php if (wp_get_attachment_url( $product->get_image_id() )) : ?>
+                    <div class="variable_product__image_w">
+                        <img src="<?php echo wp_get_attachment_url( $product->get_image_id() ); ?>"  alt="img product" loading="lazy">
+                    </div>
+                <?php endif; ?>
 
                 <form
                     id="variable_product__form"

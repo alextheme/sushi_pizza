@@ -1,11 +1,6 @@
 (function ($) {
     $(document).ready(function () {
 
-        function getPreloaderHtml() {
-            return
-            '<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>'
-        }
-
         /*Translate checkout*/
         //Change language actions
         let url = window.location.href;
@@ -296,13 +291,13 @@
 
         $('.category-filtr a').on('click', function (e) {
             e.preventDefault();
+
             $('.category-filtr').removeClass('active-tab');
             $(this).parent().addClass('active-tab');
             let category = $(this).attr('href');
-            $('html,body').animate({
-                    scrollTop: $(category).offset().top + 40
-                },
-                'slow');
+            $('html,body').animate({ scrollTop: $(category).offset().top + 40 },'slow');
+
+            moverigt()
         });
 
         if ($('.category-filtr a')) {
@@ -310,43 +305,58 @@
         }
 
         function moverigt() {
-            let navPosition = $('.shop-header-tabs ul').scrollLeft();
-            $(".shop-header-tabs ul").animate({
-                    scrollLeft: navPosition + $('.active-tab').offset().left - 50
-                },
-                'slow');
+            document.querySelector('.shop-header-tabs ul')?.scrollTo({
+                left: document.querySelector('.active-tab')?.offsetLeft,
+                behavior: 'smooth'
+            })
         }
 
+        let timeScroll = null;
         $(window).scroll(function (event) {
-            if ($('.active-tab')) {
-                let scroll = $(window).scrollTop();
-                let category = $('.active-tab a').attr('href');
-                let next = 0;
-                let prev = 0;
-                if ($(category).next().is('div')) {
-                    next = $(category).next().offset().top;
-                }
-                if ($(category).prev().is('div')) {
-                    prev = $(category).offset().top - 20;
-                }
-                let current = $('.active-tab');
-                if (next != 0 && scroll > next) {
-                    $('.active-tab').next().addClass('active-tab');
-                    current.removeClass('active-tab');
-                    moverigt();
-                } else if (prev != 0 && scroll < prev) {
-                    $('.active-tab').prev().addClass('active-tab');
-                    current.removeClass('active-tab');
-                    moverigt();
-                }
+            if (timeScroll) {
+                clearTimeout(timeScroll)
             }
+
+            timeScroll = setTimeout(() => {
+                if ($('.active-tab')) {
+                    let scroll = $(window).scrollTop();
+                    let category = $('.active-tab a').attr('href');
+                    let next = 0;
+                    let prev = 0;
+
+                    if ($(category).next().is('div')) {
+                        next = $(category).next().offset().top;
+                    }
+
+                    if ($(category).prev().is('div')) {
+                        prev = $(category).offset().top - 20;
+                    }
+
+                    let current = $('.active-tab');
+
+                    if (next != 0 && scroll > next) {
+                        $('.active-tab').next().addClass('active-tab');
+                        current.removeClass('active-tab');
+                        moverigt();
+                    } else if (prev != 0 && scroll < prev) {
+                        $('.active-tab').prev().addClass('active-tab');
+                        current.removeClass('active-tab');
+                        moverigt();
+                    }
+                }
+            }, 100)
+
         });
 
         let path2 = location.protocol + '//' + document.location.hostname + '/wp-content/themes/americansushi/partials/front//products-list.php';
         $('.category-filtr span').on('click', function () {
+            console.log('filter span click')
             let category = $(this).attr('id');
             let categoryname = $(this).text();
-            //$('#products-list').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+
+            // Preloader
+            $('#products-list').append('<div id="preloader" class="preloader preloader2" style="top:0;left:0;transform:none;background-color: rgba(0,0,0,0.7);"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+
             $('.product').addClass('disabled-product');
             $('.cart-item').addClass('disabled-product');
             $('.category-filtr span').parent().removeClass('active-tab');
@@ -354,7 +364,11 @@
             $.ajax({
                 url: path2,
                 type: 'get',
-                data: {"category": category, "lang": Cookies.get('pll_language'), "categoryname": categoryname},
+                data: {
+                    "category": category,
+                    "lang": Cookies.get('pll_language'),
+                    "categoryname": categoryname
+                },
                 success: function (result) {
                     $('#category-name1').html(category);
                     $('#products-list').html(result);
@@ -419,13 +433,7 @@
         $('.selected-rest').on('click', function () {
             $('.chose-restaurant').removeClass('animated-rest');
         });
-// Ajax delete product in the cart	
-//         $('a.remove-in-cart').on('click', function (e) {
-//             e.preventDefault();
-//             let product_id = $(this).attr("data-product_id"),
-//                 cart_item_key = $(this).attr("data-cart_item_key");
-//             ajax_product_modify("product_remove", product_id, cart_item_key, 0);
-//         });
+
 // Ajax change qantity product in the cart
         $('.qty-cart').on('change', function () {
             let product_id = $(this).attr("data-product_id"),
@@ -711,6 +719,20 @@
             }
 
         });
+
+
+        // Set padding for Category Filter Elements
+        // window.getComputedStyle(document.documentElement).getPropertyValue('--color-font-general');
+        function setTopPositionCart() {
+            const $headerTabs = document.querySelector('.shop-header-tabs')
+            document.documentElement.style
+                .setProperty('--products-margin-top', `${$headerTabs?.offsetHeight + 45}px`);
+        }
+
+        $( window ).on( "resize", function() {
+            setTopPositionCart();
+        })
+        setTopPositionCart();
     });
 })(jQuery);
 

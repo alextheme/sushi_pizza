@@ -55,7 +55,7 @@ $categories = get_categories( $args );
 			}	
 			
 		foreach( $categories as $category ): if($category->slug != $category1) :
-		echo '<div class="row row-margin products alignerContainer" id="'.$category->slug.'"><h3 class="text_uppercase lg100 padding-15 xs-offset-top">'.$category->name.'</h3>';
+		echo '<div class="row row-margin products alignerContainer" id="'.$category->slug.'"><h3 class="category_title text_uppercase lg100 padding-15 xs-offset-top"><span>'.$category->name.'</span></h3>';
 		$args = array( 'post_type' => 'product',  'product_cat' =>  $category->slug, 'orderby' => 'menu_order', 'posts_per_page' => 20);
 		$query = new WP_Query( $args );
 			if($query->have_posts()):
@@ -66,7 +66,7 @@ $categories = get_categories( $args );
 					<div class="row product-content-row justify-spaceb">
 						<div class="lg100 xs30 product-height corner-radius-img">
 							<a class="lg100 plink coverimg" href="<?php the_permalink(); ?>" id="<?php the_ID(); ?>">
-								<?php the_post_thumbnail(); ?>
+								<?php echo get_the_post_thumbnail( null, 'product-small'); ?>
 							</a>
 						</div>
 						<a class="plink ptext xs70" href="<?php the_permalink(); ?>" id="<?php the_ID(); ?>">

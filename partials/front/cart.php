@@ -7,18 +7,16 @@ include($path . 'wp-load.php');
 WC()->cart->calculate_totals();
 $cart_count = WC()->cart->get_cart_contents_count();
 
-?>
-<?php
 
 $lang = $_GET['lang'];
 $basket = '';
 $amount = '';
-if ($lang == 'ru') {
+if ($lang == 'ru' || get_locale() == "ru_RU") {
     $basket = "Корзина";
     $order = "Заказываю!";
     $empty = 'Корзина пуста!';
     $amount = 'Сумма';
-} else if ($lang == 'ua') {
+} else if ($lang == 'ua' || get_locale() == "ua_UA") {
     $basket = "Кошик";
     $order = "Замовляю!";
     $empty = 'Кошик порожній!';
@@ -65,9 +63,9 @@ if ($lang == 'ru') {
             echo '<div class="lg100 d-flex align-center justify-spaceb">';
             echo '<div class="buttons-qnt d-flex align-center">';
 
-            echo '<button type="button" class="minus-btn"><img src="' . $btn_minus . '" alt="+"></button>';
+            echo '<button type="button" class="minus-btn"><img src="' . $btn_minus . '" alt="+" loading="lazy"></button>';
             echo '<input type="text" data-product_id="' . $product_id . '" data-cart_item_key="' . $cart_item_key . '" class="input-text qty qty-cart text" step="1" min="-1" max="100"  value="' . $quantity . '" title="Szt." size="4" placeholder="" inputmode="numeric">';
-            echo '<button type="button" class="plus-btn"><img src="' . $btn_plus . '" alt="+"></button>';
+            echo '<button type="button" class="plus-btn"><img src="' . $btn_plus . '" alt="+" loading="lazy"></button>';
 
             echo '</div></div></div></div></div>';
         }
@@ -80,7 +78,7 @@ if ($lang == 'ru') {
             <span class="total-header"><?php echo $amount; ?>:</span> <span
                 class="total-price"><?php echo WC()->cart->get_total(); ?></span>
             <span class="button button2 lg100" id="checkout1">
-<!--			 <img src="--><?php //echo esc_url(get_template_directory_uri() . '/images/icons/icon_shop.svg'); ?><!--" alt="basket">-->
+<!--			 <img src="--><?php //echo esc_url(get_template_directory_uri() . '/images/icons/icon_shop.svg'); ?><!--" alt="basket" loading="lazy">-->
 			 <span><?php echo $order; ?></span>
 		 </span>
         </div>

@@ -25,12 +25,12 @@ $blocked = is_blocked();
 				<h2>Miasto Lubin</h2>
 				<span class="work-time"><?php the_field('czas_pracy');?></span>
 				<div class="lg100 info-tabs row justify-spaceb">
-					<span class="info-tab"><img src="/wp-content/uploads/2022/10/bag2-1.svg" alt=""> <?php the_field('min_zam');?></span>
-					<span class="info-tab"><img src="/wp-content/uploads/2022/10/Vector-2-2.svg" alt=""> <?php the_field('przewoz');?></span>
-					<span class="info-tab"><img src="/wp-content/uploads/2022/10/timer1-1.svg" alt=""><?php the_field('czas_dostawy');?></span>
-					<span class="lg100 info-tab"><img src="/wp-content/uploads/2022/10/location-2.svg" alt=""><?php the_field('adres');?></span>
-					<span class="lg100 info-tab"><a href="mailto:<?php the_field('email');?>"><img src="/wp-content/uploads/2022/10/Vector-2.svg" alt=""><?php the_field('email');?></a></span>
-					<span class="lg100 info-tab"><a href="tel:<?php the_field('telefon');?>"><img src="/wp-content/uploads/2022/10/sms-1.svg" alt=""><?php the_field('telefon');?></a></span>
+					<span class="info-tab"><img src="/wp-content/uploads/2022/10/bag2-1.svg" alt="" loading="lazy"> <?php the_field('min_zam');?></span>
+					<span class="info-tab"><img src="/wp-content/uploads/2022/10/Vector-2-2.svg" alt="" loading="lazy"> <?php the_field('przewoz');?></span>
+					<span class="info-tab"><img src="/wp-content/uploads/2022/10/timer1-1.svg" alt="" loading="lazy"><?php the_field('czas_dostawy');?></span>
+					<span class="lg100 info-tab"><img src="/wp-content/uploads/2022/10/location-2.svg" alt="" loading="lazy"><?php the_field('adres');?></span>
+					<span class="lg100 info-tab"><a href="mailto:<?php the_field('email');?>"><img src="/wp-content/uploads/2022/10/Vector-2.svg" alt="" loading="lazy"><?php the_field('email');?></a></span>
+					<span class="lg100 info-tab"><a href="tel:<?php the_field('telefon');?>"><img src="/wp-content/uploads/2022/10/sms-1.svg" alt="" loading="lazy"><?php the_field('telefon');?></a></span>
 				</div>
 			</div>
 
@@ -41,19 +41,19 @@ $blocked = is_blocked();
 						<span class="hero_box__schedule_time work-time"><?php the_field('czas_pracy', $id);?></span>
 						<div class="hero_box__schedule_info_w lg100 info-tabs text-center">
 					<span class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/bag_yellow.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/bag_yellow.svg' ?>" alt="" loading="lazy">
 						<?php the_field('min_zam', $id);?>
 					</span>
 							<span class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/timer_yellow.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/timer_yellow.svg' ?>" alt="" loading="lazy">
 						<?php the_field('czas_dostawy', $id);?>
 					</span>
 							<span class="hero_box__schedule_info lg100">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/car_yellow.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/car_yellow.svg' ?>" alt="" loading="lazy">
 						<?php the_field('przewoz', $id);?>
 					</span>
 							<span id="addr1" class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/location_yellow.svg' ?>" alt="">
+						<img src="<?php echo get_template_directory_uri() . '/images/icons/location_yellow.svg' ?>" alt="" loading="lazy">
 						<?php the_field('adres', $id);?>
 					</span>
 						</div>

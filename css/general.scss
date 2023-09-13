@@ -6,6 +6,8 @@
   --color_black: #000000;
   --color_gray: #a09f9f;
   --color_gray_2: #d7d7d7;
+
+  --products-margin-top: 330px;
 }
 
 @import "fonts/Gilroy/font_face.css";
@@ -19,4 +21,5 @@
 @import "parts/blog";
 @import "parts/order_overview";
 @import "parts/cart";
+@import "parts/categories";
 

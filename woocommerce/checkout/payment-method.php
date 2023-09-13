@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="lg100 paymeny-methods offset-top-30">
 	<h3><?php echo pll__( 'Płatność' ); ?></h3>
 	<span class="pbutton cash active"><?php echo pll__( 'Gotówka' ); ?></span>
-	<!--<span class="pbutton blik"><img src="/wp-content/uploads/2022/10/Group.svg" alt=""></span>-->
+	<!--<span class="pbutton blik"><img src="/wp-content/uploads/2022/10/Group.svg" alt="" loading="lazy"></span>-->
 </div>
 <li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>">
 	<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />

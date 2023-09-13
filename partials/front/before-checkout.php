@@ -37,8 +37,8 @@ if ($lang == 'ru') {
         <div class="before_checkout__header_btn_w">
             <a href="<?php echo $url; ?>" class="before_checkout__header_btn button button2 button-before">
                 <span>
-                    <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/icon_shop.svg' ); ?>" alt="">
-                    <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket_w.svg' ); ?>" alt="">
+                    <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/icon_shop.svg' ); ?>" alt="" loading="lazy">
+                    <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket_w.svg' ); ?>" alt="" loading="lazy">
                     <?php echo $order; ?>
                 </span>
             </a>
@@ -59,7 +59,7 @@ if ($lang == 'ru') {
                     <div class="row product-content-row justify-spaceb">
                         <div class="lg100 xs30 product-height corner-radius-img">
                             <a class="lg100 plink coverimg" href="<?php the_permalink(); ?>" id="<?php the_ID(); ?>">
-                                <?php the_post_thumbnail(); ?>
+                                <?php echo get_the_post_thumbnail( null, 'product-small'); ?>
                             </a>
                         </div>
                         <a class="plink ptext xs50" href="<?php the_permalink(); ?>" id="<?php the_ID(); ?>">
