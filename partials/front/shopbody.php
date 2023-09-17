@@ -10,27 +10,25 @@ $categories = get_categories( $args );
 <div class="row shop-body-front">
 <div class="lg100 shop-header-tabs p-bottom-30 psticky">
 	<ul>
-		<?php 
-		
-			$category1 = "checkout";
-			if (get_locale() == 'ru_RU'){
-				$category1="checkout-ru";
-			}elseif (get_locale() == 'ua_UA') {
-				$category1="checkout-ua";
-			}
-		
-			if ( count($categories) > 0 ) :
-				if(wp_is_mobile()): 
-					foreach ( $categories as $categoryT ) : if($categoryT->slug != $category1) : ?>
-							<li class="<?php if($category == $categoryT->slug){echo 'selected';} ?>category-filtr"><a href="#<?php echo $categoryT->slug; ?>"><?php echo $categoryT->name; ?></a></li>
-					<?php endif; endforeach;
-				else:
-					foreach ( $categories as $categoryT ) : if($categoryT->slug != $category1) : ?>
-							<li class="<?php if($category == $categoryT->slug){echo 'selected';} ?>category-filtr"><span id="<?php echo $categoryT->slug; ?>"><?php echo $categoryT->name; ?></span></li>
-		<?php endif; endforeach;
-				endif;
-			endif;
-		?>
+		<?php
+		$array_ignore_categories = array( 'checkout', 'checkout-ru', 'checkout-ua', 'dodatki-pl-1', 'dodatki-ru-1', 'dodatki-ua-1' );
+
+		if ( count($categories) > 0 ) {
+			foreach ( $categories as $categoryT ) {
+
+				if ( ! in_array( $categoryT->slug, $array_ignore_categories ) ) { ?>
+
+					<li class="<?php echo $category == $categoryT->slug ? 'selected' : ''; ?> category-filtr">
+						<?php if(wp_is_mobile()):  ?>
+							<a href="#<?php echo $categoryT->slug; ?>"><?php echo $categoryT->name; ?></a>
+						<?php else: ?>
+							<span id="<?php echo $categoryT->slug; ?>"><?php echo $categoryT->name; ?></span>
+						<?php endif; ?>
+					</li>
+
+				<?php } ?>
+			<?php } ?>
+		<?php } ?>
 		
 	</ul>
 </div>
@@ -54,7 +52,7 @@ $categories = get_categories( $args );
 				$want2 = "Додано!";
 			}	
 			
-		foreach( $categories as $category ): if($category->slug != $category1) :
+		foreach( $categories as $category ): if ( ! in_array( $category->slug, $array_ignore_categories ) ) :
 		echo '<div class="row row-margin products alignerContainer" id="'.$category->slug.'"><h3 class="category_title text_uppercase lg100 padding-15 xs-offset-top"><span>'.$category->name.'</span></h3>';
 		$args = array( 'post_type' => 'product',  'product_cat' =>  $category->slug, 'orderby' => 'menu_order', 'posts_per_page' => 20);
 		$query = new WP_Query( $args );

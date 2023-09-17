@@ -566,6 +566,10 @@
 
             let productId = $(this).attr('data-product_id');
 
+            const arr_url = window.location.href.split('/')
+            let lang_ru = arr_url.find((element) => element === 'ru' );
+            let lang_ua = arr_url.find((element) => element === 'ua' );
+
             // Get Popup for select variant product
             $.ajax({
                 // url: wc_add_to_cart_params.ajax_url,
@@ -574,7 +578,7 @@
                 data: {
                     action: 'o10_show_popup_select_variant_with_additional_products',
                     nonce: ajax_data.nonce,
-                    lang: Cookies.get('pll_language'),
+                    lang: lang_ru || lang_ua || '',
                     productId: productId,
                 },
                 success: function (result) {
@@ -605,6 +609,7 @@
         /* Add to from cart -- Simple Product */
         $('.product_type_simple.add_to_cart_button').on('click', function (event) {
             event.preventDefault();
+            console.log('simple')
 
             if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
@@ -644,6 +649,50 @@
                 }
             })
         });
+
+        /* Open popup -- Grouped Product */
+        $('.button.product_type_grouped').on('click', function (event) {
+            event.preventDefault();
+
+            console.log('Grouped Product pop-up');
+
+            if (blocked_shops === "calysklep") { alert(wecant);  return; }
+
+            let productId = this.dataset.product_id
+
+            // Get Popup for select Grouped Product
+            $.ajax({
+                // url: wc_add_to_cart_params.ajax_url,
+                url: ajax_data.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'o10_show_popup_select_grouped_product',
+                    nonce: ajax_data.nonce,
+                    lang: Cookies.get('pll_language'),
+                    productId: productId,
+                },
+                success: function (result) {
+                    $('#before-checkout').html(result);
+                },
+                error: function (response) {
+                    console.log(response)
+                    $('#before-checkout').html(response.responseText);
+                },
+                beforeSend: function () {
+                    $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+                    $('body')
+                        .css({ paddingRight: `${window.innerWidth - document.body.offsetWidth}px` })
+                        .addClass('body--preloader_show');
+                },
+                complete: function (response) {
+                    if ( response.responseJSON?.error ) {
+                        $('body')
+                            .css({ paddingRight: '0px' })
+                            .removeClass('body--preloader_show');
+                    }
+                }
+            })
+        })
 
         // UPDATE Cart
         function updateShoppingCartAjax() {

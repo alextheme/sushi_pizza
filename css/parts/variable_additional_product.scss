@@ -102,7 +102,7 @@ body {
 
     img {
       width: 100%;
-      height: auto;
+      height: 100%;
       object-fit: contain;
     }
   }
@@ -163,6 +163,26 @@ body {
 
     border-radius: 14px;
     border-width: 1px;
+
+    .variable_product__item_plus {
+      //margin-top: auto;
+    }
+
+    .woocommerce-Price-amount {
+      //margin-top: 1px;
+
+      bdi {
+
+      }
+    }
+
+    .woocommerce-Price-currencySymbol {
+
+    }
+  }
+
+  .variable_product__item_title {
+    margin-right: auto;
   }
 
   .ac { // accordion js - unset default settings

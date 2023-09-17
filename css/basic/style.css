@@ -1245,6 +1245,14 @@ img.floating {
     z-index: 4;
 }
 
+.product-height {
+    height: 150px;
+    background: rgba(255, 255, 255, 0.01);
+    position: relative;
+    z-index: 1;
+    border-radius: 10px;
+}
+
 .product-height img {
     height: 150px;
 }

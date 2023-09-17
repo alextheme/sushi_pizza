@@ -105,6 +105,37 @@ function o10_show_popup_select_variant_with_additional_products() {
 add_action('wp_ajax_o10_show_popup_select_variant_with_additional_products', 'o10_show_popup_select_variant_with_additional_products');
 add_action('wp_ajax_nopriv_o10_show_popup_select_variant_with_additional_products', 'o10_show_popup_select_variant_with_additional_products');
 
+/**
+ * @return void
+ */
+// o10_show_popup_select_grouped_products
+function o10_show_popup_select_grouped_product() {
+    if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) {
+        die;
+    }
+
+    $lang = 'null';
+    $product_id = -1;
+    if (isset($_REQUEST['lang'])) {
+        $lang = esc_html($_REQUEST['lang']);
+    }
+    if (isset($_REQUEST['productId'])) {
+        $product_id = esc_html($_REQUEST['productId']);
+    }
+
+    if ($product_id <= 0) {
+        return wp_send_json(array(
+            'error' => true,
+        ));
+    }
+
+    require_once get_template_directory() . '/partials/front/popup-grouped-product.php';
+
+    die; // at the end of the function in ajax should be
+}
+add_action('wp_ajax_o10_show_popup_select_grouped_product', 'o10_show_popup_select_grouped_product');
+add_action('wp_ajax_nopriv_o10_show_popup_select_grouped_product', 'o10_show_popup_select_grouped_product');
+
 
 function o10_update_cart() {
     if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) {

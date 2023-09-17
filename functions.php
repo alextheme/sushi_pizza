@@ -359,6 +359,11 @@ function redirect_visitor(){
 }
 
 if (is_plugin_active('/polylang.php')) {
+
+    if( ! function_exists( 'pll_register_string' ) ) {
+        return;
+    }
+
 	error_reporting( 0 );
 	// Polylang string registration
 	pll_register_string($cback , "Wróć do menu" );
@@ -386,6 +391,18 @@ if (is_plugin_active('/polylang.php')) {
 	pll_register_string($emp2 , "Istnieje możliwość późniejszej zmiany restauracji poprzez menu*" );
 	pll_register_string($emp3 , "Chwilowo niedostępny" );
 	error_reporting( E_ALL );
+}
+
+if( ! function_exists( 'pll__' ) ) {
+    function pll__( $string ) {
+        return $string;
+    }
+}
+
+if( ! function_exists( 'pll_e' ) ) {
+    function pll_e( $string ) {
+        echo $string;
+    }
 }
 
 

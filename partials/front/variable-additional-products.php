@@ -48,11 +48,11 @@ include_once '_variable-product-functions.php';
         <div class="variable_product__container">
             <div class="variable_product__inner_container">
 
-                <?php if (wp_get_attachment_url( $product->get_image_id() )) : ?>
-                    <div class="variable_product__image_w">
-                        <img src="<?php echo wp_get_attachment_url( $product->get_image_id() ); ?>"  alt="img product" loading="lazy">
-                    </div>
-                <?php endif; ?>
+<!--                --><?php //if (wp_get_attachment_url( $product->get_image_id() )) : ?>
+<!--                    <div class="variable_product__image_w">-->
+<!--                        <img src="--><?php //echo wp_get_attachment_url( $product->get_image_id() ); ?><!--"  alt="img product" loading="lazy">-->
+<!--                    </div>-->
+<!--                --><?php //endif; ?>
 
                 <form
                     id="variable_product__form"
@@ -72,21 +72,59 @@ include_once '_variable-product-functions.php';
 <!-- Checkboxes Components ( Additional / Ingredients ) -->
 
                         <?php
-                        $components_prod = get_field('components', $product_id);
-                        $additional_prod = get_field('additional', $product_id);
-                        ?>
 
-                        <?php if ($components_prod) : ?>
-                            <?php render_list_components($components_prod, $skladniki_title); ?>
-                        <?php endif; ?>
+                        $selector = $lang === 'ru' ? 'produkty-ru' : ($lang === 'ua' ? 'produkty-ua' : 'produkty');
+                        $field_object = get_field_object( $selector, $product_id );
 
-                        <?php if ($additional_prod) : ?>
-                            <?php render_list_components($additional_prod, $dodatki_title); ?>
-                        <?php endif; ?>
+                        $taxonomy = array();
+                        $data_products = array();
+
+                        foreach ( $field_object['taxonomy'] as $tax ) {
+                            $taxonomy[] = explode( ':', $tax )[1];
+                        }
+
+                        foreach ( $field_object['value'] as $prod ) {
+                            $_product = wc_get_product( $prod->ID );
+
+                            foreach ( $_product->get_category_ids() as $_cat_id ) {
+                                $_cat = get_term( $_cat_id );
+
+                                if ( in_array( $_cat->slug, $taxonomy ) ) {
+                                    $data_products[$_cat->name][] = $_product;
+//                                    $data_products[$_cat->name][] = array(
+//                                        'product_id' => $_product->get_id(),
+//                                        'product_name' => $_product->get_name(),
+//                                        'product_price' => $_product->get_price_html(),
+//                                    );
+                                }
+
+                            }
+                        }
+
+//                        print_pre( $data_products );
+
+                        foreach ( $data_products as $cat_name => $products ) {
+                            render_list_components($products, $cat_name);
+                        }
+
+
+
+//
+//                        $components_prod = get_field('components', $product_id);
+//                        $additional_prod = get_field('additional', $product_id);
+//                        ?>
+<!---->
+<!--                        --><?php //if ($components_prod) : ?>
+<!--                            --><?php //render_list_components($components_prod, $skladniki_title); ?>
+<!--                        --><?php //endif; ?>
+<!---->
+<!--                        --><?php //if ($additional_prod) : ?>
+<!--                            --><?php //render_list_components($additional_prod, $dodatki_title); ?>
+<!--                        --><?php //endif; ?>
 
 <!--  Additional Products                   -->
 
-                        <?php render_list_additional_products(); ?>
+                        <?php //render_list_additional_products(); ?>
 
                     </ul>
 

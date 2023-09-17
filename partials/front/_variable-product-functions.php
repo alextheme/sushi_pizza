@@ -58,7 +58,7 @@ function render_list_variants($product, $attributes) {
     <?php endforeach;
 }
 
-function render_list_components($components, $title) { ?>
+function render_list_components($products, $title) { ?>
 
     <li class="ac variable_product__item variable_product__item--checkbox simpleAdditionalComponents">
         <h4 class="ac-header">
@@ -69,16 +69,16 @@ function render_list_components($components, $title) { ?>
             <ul class="variable_product__terms">
 
                 <?php
-                foreach ($components as $product_item) { ?>
+                foreach ($products as $product_item) { ?>
 
                     <li class="variable_product__term">
 
                         <input type="checkbox" class="variable_product__input"
-                               id="inpt_<?php echo esc_attr($product_item->ID).'_'.esc_attr($title); ?>"
+                               id="inpt_<?php echo esc_attr($product_item->get_id()).'_'.esc_attr($title); ?>"
                                data-group-name="<?php echo esc_attr($title); ?>"
-                               data-product_id="<?php echo esc_attr($product_item->ID); ?>"
+                               data-product_id="<?php echo esc_attr($product_item->get_id()); ?>"
                         >
-                        <label class="variable_product__label" for="inpt_<?php echo esc_attr($product_item->ID).'_'.esc_attr($title); ?>">
+                        <label class="variable_product__label" for="inpt_<?php echo esc_attr($product_item->get_id()).'_'.esc_attr($title); ?>">
                             <span class="variable_product__checkbox_icon">
                                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect class="rect_border" stroke="#FCB326" x="0.5" y="0.5" width="18"
@@ -87,8 +87,11 @@ function render_list_components($components, $title) { ?>
                                           d="M15.2585 5.36598C15.4929 5.60039 15.6245 5.91828 15.6245 6.24973C15.6245 6.58119 15.4929 6.89907 15.2585 7.13348L9.00853 13.3835C8.77412 13.6178 8.45623 13.7495 8.12478 13.7495C7.79332 13.7495 7.47544 13.6178 7.24103 13.3835L4.74103 10.8835C4.51333 10.6477 4.38734 10.332 4.39018 10.0042C4.39303 9.67649 4.52449 9.36297 4.75625 9.13121C4.98801 8.89945 5.30153 8.76799 5.62927 8.76514C5.95702 8.76229 6.27277 8.88829 6.50853 9.11598L8.12478 10.7322L13.491 5.36598C13.7254 5.13164 14.0433 5 14.3748 5C14.7062 5 15.0241 5.13164 15.2585 5.36598Z"/>
                                 </svg>
                             </span>
-                            <span class="variable_product__item_title"><?php echo esc_html($product_item->post_title); ?></span>
+                            <span class="variable_product__item_title"><?php echo esc_html($product_item->get_name()); ?></span>
+                            <span class="variable_product__item_plus">&nbsp;+&nbsp;</span>
+                            <?php echo $product_item->get_price_html(); ?>
                         </label>
+
                     </li>
 
                 <?php } ?>

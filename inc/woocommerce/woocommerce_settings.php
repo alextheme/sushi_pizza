@@ -359,6 +359,11 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
 
     }
 
+    /**
+     * Deactivate Woocommerce Breadcrumb
+     */
+    remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+
 
     /**
      * Checkout page
@@ -417,16 +422,8 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
                     $value,
                 );
             }
-
-
         }
     }
-
-
-
-
-
-
 
 
 }
