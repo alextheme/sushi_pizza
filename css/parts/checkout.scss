@@ -1,3 +1,18 @@
+// before checkout
+
+.products.before-check {
+
+  .product-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-content-row {
+    margin-bottom: auto;
+  }
+
+}
+
 // Form
 form.checkout.woocommerce-checkout {
   padding-bottom: 50px;
@@ -16,4 +31,25 @@ form.checkout.woocommerce-checkout {
 .woocommerce-remove-coupon {
   display: none;
 }
+
+.woocommerce-table.woocommerce-table--order-details.shop_table.order_details {
+  tfoot {
+    position: relative;
+    display: block;
+    margin-top: 50px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      width: 80%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.5);
+      transform: translateX(-50%);
+    }
+  }
+}
+
+
 

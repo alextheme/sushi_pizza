@@ -148,20 +148,6 @@ add_action('wp_ajax_o10_update_cart', 'o10_update_cart');
 add_action('wp_ajax_nopriv_o10_update_cart', 'o10_update_cart');
 
 
-function o10_remove_product_from_cart() {
-    if (isset($_POST['cart_item_key'])) {
-        $cart_item_key = sanitize_key($_POST['cart_item_key']);
-
-        // Видаляємо товар з кошика за ключем
-        WC()->cart->remove_cart_item($cart_item_key);
-    }
-
-    die();
-}
-add_action('wp_ajax_o10_remove_product_from_cart', 'o10_remove_product_from_cart');
-add_action('wp_ajax_nopriv_o10_remove_product_from_cart', 'o10_remove_product_from_cart');
-
-
 function o10_woocommerce_ajax_add_to_cart() {
     if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) {
         die;
@@ -197,27 +183,43 @@ add_action('wp_ajax_o10_woocommerce_ajax_add_to_cart', 'o10_woocommerce_ajax_add
 add_action('wp_ajax_nopriv_o10_woocommerce_ajax_add_to_cart', 'o10_woocommerce_ajax_add_to_cart');
 
 
-
+/**
+ * Добавлення Компоновочного продукту та його компонентів
+ */
 add_action('wp_ajax_o10_add_products_to_cart', 'o10_add_products_to_cart');
 add_action('wp_ajax_nopriv_o10_add_products_to_cart', 'o10_add_products_to_cart');
 function o10_add_products_to_cart() {
     if(isset($_POST['products']) && is_array($_POST['products'])) {
 
+        $composite_key = md5( microtime() . rand() );
+
         foreach($_POST['products'] as $product) {
             $product_id = absint( $product['product_id'] );
             $quantity = absint( $product['quantity'] );
             $variation_id = absint( $product['variation_id'] );
-            $components = $product['components'];
+            $group_components = $product['group_components'];
+            $id_components = $product['id_components'];
 
-            $cart_item_data = array();
+            $cart_item_data = array(
+                'composite_product' => true,
+            );
 
-            if ( $components ) {
-                foreach ( $components as $group_name => $component ) {
-                    $cart_item_data[$group_name] = build_coment( $component );
+            if ( $group_components ) {
+                foreach ( $group_components as $group_name => $components ) {
+                    $cart_item_data[$group_name] = build_coment( $components );
                 }
 
                 $cart_item_data['keys'] = array_keys( $cart_item_data );
+                $cart_item_data['id_components'] = $id_components;
             }
+
+            $parent_id =  $product['parent'];
+            if ( $parent_id ) {
+                $cart_item_data['owner_product_id'] = $parent_id['product_id'];
+                $cart_item_data['owner_variation_id'] = $parent_id['variation_id'];
+            }
+
+            $cart_item_data['composite_key'] = $composite_key;
 
             if($variation_id) {
                 WC()->cart->add_to_cart($product_id, $quantity, $variation_id, array(), $cart_item_data);
@@ -258,10 +260,91 @@ function build_coment( $products ) {
 }
 
 
+
+
+// AJAX-обработчик для увеличения количества товаров в корзине
+function update_cart_item_quantity_callback() {
+    if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) {
+        die;
+    }
+
+    if(isset($_POST['target_cart_item_keys']) && is_array($_POST['target_cart_item_keys'])) {
+        $target_cart_item_keys = $_POST['target_cart_item_keys'];
+        $operation = $_POST['operation'];
+        $quantity = $_POST['quantity'];
+
+        // Получаем текущую корзину
+        WC()->cart->calculate_totals();
+
+        if ( $operation === 'plus1' ) {
+
+            // Збільшуємо кількість продуктів на 1
+            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+
+                if ( in_array( $cart_item_key, $target_cart_item_keys ) ) {
+                    WC()->cart->set_quantity($cart_item_key, $cart_item['quantity'] + 1);
+                }
+
+            }
+
+        }
+
+        if ( $operation === 'minus1' ) {
+
+            // Зменьшуємо кількість продуктів на 1
+            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+
+                if ( in_array( $cart_item_key, $target_cart_item_keys ) ) {
+                    WC()->cart->set_quantity($cart_item_key, $cart_item['quantity'] - 1);
+                }
+            }
+        }
+
+        if ( $operation === 'set_quantity' ) {
+
+            // Зменьшуємо кількість продуктів на 1
+            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+
+                if ( in_array( $cart_item_key, $target_cart_item_keys ) ) {
+                    WC()->cart->set_quantity($cart_item_key, $quantity);
+                }
+            }
+        }
+
+    }
+
+    return wp_send_json( array( 'success' => true, 'message' => __('Товари успішно обновлені в корзині', 'americansuchi') ) );
+
+    // Возвращаем обновленные фрагменты корзины
+//    wc_get_template('cart/mini-cart.php', array('show_buttons' => true));
+    wp_die();
+}
+add_action('wp_ajax_update_cart_item_quantity', 'update_cart_item_quantity_callback');
+add_action('wp_ajax_nopriv_update_cart_item_quantity', 'update_cart_item_quantity_callback');
+
+
+
+
+
 // REMOVE ALL ITEMS FROM CART
 add_action('wp_ajax_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
 add_action('wp_ajax_nopriv_o10_remove_items_from_cart', 'o10_remove_items_from_cart');
 function o10_remove_items_from_cart() {
+    if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) {
+        die;
+    }
+
+    $defaultHref = '';
+    if (isset($_REQUEST['defaultHref'])) {
+        $defaultHref = $_REQUEST['defaultHref'];
+    }
+
     WC()->cart->empty_cart();
-    return 'cart empty';
+
+    return wp_send_json(array(
+        'message' => 'cart is empty',
+        'defaultHref' => $defaultHref,
+    ));
+
+    wp_die();
 }

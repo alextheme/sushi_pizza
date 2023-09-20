@@ -33,7 +33,7 @@ $product_variations = function_exists('wc_esc_json') ? wc_esc_json($variations_j
 
 $attributes = $product->get_variation_attributes();
 
-include_once '_variable-product-functions.php';
+//include_once '_variable-product-functions.php';
 ?>
 
 <div class="variable_product variable_product--additional_product">
@@ -48,11 +48,11 @@ include_once '_variable-product-functions.php';
         <div class="variable_product__container">
             <div class="variable_product__inner_container">
 
-<!--                --><?php //if (wp_get_attachment_url( $product->get_image_id() )) : ?>
-<!--                    <div class="variable_product__image_w">-->
-<!--                        <img src="--><?php //echo wp_get_attachment_url( $product->get_image_id() ); ?><!--"  alt="img product" loading="lazy">-->
-<!--                    </div>-->
-<!--                --><?php //endif; ?>
+                <?php if (wp_get_attachment_url( $product->get_image_id() )) : ?>
+                    <div class="variable_product__image_w">
+                        <img src="<?php echo wp_get_attachment_url( $product->get_image_id() ); ?>"  alt="img product" loading="lazy">
+                    </div>
+                <?php endif; ?>
 
                 <form
                     id="variable_product__form"
@@ -91,38 +91,16 @@ include_once '_variable-product-functions.php';
 
                                 if ( in_array( $_cat->slug, $taxonomy ) ) {
                                     $data_products[$_cat->name][] = $_product;
-//                                    $data_products[$_cat->name][] = array(
-//                                        'product_id' => $_product->get_id(),
-//                                        'product_name' => $_product->get_name(),
-//                                        'product_price' => $_product->get_price_html(),
-//                                    );
                                 }
 
                             }
                         }
 
-//                        print_pre( $data_products );
-
                         foreach ( $data_products as $cat_name => $products ) {
                             render_list_components($products, $cat_name);
-                        }
+                        } ?>
 
-
-
-//
-//                        $components_prod = get_field('components', $product_id);
-//                        $additional_prod = get_field('additional', $product_id);
-//                        ?>
-<!---->
-<!--                        --><?php //if ($components_prod) : ?>
-<!--                            --><?php //render_list_components($components_prod, $skladniki_title); ?>
-<!--                        --><?php //endif; ?>
-<!---->
-<!--                        --><?php //if ($additional_prod) : ?>
-<!--                            --><?php //render_list_components($additional_prod, $dodatki_title); ?>
-<!--                        --><?php //endif; ?>
-
-<!--  Additional Products                   -->
+<!--  Additional Products  -->
 
                         <?php //render_list_additional_products(); ?>
 
@@ -164,10 +142,7 @@ include_once '_variable-product-functions.php';
                 new Accordion(accordions, {
                     duration: 300,
                     showMultiple: true,
-                    openOnInit: [0, 1, 2],// [...Array(accordions[0].childElementCount).keys()],
-                    onOpen: function (currentElement) {
-                        console.log(currentElement);
-                    }
+                    openOnInit: [...Array(accordions[0].childElementCount).keys()],
                 })
             })(); // - Accordion & height pop-up
 
@@ -256,26 +231,26 @@ include_once '_variable-product-functions.php';
                     return JSON.stringify( components )
                 }
 
-                $('input[name="additional_components"]').val(getAdditionalComponents( getProductIds() ));
+                $('input[name="additional_components"]').val( getAdditionalComponents( getProductIds() ));
 
                 $checkboxes.on('change', function (e) {
-                    $('input[name="additional_components"]').val(getAdditionalComponents( getProductIds() ));
+                    $('input[name="additional_components"]').val( getAdditionalComponents( getProductIds() ));
                 })
 
                 $('.variable_product__item--radio input[type="radio"]').on('change', function () {
                     console.log('radio change 2')
-                    $('input[name="additional_components"]').val(getAdditionalComponents( getProductIds() ));
+                    $('input[name="additional_components"]').val( getAdditionalComponents( getProductIds() ));
                 });
 
                 function getProductIds() {
                     return {
-                        product_id: $('.variable_product__form').data('product_id'),
-                        variation_id: $('.variable_product__form').find('input[name="variation_id"]').val(),
+                        product_id: +$('.variable_product__form').data('product_id'),
+                        variation_id: +$('.variable_product__form').find('input[name="variation_id"]').val(),
                     }
                 }
             })();
 
-            // Add IDs and Quantity in Hide input - simple Additional Products (additional_products)
+            // Add ids and Quantity in Hide input - simple Additional Products (additional_products)
             ;(() => {
                 const $inputs = $('.simpleAdditionalProducts input[type="text"][data-product_id]')
 
@@ -331,82 +306,89 @@ include_once '_variable-product-functions.php';
                 });
 
                 function getProducts() {
-                    const components = JSON.parse( $('input[name="additional_components"]').val() )
-                    components['Products'] = [...JSON.parse($('input[name="additional_products"]').val())]
+                    const group_components = JSON.parse( $('input[name="additional_components"]').val() )
+                    group_components['Products'] = [...JSON.parse($('input[name="additional_products"]').val())]
 
-                    return [
+                    const arr_group_components = Object.keys(group_components)
+                        .map(key => {
+                            return group_components[key]
+                        })
+                        .reduce((arr, currentValue) => [...currentValue, ...arr], [])
+
+                    const id_components = arr_group_components.map( component => component.product_id )
+
+                    const products = [
                         {
                             product_id: $('.variable_product__form').data('product_id'),
                             variation_id: $('.variable_product__form').find('input[name="variation_id"]').val(),
                             quantity: 1,
-                            components,
+                            group_components: group_components,
+                            id_components: id_components,
                         },
-                        ...Object.keys(components)
-                            .map(key => {
-                                return components[key]
-                            })
-                            .reduce((arr, currentValue) => [...currentValue, ...arr], []),
+                        ...arr_group_components,
                     ];
+
+                    return products
                 }
             })();
 
             // +/- buttons quantity
-            ;(() => {
-
-                // plus quantity (+)
-                $('.variable_product__product_button.btn_plus').on('click', function (e) {
-                    var $item = getItem(this)
-                    var $inputQuantity = getInput( $item )
-
-                    if ($item.hasClass('zero_product')) {
-                        $item.removeClass('zero_product')
-                        $inputQuantity.val(1)
-                    } else {
-                        var quantity = +$inputQuantity.val()
-                        $inputQuantity.val(quantity + 1)
-                    }
-
-                    $inputQuantity.trigger('change')
-                })
-
-                // minus quantity (-)
-                $('.variable_product__product_button.btn_minus').on('click', function (e) {
-                    var $item = getItem(this)
-                    var $inputQuantity = getInput( $item )
-
-                    var quantity = +$inputQuantity.val();
-                    $inputQuantity.val(quantity - 1).trigger('change')
-
-                    if (quantity - 1 === 0) {
-                        $item.addClass('zero_product')
-                    }
-                })
-
-                // init 1 quantity
-                $('.variable_product__product_text').on('click', function (e) {
-                    var $item = getItem(this)
-                    var $inputQuantity = getInput( $item )
-
-                    if (+$inputQuantity.val() > 0) {
-                        return;
-                    }
-
-                    if ($item.hasClass('zero_product')) {
-                        $item.removeClass('zero_product')
-                        $inputQuantity.val(1).trigger('change')
-                    }
-                })
-
-                function getItem( elem ) {
-                    return $(elem).closest('.simpleAdditionalProducts .variable_product__product_item')
-                }
-
-                function getInput( $elem ) {
-                    return $elem.find('input[type="text"][data-product_id]')
-                }
-
-
-            })();
+            // ;(() => {
+            //
+            //     // plus quantity (+)
+            //     $('.variable_product__product_button.btn_plus').on('click', function (e) {
+            //         var $item = getItem(this)
+            //         var $inputQuantity = getInput( $item )
+            //
+            //         if ($item.hasClass('zero_product')) {
+            //             $item.removeClass('zero_product')
+            //             $inputQuantity.val(1)
+            //         } else {
+            //             var quantity = +$inputQuantity.val()
+            //             $inputQuantity.val(quantity + 1)
+            //         }
+            //
+            //         $inputQuantity.trigger('change')
+            //     })
+            //
+            //     // minus quantity (-)
+            //     $('.variable_product__product_button.btn_minus').on('click', function (e) {
+            //         var $item = getItem(this)
+            //         var $inputQuantity = getInput( $item )
+            //
+            //         var quantity = +$inputQuantity.val();
+            //         $inputQuantity.val(quantity - 1).trigger('change')
+            //
+            //         if (quantity - 1 === 0) {
+            //             $item.addClass('zero_product')
+            //         }
+            //     })
+            //
+            //     // init 1 quantity
+            //     $('.variable_product__product_text').on('click', function (e) {
+            //         var $item = getItem(this)
+            //         var $inputQuantity = getInput( $item )
+            //
+            //         if (+$inputQuantity.val() > 0) {
+            //             return;
+            //         }
+            //
+            //         if ($item.hasClass('zero_product')) {
+            //             $item.removeClass('zero_product')
+            //             $inputQuantity.val(1).trigger('change')
+            //         }
+            //     })
+            //
+            //     function getItem( elem ) {
+            //         return $(elem).closest('.simpleAdditionalProducts .variable_product__product_item')
+            //     }
+            //
+            //     function getInput( $elem ) {
+            //         return $elem.find('input[type="text"][data-product_id]')
+            //     }
+            //
+            //
+            // })();
 
 
             function updateShoppingCart() {

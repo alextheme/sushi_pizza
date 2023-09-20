@@ -16,6 +16,12 @@ $breakpoint_3: 767px;
   .woocommerce-order-overview.woocommerce-thankyou-order-details.order_details {
     display: flex;
 
+    @media screen and (min-width: $breakpoint_3 - 1) {
+      padding: 14px 0 10px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.1);
+    }
+
     li {
       flex: 1 0 auto;
       float: unset;
@@ -25,7 +31,11 @@ $breakpoint_3: 767px;
         padding: 0 1.5em;
       }
 
-      @media screen and (max-width: $breakpoint_3){
+      @media screen and (min-width: $breakpoint_3 - 1) {
+        text-align: center;
+      }
+
+      @media screen and (max-width: $breakpoint_3) {
         position: relative;
         width: 100%;
         padding: 0 1.5em;
@@ -63,8 +73,9 @@ $breakpoint_3: 767px;
 
 .woocommerce table.shop_table {
   @media screen and (max-width: $breakpoint_1){
-    margin-left: -15px;
-    width: 104%;
+    margin-left: -10px;
+    margin-right: -10px;
+    width: unset;
   }
 
   td.product-name {

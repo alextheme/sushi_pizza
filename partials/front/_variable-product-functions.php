@@ -207,3 +207,11 @@ function render_list_additional_products() {
     <?php }
 }
 
+function get_list_ignore_categories() {
+    return array(
+        'checkout', 'checkout-ru', 'checkout-ua',
+        'dodatki-pl-1', 'dodatki-ru-1', 'dodatki-ua-1',
+        'dodatki', 'dopovnennya', 'dopolnenie',
+        );
+}
+

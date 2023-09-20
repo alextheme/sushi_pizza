@@ -1,0 +1,34 @@
+#products-list {
+  .product-content {
+    display: flex;
+    flex-direction: column;
+
+    .product-content-row {
+      margin-bottom: auto;
+    }
+
+    .product-footer {
+      margin-top: 35px;
+    }
+
+    .plink.ptext {
+      line-height: 1.5;
+
+      @media screen and (max-width: 767px) {
+
+      }
+
+      @media screen and (min-width: 768px) {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      h3 {
+        margin-bottom: 20px;
+      }
+
+    }
+  }
+}

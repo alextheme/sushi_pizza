@@ -19,8 +19,6 @@ switch ($lang) {
         $title_text = 'WYBIERZ SKŁADNIK';
 
 }
-print_pre();
-
 
 ?>
 <div class="group_product">

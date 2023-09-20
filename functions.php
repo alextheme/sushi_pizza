@@ -465,14 +465,27 @@ require_once get_template_directory() . '/inc/ajax/ajax.php';
  */
 require_once get_template_directory() . '/inc/theme_settings/system.php';
 
-
+include_once get_template_directory() . '/partials/front/_variable-product-functions.php';
 
 
 /**
  * TEMP TODO
  */
 function print_pre( $obj ) {
-	echo '<pre>';
+	echo '<pre style="padding:10px;background:#33384b;width: 100%;">';
+	print_r( $obj );
+	echo '</pre>';
+}
+
+/**
+ *
+ * Show position absolute
+ *
+ * @param $obj
+ * @return void
+ */
+function print_pre_a( $obj ) {
+	echo '<pre style="position:absolute;top:0;left:0;z-index:999;padding:10px;background:#33384b;width: 100%;">';
 	print_r( $obj );
 	echo '</pre>';
 }

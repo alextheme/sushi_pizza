@@ -45,14 +45,7 @@ if ( isset($args) && is_array($args) && array_key_exists( 'id', $args ) ) {
 
 $blocked = is_blocked();
 
-//print_pre_die( $sushi_pizza_option );
-
-//	$url = '/';
-//	if (get_locale() == 'ru_RU'){
-//		$url = '/ru/';
-//	}elseif (get_locale() == 'ua_UA') {
-//		$url = '/ua/';
-//	}
+$array_pages_hide_lang = [27, 269, 271];
 
 ?>
 <div class="header lg100">
@@ -107,9 +100,11 @@ $blocked = is_blocked();
 						  </ul>
 					  <?php } ?>
 
-					  <ul class="menu_mobile__lang_bottom">
-						  <?php pll_the_languages( array('display_names_as' => 'slug', 'hide_current' => 1) ); ?>
-					  </ul>
+					  <?php if ( ! is_page( $array_pages_hide_lang )) { ?>
+						  <ul class="menu_mobile__lang_bottom">
+							  <?php pll_the_languages( array('display_names_as' => 'slug', 'hide_current' => 1) ); ?>
+						  </ul>
+					  <?php } ?>
 
 					  <div class="menu_mobile__bottom_links">
 						  <a href="/polityka-prywatnosci">Polityka prywatności</a>
@@ -125,7 +120,12 @@ $blocked = is_blocked();
 
 		  <div class="header_buttons_w">
 			  <aside class="navbar-shop-buttons">
-				  <?php pll_the_languages( array('display_names_as' => 'slug', 'hide_current' => 1) ); ?>
+
+				  <?php if ( ! is_page( $array_pages_hide_lang )) { ?>
+					  <ul class="navbar-shop-buttons-lang">
+						  <?php pll_the_languages( array('display_names_as' => 'slug', 'hide_current' => 1) ); ?>
+					  </ul>
+				  <?php } ?>
 
 				  <?php if ($sushi_pizza_option) { ?>
 					  <ul class="menu__socials">
@@ -161,9 +161,11 @@ $blocked = is_blocked();
 
 		  <div class="menu_mobile__handlers">
 
-			  <ul class="menu_mobile__lang_top">
-				<?php  pll_the_languages( array('display_names_as' => 'slug' ) ); ?>
-			  </ul>
+			  <?php if ( ! is_page( $array_pages_hide_lang )) { ?>
+				  <ul class="menu_mobile__lang_top">
+					<?php  pll_the_languages( array('display_names_as' => 'slug' ) ); ?>
+				  </ul>
+			  <?php } ?>
 
 			  <!-- Button open/close mobile menu -->
 			  <div id="burger" class="menu_mobile__button_switch">

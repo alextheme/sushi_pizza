@@ -401,6 +401,8 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
         <div class="row row-margin">
 
     <?php }
+
+
     add_action( 'woocommerce_checkout_after_customer_details', function () {
         echo '</div></div>';
     });
@@ -424,6 +426,19 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
             }
         }
     }
+
+
+    add_filter( 'woocommerce_add_cart_item_data', 'add_cart_unique_key', 20, 2 );
+    function add_cart_unique_key( $cart_item_data, $product_id ) {
+        $is_composite_product = $cart_item_data['composite_product'];
+
+        if ( $is_composite_product === true ) {
+            // generate a unique hash key and add a unique key to the product data in the cart
+            $cart_item_data['unique_key'] = $product_id . '__' . md5( microtime() . rand() );
+            return $cart_item_data;
+        }
+    }
+
 
 
 }
