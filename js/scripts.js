@@ -118,7 +118,7 @@ jQuery(document).ready(function ($) {
     if ("#delivery_way_field .woocommerce-input-wrapper") {
         $(`<div class="switch-buttons">
                 <span id="d1" class="switch-button delivery-way left-buttton" value="Dostawa 40-90 min">${ deliver9 }</span>
-                <span id="d2" class="switch-button delivery-way right-buttton" value="Odbiór osobisty" data-coupon-name="ODBR10">${ teke }</span>
+                <span id="d2" class="switch-button delivery-way right-buttton" value="Odbiór osobisty">${ teke }</span>
                </div>`).appendTo('#delivery_way_field');
 
         $('.delivery-way').bind('click', function (e) {
@@ -188,20 +188,6 @@ jQuery(document).ready(function ($) {
     }
     /* *************** coupons **************** */
 
-    // TODO
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
-    $('.switch-button.delivery-way.right-buttton').click();
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
-    // TEMP TODO
 
 
     if ("#after_deliver_field .woocommerce-input-wrapper") {

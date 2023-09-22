@@ -176,6 +176,10 @@ body {
     li:not(:last-child) {
       margin-right: 15px;
     }
+
+    @media (max-width: 992px) {
+      display: none;
+    }
   }
 
   a {
@@ -1204,7 +1208,17 @@ body.body--preloader_show {
   }
 }
 
-// BUTTONS
+.product-content-row {
+  .plink {
+    height: 100%;
+
+    img {
+      object-fit: contain;
+    }
+  }
+}
+
+  // BUTTONS
 .add_to_cart_button,
 .product-footer .button.add_to_cart_button {
   margin-bottom: 1px;

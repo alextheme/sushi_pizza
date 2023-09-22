@@ -6,6 +6,8 @@ if ( isset($args) && is_array($args) && array_key_exists( 'id', $args ) ) {
 	$id = $args['id'];
 }
 
+$acf_option = get_field('kontacts-' . pll_current_language(), 'options');
+
 $blocked = is_blocked();
 ?>
 <span class="blocked_shops" id="blocked_shops"><?php echo $blocked; ?></span>
@@ -26,24 +28,25 @@ $blocked = is_blocked();
 	<section class="hero_box__schedule lg33 md100 xs100 right-banner-info padding-30">
 		<div class="row">
 			<div class="hero_box__schedule_w lg100 md50 xs100 bckg-info">
-				<h3 class="hero_box__schedule_title"><?php the_field('tytul', $id, false);?></h3>
-				<span class="hero_box__schedule_time work-time"><?php the_field('czas_pracy', $id, false);?></span>
+
+				<h3 class="hero_box__schedule_title"><?= $acf_option['title'] ?></h3>
+				<span class="hero_box__schedule_time work-time"><?= $acf_option['work-time'] ?></span>
 				<div class="hero_box__schedule_info_w lg100 info-tabs text-center">
 					<span class="hero_box__schedule_info">
 						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_bag.svg' ?>" alt="" loading="lazy">
-						<?php the_field('min_zam', $id, false);?>
+						<?= $acf_option['min_order'] ?>
 					</span>
 					<span class="hero_box__schedule_info">
 						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_clock.svg' ?>" alt="" loading="lazy">
-						<?php the_field('czas_dostawy', $id, false);?>
+						<?= $acf_option['delivery-time'] ?>
 					</span>
 					<span class="hero_box__schedule_info lg100">
 						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_car.svg' ?>" alt="" loading="lazy">
-						<?php the_field('przewoz', $id, false);?>
+						<?= $acf_option['delivery'] ?>
 					</span>
 					<span id="addr1" class="hero_box__schedule_info">
 						<img src="<?php echo get_template_directory_uri() . '/images/icons/icon_mark.svg' ?>" alt="" loading="lazy">
-						<?php the_field('adres', $id, false);?>
+						<?= $acf_option['address'] ?>
 					</span>
 				</div>
 			</div>

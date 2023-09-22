@@ -158,6 +158,11 @@ body:before {
 .navbar-shop-buttons .navbar-shop-buttons-lang li:not(:last-child) {
   margin-right: 15px;
 }
+@media (max-width: 992px) {
+  .navbar-shop-buttons .navbar-shop-buttons-lang {
+    display: none;
+  }
+}
 .navbar-shop-buttons a:hover {
   color: var(--accent_color);
 }
@@ -1012,6 +1017,13 @@ body.body--preloader_show {
   .before_checkout__header_btn.button-before:before {
     display: block;
   }
+}
+
+.product-content-row .plink {
+  height: 100%;
+}
+.product-content-row .plink img {
+  object-fit: contain;
 }
 
 .add_to_cart_button,

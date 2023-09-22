@@ -1,5 +1,3 @@
-<?php global $sushi_pizza_option; ?>
-
 <footer class="lg100 footer bckg-white p-top p-bottom-30">
 	<div class="container">
 		<div class="row copyright">
@@ -10,12 +8,14 @@
 				<span><?php echo pll__( 'Strona stworzona i prowadzona przez' ); ?> <a class="txt-red" href="https://entsolve.pl" target="_blank">entsolve.pl</a></span>
 			</div>
 		</div>
-		<?php if ($sushi_pizza_option) { ?>
+		<?php
+
+		$payment_methods = get_field( 'payment_methods', 'options' );
+		if ($payment_methods) { ?>
 			<ul class="payment_methods__list">
-				<?php $arr = explode( ',', $sushi_pizza_option['footer_payments'] );
-				foreach ( $arr as $id ) { ?>
+				<?php foreach ( $payment_methods as $payment_method ) { ?>
 					<li class="payment_method__item">
-						<?php echo wp_get_attachment_image( $id ); ?>
+						<img src="<?= esc_url( $payment_method['image'] ) ?>" alt="payment method icon">
 					</li>
 				<?php } ?>
 			</ul>

@@ -2,7 +2,7 @@
 if(!defined('DS_THEME')) {
 	define('DS_THEME', get_theme_root().'/'.get_template().'/');
 }
-global $sushi_pizza_option;
+
 require_once DS_THEME.'libs/utils.php';
 require_once DS_THEME.'libs/posttypes.php';
 
@@ -24,7 +24,7 @@ function mojeStyleiSkrypty() {
 	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/js/scripts.js', array ( 'jquery' ), 1.1, true);
 
     wp_register_script( 'map_scripts', get_template_directory_uri() . '/js/maps.js', array ( 'jquery' ), 1.1, true);
-    wp_register_script( 'google_map_js', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $sushi_pizza_option['map_settings_key'] ) . '&v=weekly&libraries=places&callback=initMap', array ( 'jquery' ), 1.1, true);
+    wp_register_script( 'google_map_js', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( get_field( 'key_google_map', 'options' ) ) . '&v=weekly&libraries=places&callback=initMap', array ( 'jquery' ), 1.1, true);
     wp_register_script( 'polyfill', 'https://polyfill.io/v3/polyfill.js?features=es5,es6,es7&flags=gated', array ( 'jquery' ), 1.1, true);
 
     // Page is Checkout (pl, ru, ua), Dostava (pl, ru, ua)
@@ -451,11 +451,6 @@ function block_shop_func() {
 require_once get_template_directory() . '/inc/tgm/options.php';
 
 /**
- * Redux Option Include
- */
-require_once get_template_directory() . '/inc/redux_framework/redux_options.php';
-
-/**
  * AJAX
  */
 require_once get_template_directory() . '/inc/ajax/ajax.php';
@@ -466,6 +461,11 @@ require_once get_template_directory() . '/inc/ajax/ajax.php';
 require_once get_template_directory() . '/inc/theme_settings/system.php';
 
 include_once get_template_directory() . '/partials/front/_variable-product-functions.php';
+
+/**
+ * ACF THEME OPTIONS PAGE
+ */
+include_once get_template_directory() . '/inc/acf/acf-settings.php';
 
 
 /**

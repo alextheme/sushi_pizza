@@ -19,8 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-global $sushi_pizza_option;
-
 do_action( 'woocommerce_before_checkout_form', $checkout );
 
 // If checkout registration is disabled and not logged in, the user cannot checkout.
@@ -38,7 +36,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
         <div class="col1-set" id="customer_details"
-			 data-self-pickup-discount-coupon="<?php echo $sushi_pizza_option['self_pickup_discount_coupon'] ?>"
+			 data-self-pickup-discount-coupon="<?= get_field( 'coupon', 'options' ); ?>"
 		>
             <div class="col-1">
                 <?php do_action( 'woocommerce_checkout_billing' ); ?>

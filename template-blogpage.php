@@ -4,8 +4,6 @@
 
 get_header();
 
-global $sushi_pizza_option;
-
 ?>
 
 <div class="blog blog_template lg100 page-blackcontent offset-header offset-bottom">

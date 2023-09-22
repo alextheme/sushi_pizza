@@ -9,6 +9,8 @@ if ( isset($args) && is_array($args) && array_key_exists( 'id', $args ) ) {
 	$id = $args['id'];
 }
 
+$acf_option = get_field('kontacts-' . pll_current_language(), 'options');
+
 $blocked = is_blocked();
 ?>
 
@@ -37,25 +39,31 @@ $blocked = is_blocked();
 			<section class="hero_box__schedule contact_template__schedule md100 xs100 right-banner-info ">
 				<div class="row">
 					<div class="hero_box__schedule_w lg100 md50 xs100 bckg-info">
-						<h3 class="hero_box__schedule_title"><?php the_field('tytul', $id, false);?></h3>
-						<span class="hero_box__schedule_time work-time"><?php the_field('czas_pracy', $id, false);?></span>
+
+						<h3 class="hero_box__schedule_title"><?= $acf_option['title'] ?></h3>
+						<span class="hero_box__schedule_time work-time"><?= $acf_option['work-time'] ?></span>
+
 						<div class="hero_box__schedule_info_w lg100 info-tabs text-center">
-					<span class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/bag_yellow.svg' ?>" alt="" loading="lazy">
-						<?php the_field('min_zam', $id);?>
-					</span>
+
 							<span class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/timer_yellow.svg' ?>" alt="" loading="lazy">
-						<?php the_field('czas_dostawy', $id);?>
-					</span>
+								<img src="<?php echo get_template_directory_uri() . '/images/icons/bag_yellow.svg' ?>" alt="" loading="lazy">
+								<?= $acf_option['min_order'] ?>
+							</span>
+
+							<span class="hero_box__schedule_info">
+								<img src="<?php echo get_template_directory_uri() . '/images/icons/timer_yellow.svg' ?>" alt="" loading="lazy">
+								<?= $acf_option['delivery-time'] ?>
+							</span>
+
 							<span class="hero_box__schedule_info lg100">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/car_yellow.svg' ?>" alt="" loading="lazy">
-						<?php the_field('przewoz', $id);?>
-					</span>
+								<img src="<?php echo get_template_directory_uri() . '/images/icons/car_yellow.svg' ?>" alt="" loading="lazy">
+								<?= $acf_option['delivery'] ?>
+							</span>
+
 							<span id="addr1" class="hero_box__schedule_info">
-						<img src="<?php echo get_template_directory_uri() . '/images/icons/location_yellow.svg' ?>" alt="" loading="lazy">
-						<?php the_field('adres', $id);?>
-					</span>
+								<img src="<?php echo get_template_directory_uri() . '/images/icons/location_yellow.svg' ?>" alt="" loading="lazy">
+								<?= $acf_option['address'] ?>
+							</span>
 						</div>
 					</div>
 				</div>
