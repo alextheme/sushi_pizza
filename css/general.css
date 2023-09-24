@@ -2161,7 +2161,9 @@ form.checkout.woocommerce-checkout {
   opacity: 0;
   user-select: none;
 }
-.cart-item.cart-item--component h4,
+.cart-item.cart-item--component h4 {
+  white-space: normal;
+}
 .cart-item.cart-item--component .cproduct-price,
 .cart-item.cart-item--component div {
   white-space: nowrap;
@@ -2172,11 +2174,11 @@ form.checkout.woocommerce-checkout {
   line-height: 1.5;
 }
 .cart-item.cart-item--component .cproduct-price {
-  margin-right: 10px;
+  margin-left: auto;
+  margin-right: 4px;
   margin-bottom: 0;
 }
 .cart-item.cart-item--component div {
-  margin-left: auto;
   width: auto;
 }
 
