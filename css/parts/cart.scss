@@ -35,6 +35,12 @@
   .minus-btn {
     cursor: pointer;
   }
+
+  &.removal {
+    opacity: .2;
+    user-select: none;
+    pointer-events: none;
+  }
 }
 .cart-item.cart-item--component {
   padding-left: 20px;

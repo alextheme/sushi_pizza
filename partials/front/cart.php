@@ -120,7 +120,10 @@ if ($lang == 'ru' || get_locale() == "ru_RU") {
                                 <div class="buttons-qnt d-flex align-center">
 
                                     <button type="button" class="minus-btn">
-                                        <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/icon_minus.svg' ); ?>" alt="+" loading="lazy">
+                                        <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="10.5" cy="11" r="10" fill="#464646" stroke="#DEDDE0"/>
+                                            <path d="M6 11.5C12.9048 11.5 14.631 11.5 14.631 11.5" stroke="white"/>
+                                        </svg>
                                     </button>
 
                                     <input type="text" step="1" min="-1" max="100" title="Szt." size="4" placeholder="" inputmode="numeric"
@@ -136,7 +139,12 @@ if ($lang == 'ru' || get_locale() == "ru_RU") {
                                     >
 
                                     <button type="button" class="plus-btn">
-                                        <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/icon_plus.svg' ); ?>" alt="+" loading="lazy">
+                                        <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="10.5" cy="11" r="10" fill="white" stroke="#DEDDE0"/>
+                                            <circle cx="10.5" cy="11" r="10" fill="white" stroke="#DEDDE0"/>
+                                            <path d="M6 10.8155C12.9048 10.8155 14.631 10.8155 14.631 10.8155" stroke="#191A1F"/>
+                                            <path d="M10.3154 15.131C10.3154 8.22619 10.3154 6.5 10.3154 6.5" stroke="#191A1F"/>
+                                        </svg>
                                     </button>
 
                                 </div>
@@ -222,6 +230,8 @@ if ($lang == 'ru' || get_locale() == "ru_RU") {
          */
         $('.remove-in-cart').on('click', function (event) {
             event.preventDefault();
+
+            this.closest('.cart-item').classList.add('removal')
 
             const target_cart_item_keys = this.dataset.composite_key
                 ?  Array.from( document.querySelectorAll(`.remove-in-cart[data-composite_key="${this.dataset.composite_key}"]`) )

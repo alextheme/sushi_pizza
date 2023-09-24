@@ -61,7 +61,7 @@ function o10_show_popup_select_variable_product() {
     }
 
     if ($product_id <= 0) {
-        return wp_send_json(array(
+        wp_send_json(array(
             'error' => true,
         ));
     }
@@ -93,7 +93,7 @@ function o10_show_popup_select_variant_with_additional_products() {
     }
 
     if ($product_id <= 0) {
-        return wp_send_json(array(
+        wp_send_json(array(
             'error' => true,
         ));
     }
@@ -124,7 +124,7 @@ function o10_show_popup_select_grouped_product() {
     }
 
     if ($product_id <= 0) {
-        return wp_send_json(array(
+        wp_send_json(array(
             'error' => true,
         ));
     }
@@ -167,14 +167,16 @@ function o10_woocommerce_ajax_add_to_cart() {
             wc_add_to_cart_message(array($product_id => $quantity), true);
         }
 
-        WC_AJAX::get_refreshed_fragments();
+//        WC_AJAX::get_refreshed_fragments();
+
+        wp_send_json( array( 'success' => true ) );
+
     } else {
 
-        $data = array(
+        wp_send_json( array(
             'error' => true,
-            'product_url' => apply_filters('woocommerce_cart_redirect_after_error', get_permalink($product_id), $product_id));
-
-        echo wp_send_json($data);
+            'product_url' => apply_filters('woocommerce_cart_redirect_after_error', get_permalink($product_id), $product_id)
+        ) );
     }
 
     wp_die();
@@ -313,7 +315,7 @@ function update_cart_item_quantity_callback() {
 
     }
 
-    return wp_send_json( array( 'success' => true, 'message' => __('Товари успішно обновлені в корзині', 'americansuchi') ) );
+    wp_send_json( array( 'success' => true, 'message' => __('Товари успішно обновлені в корзині', 'americansuchi') ) );
 
     // Возвращаем обновленные фрагменты корзины
 //    wc_get_template('cart/mini-cart.php', array('show_buttons' => true));
@@ -341,7 +343,7 @@ function o10_remove_items_from_cart() {
 
     WC()->cart->empty_cart();
 
-    return wp_send_json(array(
+    wp_send_json(array(
         'message' => 'cart is empty',
         'defaultHref' => $defaultHref,
     ));

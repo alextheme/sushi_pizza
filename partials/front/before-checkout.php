@@ -70,7 +70,7 @@ if ($lang == 'ru') {
                     <div class="lg100 product-footer">
                         <span class="price"><?php $product = wc_get_product(get_the_ID());
                             echo $product->get_price(); ?> zł</span>
-                        <?php echo sprintf('<a href="%s" pamount="0" data-quantity="1" class="%s" %s>' . pll__('Chcę') . '</a>',
+                        <?php echo sprintf('<a href="%s" pamount="0" data-quantity="1" class="%s" %s><span class="preloader"></span>' . pll__('Chcę') . '</a>',
                             esc_url($product->add_to_cart_url()),
                             esc_attr(implode(' ',
                                 array_filter(array(
@@ -112,6 +112,82 @@ if ($lang == 'ru') {
                 $('.before-checkout-products').removeClass('active-prom')
                 $('body').css( { overflow: 'unset' })
             })
+
+
+            /* Add to from cart -- Simple Product */
+            $('.product_type_simple.add_to_cart_button').on('click', function (event) {
+                event.preventDefault();
+                console.log('add to cart from pop-up')
+
+                if (blocked_shops === "calysklep") { alert(wecant);  return; }
+
+                let product_id = $(this).attr('data-product_id');
+
+                const trigger_product_id = this.dataset.product_id
+                $(this).addClass('loading')
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    // url: wc_add_to_cart_params.ajax_url,
+                    url: ajax_data.ajaxUrl,
+                    data: {
+                        action: 'o10_woocommerce_ajax_add_to_cart',
+                        nonce: ajax_data.nonce,
+                        lang: Cookies.get('pll_language'),
+                        product_id: product_id,
+                        variation_id: 0,
+                        quantity: 1,
+                    },
+                    success: function (result) {
+                        console.log( 'success' )
+                        const trigger = $( '.add_to_cart_button[data-product_id="'+ trigger_product_id +'"]'  )
+                        trigger.addClass('added')
+                    },
+                    error: function (msg) {
+                        console.error(msg);
+                    },
+                    beforeSend: function () {
+                        console.log( 'before')
+                    },
+                    complete: function () {
+                        console.log( 'complete' )
+                        const trigger = $( '.add_to_cart_button[data-product_id="'+ trigger_product_id +'"]'  )
+                        trigger.removeClass('loading')
+                    }
+                })
+            });
+
+
+            // UPDATE Cart
+            function updateShoppingCartAjax() {
+                console.log( 'upd cart prodListPhp')
+
+                $.ajax({
+                    // url: wc_add_to_cart_params.ajax_url,
+                    url: ajax_data.ajaxUrl,
+                    type: 'get',
+                    data: {
+                        action: 'o10_update_cart',
+                        nonce: ajax_data.nonce,
+                        lang: Cookies.get('pll_language'),
+                    },
+                    success: function (response) {
+                        $('#product-sidebar-cart').html(response);
+                        $('#product-sidebar-cart .cart-content').addClass('active-cart');
+                    },
+                    error: function (response) {
+                        console.error(response.statusText);
+                        console.error(response.responseText);
+                    },
+                    beforeSend: function () {
+                        $('.cart_content_preloader').addClass('show');
+                    },
+                    complete: function () {
+                        $('.cart_content_preloader').removeClass('show');
+                    }
+                })
+            }
 
         })
     })(jQuery);
