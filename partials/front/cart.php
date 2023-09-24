@@ -415,4 +415,11 @@ if ($lang == 'ru' || get_locale() == "ru_RU") {
 
     })(jQuery);
 </script>
-<script id="delAllTxtAfterMe">setTimeout(()=>{const n = document.getElementById('delAllTxtAfterMe').nextSibling;n.nodeType===Node.TEXT_NODE?n.remove():''},0)</script>
+<script id="delAllTxtAfterMe">
+    setTimeout(()=>{
+        const n = document.getElementById('delAllTxtAfterMe')?.nextSibling;
+        if ( n ) {
+            n.nodeType === Node.TEXT_NODE ? n.remove() : ''
+        }
+    }, 0)
+</script>
