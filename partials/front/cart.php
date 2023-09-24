@@ -126,7 +126,7 @@ if ($lang == 'ru' || get_locale() == "ru_RU") {
                                         </svg>
                                     </button>
 
-                                    <input type="text" step="1" min="-1" max="100" title="Szt." size="4" placeholder="" inputmode="numeric"
+                                    <input type="text" step="1" min="1" max="100" title="Szt." size="4" placeholder="" inputmode="numeric"
                                            class="input-text qty qty-cart text" readonly
                                            data-product_id="<?php echo esc_attr( $product_id ); ?>"
                                            data-variation_id="<?php echo esc_attr( $variation_id ); ?>"
@@ -197,24 +197,24 @@ if ($lang == 'ru' || get_locale() == "ru_RU") {
             const inputQuantity = this.closest('.cart-item').querySelector('.qty-cart')
             const value = +inputQuantity.value // 12
             const max = +inputQuantity.getAttribute('max') // 100
-            const min = +inputQuantity.getAttribute('min') // -1
+            const min = +inputQuantity.getAttribute('min') // 1
             const step = +inputQuantity.getAttribute('step') // 1
 
             // Change the value if plus or minus
             if ( this.classList.contains('plus-btn') ) {
-                if ( max && (max <= value) ) {
-                    inputQuantity.value = max
-                } else {
+
+                if ( value < max ) {
                     inputQuantity.value = value + step
                     componentUpdateQty( inputQuantity )
                 }
+
             } else {
-                if ( min && (min >= value) ) {
-                    inputQuantity.value = min
-                } else if (value > 0) {
+
+                if ( value > min ) {
                     inputQuantity.value = value - step
                     componentUpdateQty( inputQuantity )
                 }
+
             }
 
             function componentUpdateQty( inputQuantity, operation = 'set_quantity' ) {
