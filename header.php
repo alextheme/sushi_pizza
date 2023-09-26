@@ -45,7 +45,7 @@ if ( isset($args) && is_array($args) && array_key_exists( 'id', $args ) ) {
 
 $blocked = is_blocked();
 
-$array_pages_hide_lang = [27, 269, 271];
+$array_pages_hide_lang = [88888];
 
 $socials = get_field( 'socials', 'options' );
 
@@ -53,7 +53,7 @@ $socials = get_field( 'socials', 'options' );
 <div class="header lg100">
   <div class="container">
 	  <div class="row align-center">
-		  <header class="logo" >
+		  <header class="logo">
 			  <a href="<?php echo esc_url( home_url() );?>">
 				  <?php if ( get_field('logo', 'options') ) { ?>
 					  <img src="<?= esc_url( get_field('logo', 'options') ) ?>" alt="logo site" loading="lazy">
@@ -93,6 +93,7 @@ $socials = get_field( 'socials', 'options' );
 								  <?php } ?>
 
 							  <?php } ?>
+
 						  </ul>
 					  <?php } ?>
 
@@ -102,11 +103,12 @@ $socials = get_field( 'socials', 'options' );
 						  </ul>
 					  <?php } ?>
 
-					  <div class="menu_mobile__bottom_links">
-						  <a href="/polityka-prywatnosci">Polityka prywatności</a>
-						  <a href="/regulamin">Regulamin</a>
-						  <a href="/alergeny">Alergeny</a>
-					  </div>
+					  <?php wp_nav_menu(
+						  array(
+							  'theme_location' => 'footer-menu',
+							  'menu_class' => 'menu_mobile__bottom_links',
+						  )
+					  ); ?>
 
 				  </div>
 
@@ -150,11 +152,9 @@ $socials = get_field( 'socials', 'options' );
 
 		  <div class="menu_mobile__handlers">
 
-			  <?php if ( ! is_page( $array_pages_hide_lang )) { ?>
-				  <ul class="menu_mobile__lang_top">
-					<?php  pll_the_languages( array('display_names_as' => 'slug' ) ); ?>
-				  </ul>
-			  <?php } ?>
+			  <ul class="menu_mobile__lang_top">
+				<?php  pll_the_languages( array('display_names_as' => 'slug' ) ); ?>
+			  </ul>
 
 			  <!-- Button open/close mobile menu -->
 			  <div id="burger" class="menu_mobile__button_switch">

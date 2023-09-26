@@ -61,6 +61,7 @@ body:before {
 .header .logo a img {
   width: 100%;
   height: auto;
+  background-color: #ffffff;
 }
 .header .header_buttons_w {
   display: flex;
@@ -867,7 +868,7 @@ body:before {
   }
   .variable_product .variable_product__btn_submit .single_add_to_cart_button span {
     font-size: 16px;
-    line-height: 38px;
+    line-height: 35px;
   }
 }
 
@@ -1085,6 +1086,37 @@ body.body--preloader_show {
   .shop-header-tabs.shadow a, .shop-header-tabs.shadow span {
     background: #1E1D1A;
   }
+}
+
+@media screen and (max-width: 767px) {
+  .menu-stopka-menu-w-stopce-ru-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  ul.menu_mobile__bottom_links {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 767px) {
+  ul.menu_mobile__bottom_links .menu-item {
+    width: 100%;
+    margin: 0 !important;
+    text-align: center;
+  }
+  ul.menu_mobile__bottom_links .menu-item:not(:last-child) {
+    padding-bottom: 3px;
+  }
+}
+ul.menu_mobile__bottom_links .menu-item a {
+  width: 100% !important;
+  text-transform: initial;
+  transition: color 300ms ease-in-out;
+}
+ul.menu_mobile__bottom_links .menu-item a:hover {
+  color: var(--accent_color);
 }
 
 body.body--preloader_show .before-checkout-products {

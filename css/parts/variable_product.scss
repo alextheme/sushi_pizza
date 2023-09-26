@@ -54,6 +54,7 @@ body {
       img {
         width: 100%;
         height: auto;
+        background-color: #ffffff;
       }
     }
   }
@@ -1023,7 +1024,7 @@ body {
       .single_add_to_cart_button {
         span {
           font-size: 16px;
-          line-height: 38px;
+          line-height: 35px;
         }
       }
     }
@@ -1305,4 +1306,43 @@ body.body--preloader_show {
     }
   }
 }
+
+.menu-stopka-menu-w-stopce-ru-container {
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+ul.menu_mobile__bottom_links {
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .menu-item {
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      margin: 0 !important;
+      text-align: center;
+
+      &:not(:last-child) {
+        padding-bottom: 3px;
+      }
+    }
+
+    a {
+      width: 100% !important;
+      text-transform: initial;
+      transition: color 300ms ease-in-out;
+
+      &:hover {
+        color: var(--accent_color);
+      }
+    }
+  }
+}
+
+
+
+
 
