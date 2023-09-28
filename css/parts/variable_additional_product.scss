@@ -5,13 +5,13 @@ body {
     }
   }
 
-  &:before {
-    background-image:  url(../images/bg-pizza.svg);
-
-    width: 2931px;
-    height: 2456px;
-    margin-left: -381px;
-  }
+  //&:before {
+  //  background-image:  url(../images/bg-pizza.svg);
+  //
+  //  width: 2931px;
+  //  height: 2456px;
+  //  margin-left: -381px;
+  //}
 
   @media screen and (min-width: 992px) {
     &::-webkit-scrollbar {

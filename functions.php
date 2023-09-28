@@ -25,15 +25,18 @@ function mojeStyleiSkrypty()
     wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), 1.1, true);
 
     wp_register_script('map_scripts', get_template_directory_uri() . '/js/maps.js', array('jquery'), 1.1, true);
-    wp_register_script('google_map_js', 'https://maps.googleapis.com/maps/api/js?key=' . esc_attr(get_field('key_google_map', 'options')) . '&v=weekly&libraries=places&callback=initMap', array('jquery'), 1.1, true);
+    wp_register_script(
+        'google_map_js',
+        'https://maps.googleapis.com/maps/api/js?key='
+        . esc_attr(get_field('key_google_map', 'options'))
+        . '&v=weekly&libraries=places&callback=initMap&libraries=drawing', array('jquery'), 1.1, true);
     wp_register_script('polyfill', 'https://polyfill.io/v3/polyfill.js?features=es5,es6,es7&flags=gated', array('jquery'), 1.1, true);
 
 
-    // Page is (pl, ru, ua):
-    // Checkout
-    // Dostava
-
-    $pages_ids = [27, 269, 271, 102, 205, 207];
+    // Page is (pl, ru, ua)
+    $checkout_pages = [27, 269, 271];
+    $delivery_pages = [102, 205, 207];
+    $pages_ids = array_merge($checkout_pages, $delivery_pages);
 
     if (is_page($pages_ids)) {
         wp_enqueue_script('map_scripts');

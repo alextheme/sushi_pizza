@@ -373,7 +373,7 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
     function add_button_back_to_menu( $checkout ) {
         ?>
             <div class="lg100 p-top-30 d-flex p-bottom-30 breadcrumbs">
-                <a class="button d-flex align-center" href="<?php echo esc_url( home_url('/') ); ?>"><img src="<?php echo esc_url( get_template_directory() . '/images/icons/Group-33.svg' ); ?>" alt="" loading="lazy"><?php echo pll__( 'Wróć do menu' ); ?></a>
+                <a class="button d-flex align-center" href="<?php echo esc_url( home_url('/') ); ?>"><img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/arrow_back.svg' ); ?>" alt="" loading="lazy"><?php echo pll__( 'Wróć do menu' ); ?></a>
             </div>
         <?php
     }
