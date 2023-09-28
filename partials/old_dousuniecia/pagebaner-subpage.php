@@ -1,11 +1,11 @@
 <div class="lg100 banner-subpage">
 	<div class="lg100 banner-subpage-img coverimg">
 		<?php if(get_field('post_banner') != null): ?>
-			<img src="<?php the_field('post_banner'); ?>" alt="">
+			<img src="<?php the_field('post_banner'); ?>" alt="" loading="lazy">
 		<?php elseif(is_search()): ?>
-		<img src="/wp-content/uploads/2022/08/search-bg.jpg" alt="">
+		<img src="/wp-content/uploads/2022/08/search-bg.jpg" alt="" loading="lazy">
 		<?php else: ?>
-			<img src="/wp-content/uploads/2022/07/banner_pod.jpg" alt="">
+			<img src="/wp-content/uploads/2022/07/banner_pod.jpg" alt="" loading="lazy">
 		<?php endif;?>
 	</div>
 	<h1><?php if(!is_home() && !is_search()) {the_title();}elseif(!is_search()){echo 'Aktualności';} ?></h1>

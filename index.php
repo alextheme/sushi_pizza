@@ -76,7 +76,7 @@
 			<article class="lg100 event-body d-flex align-center bckg-white shadowed">
 				<div class="lg20 xs100 event-body-left">
 					<div class="ev-image">
-						<a href="<?php the_permalink(); ?>"><img src="/wp-content/uploads/2022/08/flag-course-exam.png" alt=""></a>
+						<a href="<?php the_permalink(); ?>"><img src="/wp-content/uploads/2022/08/flag-course-exam.png" alt="" loading="lazy"></a>
 					</div>
 				</div>
 				<div class="lg80 xs100 xs-offset-top event-body-middle">
@@ -87,7 +87,7 @@
 						</div>
 						<div class="lg20 xs-offset-top event-body-right">
 							<a href="<?php the_permalink(); ?>">
-								<img src="/wp-content/uploads/2022/07/Vector.svg" alt="">
+								<img src="/wp-content/uploads/2022/07/Vector.svg" alt="" loading="lazy">
 							</a>
 						</div>
 					</div>
@@ -103,7 +103,7 @@
 			<article class="lg100 event-body d-flex align-center bckg-white shadowed">
 				<div class="lg20 xs100 event-body-left">
 					<div class="ev-image">
-						<a href="<?php the_permalink(); ?>"><img src="/wp-content/uploads/2022/08/flag-barcamp.png" alt=""></a>
+						<a href="<?php the_permalink(); ?>"><img src="/wp-content/uploads/2022/08/flag-barcamp.png" alt="" loading="lazy"></a>
 					</div>
 				</div>
 				<div class="lg80 xs100 xs-offset-top event-body-middle">
@@ -114,7 +114,7 @@
 						</div>
 						<div class="lg20 xs-offset-top event-body-right">
 							<a href="<?php the_permalink(); ?>">
-								<img src="/wp-content/uploads/2022/07/Vector.svg" alt="">
+								<img src="/wp-content/uploads/2022/07/Vector.svg" alt="" loading="lazy">
 							</a>
 						</div>
 					</div>
@@ -133,7 +133,7 @@
 			<article class="lg100 event-body d-flex align-center bckg-white shadowed">
 				<div class="lg20 xs100 event-body-left">
 					<div class="ev-image">
-						<a href="<?php the_permalink(); ?>"><img src="/wp-content/uploads/2022/08/flag-news.png" alt=""></a>
+						<a href="<?php the_permalink(); ?>"><img src="/wp-content/uploads/2022/08/flag-news.png" alt="" loading="lazy"></a>
 					</div>
 				</div>
 				<div class="lg80 xs100 xs-offset-top event-body-middle">
@@ -144,7 +144,7 @@
 						</div>
 						<div class="lg20 xs-offset-top event-body-right">
 							<a href="<?php the_permalink(); ?>">
-								<img src="/wp-content/uploads/2022/07/Vector.svg" alt="">
+								<img src="/wp-content/uploads/2022/07/Vector.svg" alt="" loading="lazy">
 							</a>
 						</div>
 					</div>

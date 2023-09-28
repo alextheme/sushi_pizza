@@ -31,7 +31,10 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
 
 <div class="variable_product">
     <div class="variable_product__wrapper">
-        <span class="variable_product__close_btn" aria-label="button close popup variable product"><span></span></span>
+
+        <span onclick="document.body.classList.remove('body--preloader_show')"
+              class="variable_product__close_btn"
+              aria-label="button close popup variable product"><span></span></span>
 
         <form
             class="variable_product__form variations_form"
@@ -58,15 +61,15 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                     <li class="variable_product__item">
                         <input type="radio"
                                name="variable_<?php echo esc_attr( $attribute_name ); ?>"
-                               class="variable_product__radio variable_product__radio_<?php echo esc_attr( $attr_i ); ?>"
+                               class="variable_product__input variable_product__input_<?php echo esc_attr( $attr_i ); ?>"
                                id="variable_<?php echo esc_attr( $attribute_name.'_'.$option ); ?>"
                                data-attribute_name="<?php echo esc_attr( $attribute_name ); ?>"
                                data-term_id="<?php echo esc_attr( $term->term_id ); ?>"
                                data-term_slug="<?php echo esc_attr( $term->slug ); ?>"
                             <?php echo $default_select ? 'checked="checked"' : ''; ?>
                         >
-                        <label class="variable_product__radio_label" for="variable_<?php echo esc_attr( $attribute_name.'_'.$option ); ?>">
-                            <span class="variable_product__radio_title"><?php echo esc_html( $term->name ); ?></span>
+                        <label class="variable_product__label" for="variable_<?php echo esc_attr( $attribute_name.'_'.$option ); ?>">
+                            <span class="variable_product__item_title"><?php echo esc_html( $term->name ); ?></span>
                             <span class="variable_product__icon"></span>
                         </label>
                     </li>
@@ -100,7 +103,7 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
             // CLOSED POPUP SELECT VARIANT
             (() => {
                 $('.variable_product__close_btn').on('click', e => {
-                    $('body').removeClass('variable_popup');
+                    $('body').removeClass('body--preloader_show');
                 });
             })();// - CLOSED POPUP SELECT VARIANT
 
@@ -109,8 +112,8 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
             (() => {
                 $('input[name="variation_id"]').val(getVariantId());
 
-                $('.variable_product__radio').on('change', function() {
-                    var selected = $('.variable_product__radio_0:checked');
+                $('.variable_product__input').on('change', function() {
+                    var selected = $('.variable_product__input_0:checked');
                     $('input[name="variation_id"]').val( getVariantId() );
                 });
 
@@ -118,7 +121,7 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                     var variations = $('.variable_product__form').data('product_variations');
                     var attributes = {};
 
-                    $('.variable_product__radio').each( (i, elem) => {
+                    $('.variable_product__input').each( (i, elem) => {
                         var $elem = $(elem);
 
                         if ( $elem.is(':checked' ) ) {
@@ -161,40 +164,36 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
             })(); // - GET Variant Product ID
 
 
-            // ADD TO CART VARIABLE PRODUCT
+            // ADD TO CART -- VARIABLE PRODUCT
             (() => {
                 $('.variable_product__btn_submit .single_add_to_cart_button').on('click', function(e) {
                     e.preventDefault();
 
-                    console.log( 'single_add_to_cart_button | variable-producn.php' )
-
+                    var product_id = $('.variations_form').find('input[name="product_id"]').val();
                     var variation_id = $('.variations_form').find('input[name="variation_id"]').val();
-                    var quantity = 1;
 
                     $.ajax({
                         type: 'POST',
                         url: ajax_data.ajaxUrl,
                         data: {
-                            action: 'o10_add_to_cart_variable_product',
+                            action: 'o10_woocommerce_ajax_add_to_cart',
                             nonce: ajax_data.nonce,
                             lang: Cookies.get('pll_language'),
-                            product_id: variation_id,
-                            quantity: quantity,
+                            product_id: product_id,
+                            variation_id: variation_id,
+                            quantity: 1,
+                        },
+                        beforeSend: function () {
+                            $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
                         },
                         success: function(response) {
-                            // Оновити міні-кошик або виконати інші дії
-                            console.log( response || 'Товар додано до кошика.');
-
-                            $('body').removeClass('variable_popup');
-
                             updateShoppingCart();
                         },
                         error: function (error) {
                             console.error(error);
-                            $('body').removeClass('variable_popup');
                         },
-                        beforeSend: function () {
-                            $('#before-checkout').html('<div id="preloader" class="preloader preloader2"><div class="cssload-loader"><div class="cssload-inner cssload-one"></div><div class="cssload-inner cssload-two"></div><div class="cssload-inner cssload-three"></div></div></div>');
+                        complete: function () {
+                            $('body').removeClass('body--preloader_show').css({ paddingRight: '0px' })
                         }
                     });
                 });
@@ -203,9 +202,8 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
 
             function updateShoppingCart() {
 
-                console.log( 'update Shopping Cart | before-checkout-variable-product' )
-
                 $.ajax({
+                    // url: wc_add_to_cart_params.ajax_url,
                     url: ajax_data.ajaxUrl,
                     type: 'get',
                     data: {
@@ -219,10 +217,15 @@ $variations_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $variations_j
                     error: function (response) {
                         console.error(response.statusText);
                         console.error(response.responseText);
+                    },
+                    beforeSend: function () {
+                        $('.cart_content_preloader').addClass('show');
+                    },
+                    complete: function () {
+                        $('.cart_content_preloader').removeClass('show');
                     }
                 })
             }
-
         })
     })(jQuery);
 </script>

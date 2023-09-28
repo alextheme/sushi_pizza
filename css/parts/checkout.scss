@@ -1,0 +1,95 @@
+// before checkout
+
+.products.before-check {
+
+  .product-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-content-row {
+    margin-bottom: auto;
+  }
+
+}
+
+// Form
+form.checkout.woocommerce-checkout {
+  padding-bottom: 50px;
+}
+
+// Coupon messages
+.woocommerce {
+  .woocommerce-form-coupon-toggle {}
+  .woocommerce-message,
+  .woocommerce-error {
+    display: none;
+  }
+}
+
+// Button remove coupon
+.woocommerce-remove-coupon {
+  display: none;
+}
+
+.woocommerce-table.woocommerce-table--order-details.shop_table.order_details {
+  tfoot {
+    position: relative;
+    display: block;
+    margin-top: 50px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      width: 80%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.5);
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.add_to_cart_button {
+
+  .preloader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+    background-color: transparent;
+    border: 2px solid var(--accent_color);
+    border-top-color: transparent;
+    transform: translate(-100%, -40%);
+
+    animation: add_to_cart_preloader_animation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  &.loading {
+    color: transparent !important;
+
+    .preloader {
+      display: inline-block;
+    }
+  }
+}
+
+@keyframes add_to_cart_preloader_animation {
+  0% {
+    transform: translate(-100%, -40%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-100%, -40%) rotate(360deg);
+  }
+}
+
+
+
+
