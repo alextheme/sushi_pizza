@@ -1,3 +1,12 @@
+<?php
+
+$pages_redirect = [26, 1603, 1597];
+if (is_page($pages_redirect)) {
+	wp_redirect('/');
+}
+
+?>
+
 <?php get_header(); ?>
 
 <?php if(have_posts()) :

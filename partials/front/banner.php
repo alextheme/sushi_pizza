@@ -6,8 +6,6 @@ if ( isset($args) && is_array($args) && array_key_exists( 'id', $args ) ) {
 	$id = $args['id'];
 }
 
-$acf_option = get_field('kontacts-' . pll_current_language(), 'options');
-
 $blocked = is_blocked();
 ?>
 <span class="blocked_shops" id="blocked_shops"><?php echo $blocked; ?></span>
@@ -28,6 +26,8 @@ $blocked = is_blocked();
 	<section class="hero_box__schedule lg33 md100 xs100 right-banner-info padding-30">
 		<div class="row">
 			<div class="hero_box__schedule_w lg100 md50 xs100 bckg-info">
+
+				<?php $acf_option = get_field('kontacts-' . pll_current_language(), 'options'); ?>
 
 				<h3 class="hero_box__schedule_title"><?= $acf_option['title'] ?></h3>
 				<span class="hero_box__schedule_time work-time"><?= $acf_option['work-time'] ?></span>

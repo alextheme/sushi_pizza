@@ -1,6 +1,6 @@
 <?php
 get_header();
-/* Template Name: Kontakt */
+/* Template Name: Kontakt Template */
 
 global $post;
 
@@ -9,15 +9,13 @@ if ( isset($args) && is_array($args) && array_key_exists( 'id', $args ) ) {
 	$id = $args['id'];
 }
 
-$acf_option = get_field('kontacts-' . pll_current_language(), 'options');
-
 $blocked = is_blocked();
 ?>
 
 <div class="lg100 page-blackcontent contact offset-header offset-bottom contact_template">
 <div class="container">
 	<div class="row">
-		<section class="lg100 header-section offset-top p-top p-bottom"> 
+		<section class="lg100 header-section offset-top p-top p-bottom">
 			<h1 class="txt-center"><?php echo pll__( 'Masz jakieś pytania lub propozycje?' ); ?></h1>
 		</section>
 	</div>
@@ -39,6 +37,8 @@ $blocked = is_blocked();
 			<section class="hero_box__schedule contact_template__schedule md100 xs100 right-banner-info ">
 				<div class="row">
 					<div class="hero_box__schedule_w lg100 md50 xs100 bckg-info">
+
+						<?php $acf_option = get_field('kontacts-' . pll_current_language(), 'options'); ?>
 
 						<h3 class="hero_box__schedule_title"><?= $acf_option['title'] ?></h3>
 						<span class="hero_box__schedule_time work-time"><?= $acf_option['work-time'] ?></span>
@@ -70,7 +70,7 @@ $blocked = is_blocked();
 			</section>
 		</div>
 		<section class="lg60 xs100 contact-form padding-30">
-			<?php the_field('formularz');?>
+			<?php if ( have_posts() ) { while ( have_posts() ) { the_post();  the_content(); }} ?>
 		</section>
 	</div>
 
@@ -79,4 +79,4 @@ $blocked = is_blocked();
 </div>
 </div>
 
-<?php get_footer();?>   
+<?php get_footer();?>

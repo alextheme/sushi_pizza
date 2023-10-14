@@ -332,65 +332,6 @@ $attributes = $product->get_variation_attributes();
                 }
             })();
 
-            // +/- buttons quantity
-            // ;(() => {
-            //
-            //     // plus quantity (+)
-            //     $('.variable_product__product_button.btn_plus').on('click', function (e) {
-            //         var $item = getItem(this)
-            //         var $inputQuantity = getInput( $item )
-            //
-            //         if ($item.hasClass('zero_product')) {
-            //             $item.removeClass('zero_product')
-            //             $inputQuantity.val(1)
-            //         } else {
-            //             var quantity = +$inputQuantity.val()
-            //             $inputQuantity.val(quantity + 1)
-            //         }
-            //
-            //         $inputQuantity.trigger('change')
-            //     })
-            //
-            //     // minus quantity (-)
-            //     $('.variable_product__product_button.btn_minus').on('click', function (e) {
-            //         var $item = getItem(this)
-            //         var $inputQuantity = getInput( $item )
-            //
-            //         var quantity = +$inputQuantity.val();
-            //         $inputQuantity.val(quantity - 1).trigger('change')
-            //
-            //         if (quantity - 1 === 0) {
-            //             $item.addClass('zero_product')
-            //         }
-            //     })
-            //
-            //     // init 1 quantity
-            //     $('.variable_product__product_text').on('click', function (e) {
-            //         var $item = getItem(this)
-            //         var $inputQuantity = getInput( $item )
-            //
-            //         if (+$inputQuantity.val() > 0) {
-            //             return;
-            //         }
-            //
-            //         if ($item.hasClass('zero_product')) {
-            //             $item.removeClass('zero_product')
-            //             $inputQuantity.val(1).trigger('change')
-            //         }
-            //     })
-            //
-            //     function getItem( elem ) {
-            //         return $(elem).closest('.simpleAdditionalProducts .variable_product__product_item')
-            //     }
-            //
-            //     function getInput( $elem ) {
-            //         return $elem.find('input[type="text"][data-product_id]')
-            //     }
-            //
-            //
-            // })();
-
-
             function updateShoppingCart() {
 
                 $.ajax({

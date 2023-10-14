@@ -111,26 +111,67 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    $('.address-field span.woocommerce-input-wrapper').append('<span onclick="return funEventCheck()" id="address-accept">' + inser + '!</span>');
+    // $('.address-field span.woocommerce-input-wrapper').append('<span onclick="return funEventCheck()" id="address-accept">' + inser + '!</span>');
     $('#boxy').parent().addClass('active-tab');
     /*Order fields custom*/
 
     if ("#delivery_way_field .woocommerce-input-wrapper") {
-        $(`<div class="switch-buttons">
-                <span id="d1" class="switch-button delivery-way left-buttton" value="Dostawa 40-90 min">${ deliver9 }</span>
-                <span id="d2" class="switch-button delivery-way right-buttton" value="Odbiór osobisty">${ teke }</span>
+
+        // id Shipping Method for default delivery settings
+        // const defaultMethodSippingId = 'shipping_method_0_flat_rate52'  // for PIZZA
+        const defaultMethodSippingId = 'shipping_method_0_flat_rate32' // for SUSHI
+
+        $('#' + defaultMethodSippingId).click()
+
+            $(`<div class="switch-buttons">
+                <label 
+                    for="${ defaultMethodSippingId }"
+                    style="display:inline-block;line-height:40px"
+                    id="d1" 
+                    class="switch-button delivery-way left-buttton" 
+                    value="Dostawa 40-90 min"
+                >
+                    <svg style="margin-bottom:-4px;margin-right:5px;" class="bi mr-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16pt" height="16pt" viewBox="0 0 16 16" version="1.1">
+                    <g id="surface1">
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 4.332031 12.667969 L 3 12.667969 C 2.816406 12.667969 2.667969 12.515625 2.667969 12.332031 C 2.667969 12.148438 2.816406 12 3 12 L 4.332031 12 C 4.515625 12 4.667969 12.148438 4.667969 12.332031 C 4.667969 12.515625 4.515625 12.667969 4.332031 12.667969 Z M 4.332031 12.667969 "></path>
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 15.167969 12.667969 L 14.332031 12.667969 C 14.148438 12.667969 14 12.515625 14 12.332031 C 14 12.148438 14.148438 12 14.332031 12 L 14.890625 12 L 15.339844 9.605469 C 15.332031 8.378906 14.285156 7.332031 13 7.332031 L 10.8125 7.332031 L 9.75 12 L 11.667969 12 C 11.851562 12 12 12.148438 12 12.332031 C 12 12.515625 11.851562 12.667969 11.667969 12.667969 L 9.332031 12.667969 C 9.230469 12.667969 9.136719 12.621094 9.074219 12.542969 C 9.007812 12.460938 8.984375 12.359375 9.007812 12.261719 L 10.21875 6.925781 C 10.253906 6.773438 10.390625 6.667969 10.546875 6.667969 L 13 6.667969 C 14.652344 6.667969 16 8.011719 16 9.667969 L 15.492188 12.394531 C 15.464844 12.550781 15.328125 12.667969 15.167969 12.667969 Z M 15.167969 12.667969 "></path>
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 13 14 C 12.082031 14 11.332031 13.253906 11.332031 12.332031 C 11.332031 11.414062 12.082031 10.667969 13 10.667969 C 13.917969 10.667969 14.667969 11.414062 14.667969 12.332031 C 14.667969 13.253906 13.917969 14 13 14 Z M 13 11.332031 C 12.449219 11.332031 12 11.78125 12 12.332031 C 12 12.882812 12.449219 13.332031 13 13.332031 C 13.550781 13.332031 14 12.882812 14 12.332031 C 14 11.78125 13.550781 11.332031 13 11.332031 Z M 13 11.332031 "></path>
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 5.667969 14 C 4.746094 14 4 13.253906 4 12.332031 C 4 11.414062 4.746094 10.667969 5.667969 10.667969 C 6.585938 10.667969 7.332031 11.414062 7.332031 12.332031 C 7.332031 13.253906 6.585938 14 5.667969 14 Z M 5.667969 11.332031 C 5.117188 11.332031 4.667969 11.78125 4.667969 12.332031 C 4.667969 12.882812 5.117188 13.332031 5.667969 13.332031 C 6.21875 13.332031 6.667969 12.882812 6.667969 12.332031 C 6.667969 11.78125 6.21875 11.332031 5.667969 11.332031 Z M 5.667969 11.332031 "></path>
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 4.332031 6.667969 L 1.667969 6.667969 C 1.484375 6.667969 1.332031 6.515625 1.332031 6.332031 C 1.332031 6.148438 1.484375 6 1.667969 6 L 4.332031 6 C 4.515625 6 4.667969 6.148438 4.667969 6.332031 C 4.667969 6.515625 4.515625 6.667969 4.332031 6.667969 Z M 4.332031 6.667969 "></path>
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 4.332031 8.667969 L 1 8.667969 C 0.816406 8.667969 0.667969 8.515625 0.667969 8.332031 C 0.667969 8.148438 0.816406 8 1 8 L 4.332031 8 C 4.515625 8 4.667969 8.148438 4.667969 8.332031 C 4.667969 8.515625 4.515625 8.667969 4.332031 8.667969 Z M 4.332031 8.667969 "></path>
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 4.332031 10.667969 L 0.332031 10.667969 C 0.148438 10.667969 0 10.515625 0 10.332031 C 0 10.148438 0.148438 10 0.332031 10 L 4.332031 10 C 4.515625 10 4.667969 10.148438 4.667969 10.332031 C 4.667969 10.515625 4.515625 10.667969 4.332031 10.667969 Z M 4.332031 10.667969 "></path>
+                        <path style="stroke:none;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 9.332031 12.667969 L 7 12.667969 C 6.816406 12.667969 6.667969 12.515625 6.667969 12.332031 C 6.667969 12.148438 6.816406 12 7 12 L 9.066406 12 L 10.582031 5.332031 L 3 5.332031 C 2.816406 5.332031 2.667969 5.183594 2.667969 5 C 2.667969 4.816406 2.816406 4.667969 3 4.667969 L 11 4.667969 C 11.101562 4.667969 11.199219 4.710938 11.261719 4.792969 C 11.324219 4.871094 11.347656 4.976562 11.324219 5.074219 L 9.660156 12.40625 C 9.625 12.558594 9.488281 12.667969 9.332031 12.667969 Z M 9.332031 12.667969 "></path>
+                    </g>
+                </svg>
+                    ${ deliver9 }
+                </label>
+                <label
+                    for="shipping_method_0_local_pickup11" 
+                    style="display:inline-block;line-height:40px"
+                    id="d2" 
+                    class="switch-button delivery-way right-buttton" 
+                    value="Odbiór osobisty"
+                >
+                    <svg style="margin-bottom:-3px;margin-right:5px;width:15px;height:auto;" class="bi mr-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16pt" height="16pt" viewBox="0 0 16 16" version="1.1">
+                    <g id="surface1">
+                        <path style="stroke:#fff;stroke-width:.3;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 15.945312 14.199219 L 14.863281 3.890625 C 14.851562 3.761719 14.734375 3.667969 14.605469 3.679688 C 14.476562 3.695312 14.382812 3.8125 14.398438 3.941406 L 15.476562 14.246094 C 15.511719 14.574219 15.40625 14.902344 15.183594 15.144531 C 14.964844 15.390625 14.648438 15.53125 14.320312 15.53125 L 1.679688 15.53125 C 1.351562 15.53125 1.035156 15.390625 0.816406 15.144531 C 0.59375 14.902344 0.488281 14.574219 0.523438 14.246094 L 1.175781 8.023438 C 1.1875 7.894531 1.09375 7.78125 0.964844 7.765625 C 0.835938 7.753906 0.722656 7.847656 0.707031 7.976562 L 0.0546875 14.199219 C 0.0078125 14.65625 0.15625 15.117188 0.464844 15.460938 C 0.773438 15.804688 1.21875 16 1.679688 16 L 14.320312 16 C 14.78125 16 15.226562 15.804688 15.535156 15.460938 C 15.84375 15.117188 15.992188 14.65625 15.945312 14.199219 Z M 15.945312 14.199219 "></path>
+                        <path style="stroke:#fff;stroke-width:.3;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 14.695312 2.265625 L 14.5 0.394531 C 14.472656 0.167969 14.285156 0 14.0625 0 L 12.007812 0 C 11.765625 0 11.570312 0.195312 11.570312 0.4375 L 11.570312 3.636719 L 4.429688 3.636719 L 4.429688 0.4375 C 4.429688 0.195312 4.234375 0 3.992188 0 L 1.9375 0 C 1.714844 0 1.527344 0.167969 1.503906 0.394531 L 0.878906 6.335938 C 0.867188 6.464844 0.960938 6.578125 1.089844 6.59375 C 1.097656 6.59375 1.105469 6.59375 1.113281 6.59375 C 1.230469 6.59375 1.335938 6.503906 1.347656 6.382812 L 1.96875 0.46875 L 3.960938 0.46875 L 3.960938 3.667969 C 3.960938 3.910156 4.15625 4.105469 4.398438 4.105469 L 11.601562 4.105469 C 11.84375 4.105469 12.039062 3.910156 12.039062 3.667969 L 12.039062 0.46875 L 14.03125 0.46875 L 14.226562 2.316406 C 14.238281 2.445312 14.355469 2.539062 14.484375 2.527344 C 14.613281 2.511719 14.707031 2.398438 14.695312 2.265625 Z M 14.695312 2.265625 "></path>
+                        <path style="stroke:#fff;stroke-width:.3;fill-rule:nonzero;fill:rgb(255, 255, 255);fill-opacity:1;" d="M 10.9375 10.75 L 9.476562 8.535156 L 9.855469 8.632812 C 9.980469 8.664062 10.109375 8.589844 10.140625 8.464844 C 10.171875 8.339844 10.097656 8.210938 9.972656 8.179688 L 9.089844 7.949219 L 8.328125 6.792969 C 8.253906 6.683594 8.132812 6.617188 8 6.617188 C 7.867188 6.617188 7.746094 6.683594 7.671875 6.792969 L 5.0625 10.75 C 4.984375 10.871094 4.976562 11.027344 5.042969 11.152344 C 5.113281 11.28125 5.246094 11.359375 5.390625 11.359375 L 10.609375 11.359375 C 10.753906 11.359375 10.886719 11.28125 10.957031 11.152344 C 11.023438 11.027344 11.015625 10.871094 10.9375 10.75 Z M 5.535156 10.890625 L 8 7.152344 L 8.691406 8.199219 L 8.492188 9.0625 C 8.464844 9.191406 8.542969 9.316406 8.667969 9.34375 C 8.6875 9.351562 8.703125 9.351562 8.722656 9.351562 C 8.828125 9.351562 8.925781 9.277344 8.949219 9.167969 L 9.046875 8.742188 L 10.464844 10.890625 Z M 5.535156 10.890625 "></path>
+                    </g>
+                </svg>
+                    ${ teke } 
+                </label>
                </div>`).appendTo('#delivery_way_field');
 
+
         $('.delivery-way').bind('click', function (e) {
+
             if ($(this).hasClass('right-buttton')) {
                 $(this).parent().addClass('checked');
                 $('#delivery_way').val($(this).attr("value"));
                 $('#apartment_field').hide();
                 $('#square_field').hide();
                 $('#floor_field').hide();
-                $('#apartment').val('-');
-                $('#square').val('-');
-                $('#floor').val('-');
                 $('#map_field').hide('slow');
                 setTimeout(function () {
                     $('li[szbd="true"]').hide();
@@ -138,11 +179,15 @@ jQuery(document).ready(function ($) {
 
                 $('.delivery-way2').parent().hide();
                 $('.delivery-dat').parent().hide();
+                $('#apartment').val('-');
+                $('#square').val('-');
+                $('#floor').val('-');
                 $('#billing_address_1').val('Wrocław');
                 $("#shipping_method_0_local_pickup27").attr('checked', true);
                 $('#billing_address_1_field').hide();
 
-                addCouponForDiscount( $(this).data('coupon-name') )
+                addCouponForDiscount()
+
             } else {
                 $(this).parent().removeClass('checked');
                 $('#delivery_way').val($(this).attr("value"));
@@ -160,33 +205,43 @@ jQuery(document).ready(function ($) {
     }
 
     /**
-     * **************** coupons olbor ****************
+     * **************** coupons ****************
      */
-    const coupon = document.getElementById('customer_details')?.dataset.selfPickupDiscountCoupon;
+    const $wrapperCustomerDetails = $('.wrapper_customer_details')
+    const autoCoupon = $wrapperCustomerDetails?.data('auto_coupon');
 
-    function addCouponForDiscount( couponName ) {
-        $('input[type="text"][name="coupon_code"]#coupon_code').val(couponName)
-        $('button[type="submit"][name="apply_coupon"].button').click()
+    function addCouponForDiscount() {
+        const $elem = $('.wrapper_customer_details')
+        const couponActive = $elem.hasClass('auto_coupon_active')
+        const couponName = $elem.data('auto_coupon')
+
+        if (couponActive && couponName && confirm('Add a discount coupon for pickup')) {
+            $('input[type="text"][name="coupon_code"]#coupon_code').val(couponName)
+
+            setTimeout(function () {
+                $('button[type="submit"][name="apply_coupon"].button')[0].click()
+            }, 500)
+        }
     }
     function removeCouponForDiscount() {
         $('input[type="text"][name="coupon_code"]#coupon_code').val()
         $('.cart-discount .woocommerce-remove-coupon').click()
     }
-    const $wrapperCustomerDetails = $('.wrapper_customer_details')
-    if ( $wrapperCustomerDetails.hasClass('coupon_active')) {
-        const coupons = $wrapperCustomerDetails.data('coupons')
-        const rightButton = $('.switch-button.delivery-way.right-buttton')
-        const couponName = String(coupon).toLowerCase()
+    /* *************** coupons **************** */
 
-        if ( coupons && typeof coupons === 'object' ) {
-            Object.keys(coupons).forEach(k => {
-                if ( coupons[k].toLowerCase() === couponName ) {
-                    rightButton.click()
-                }
-            })
+    /** ************** delivery method **************** */
+    function changeDeliveryMethod(id) {
+        const radio_buttons = $("#shipping_method li input[type='radio']")
+
+        if (id === 'd1'){
+            radio_buttons[1].click()
+        }
+
+        if (id === 'd2'){
+            radio_buttons[0].click()
         }
     }
-    /* *************** coupons **************** */
+    /* *************** delivery method **************** */
 
 
 
@@ -204,8 +259,17 @@ jQuery(document).ready(function ($) {
     }
 
     if ("#delivery_date_field .woocommerce-input-wrapper") {
+        const icon1 = '<svg style="vertical-align:-5px;margin-right:5px;" class="bi" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16pt" height="16pt" viewBox="0 0 16 16" version="1.1">\n' +
+            '    <g id="surface1">\n' +
+            '        <path style=" stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1;" d="M 15.726562 3.480469 L 15.6875 3.441406 C 15.320312 3.074219 14.722656 3.074219 14.351562 3.445312 L 12.910156 4.898438 C 12.835938 4.972656 12.714844 4.976562 12.632812 4.90625 L 10.617188 3.042969 C 10.417969 2.859375 10.164062 2.761719 9.898438 2.761719 L 6.894531 2.761719 C 6.824219 2.761719 6.753906 2.789062 6.703125 2.835938 L 4.160156 5.253906 C 3.785156 5.625 3.761719 6.226562 4.101562 6.59375 C 4.285156 6.789062 4.53125 6.898438 4.796875 6.898438 L 4.800781 6.898438 C 5.0625 6.894531 5.316406 6.785156 5.492188 6.59375 L 7.289062 4.691406 L 7.933594 4.691406 L 3.738281 9.378906 L 1.148438 9.378906 C 0.535156 9.378906 0.03125 9.835938 0 10.421875 C -0.015625 10.730469 0.09375 11.019531 0.304688 11.242188 C 0.511719 11.460938 0.800781 11.585938 1.101562 11.585938 L 4.964844 11.585938 C 5.039062 11.585938 5.113281 11.554688 5.164062 11.496094 L 7.144531 9.386719 L 8.808594 11.125 L 8.304688 14.335938 C 8.179688 14.867188 8.433594 15.410156 8.910156 15.621094 C 9.058594 15.6875 9.214844 15.722656 9.371094 15.722656 C 9.539062 15.722656 9.703125 15.683594 9.859375 15.609375 C 10.152344 15.460938 10.367188 15.191406 10.445312 14.859375 L 11.300781 10.257812 C 11.320312 10.167969 11.289062 10.074219 11.226562 10.011719 L 8.9375 7.722656 L 10.753906 5.90625 L 12.023438 7.175781 C 12.378906 7.53125 12.996094 7.53125 13.347656 7.175781 L 15.726562 4.796875 C 15.902344 4.621094 16 4.386719 16 4.140625 C 16 3.890625 15.902344 3.65625 15.726562 3.480469 Z M 15.726562 3.480469 "></path>\n' +
+            '        <path style=" stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1;" d="M 12.6875 3.585938 C 13.597656 3.585938 14.339844 2.84375 14.339844 1.933594 C 14.339844 1.019531 13.597656 0.277344 12.6875 0.277344 C 11.773438 0.277344 11.03125 1.019531 11.03125 1.933594 C 11.03125 2.84375 11.773438 3.585938 12.6875 3.585938 Z M 12.6875 3.585938 "></path>\n' +
+            '    </g>\n' +
+            '</svg>'
+        const icon2 = '<svg style="vertical-align:-3px;margin-right:10px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-clock-fill" viewBox="0 0 16 16">\n' +
+            '    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"></path>\n' +
+            '</svg>'
         $('#flatpickr_field').hide();
-        $('<div class="switch-buttons"><span id="d5" class="switch-button delivery-dat left-buttton" value="Jak najszybciej">' + asoons + '</span><span id="d6" class="switch-button delivery-dat right-buttton" value="Przedział czasowy">' + hours + '</span></div>').prependTo('#delivery_date_field');
+        $('<div class="switch-buttons"><span id="d5" class="switch-button delivery-dat left-buttton" value="Jak najszybciej">' + icon1 + asoons + '</span><span id="d6" class="switch-button delivery-dat right-buttton" value="Przedział czasowy">' + icon2 + hours + '</span></div>').prependTo('#delivery_date_field');
         $('.switch-button').bind('click', function () {
             if ($(this).hasClass('right-buttton')) {
                 if ($(this).hasClass('delivery-dat')) {

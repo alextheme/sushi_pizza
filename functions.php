@@ -29,7 +29,7 @@ function mojeStyleiSkrypty()
         'google_map_js',
         'https://maps.googleapis.com/maps/api/js?key='
         . esc_attr(get_field('key_google_map', 'options'))
-        . '&v=weekly&libraries=places&callback=initMap&libraries=drawing', array('jquery'), 1.1, true);
+        . '&v=weekly&callback=initMap&libraries=drawing,geometry,places', array('jquery'), 1.1, true);
     wp_register_script('polyfill', 'https://polyfill.io/v3/polyfill.js?features=es5,es6,es7&flags=gated', array('jquery'), 1.1, true);
 
 
@@ -488,38 +488,50 @@ include_once get_template_directory() . '/inc/acf/acf-settings.php';
  */
 function print_pre($obj)
 {
-    echo '<pre style="padding:10px;background:#33384b;width: 100%;">';
+    echo '<pre style="padding:10px;background:#33384b;width: 100%;color: #ffffff">';
     print_r($obj);
     echo '</pre>';
 }
-
-/**
- *
- * Show position absolute
- *
- * @param $obj
- * @return void
- */
 function print_pre_a($obj)
 {
     echo '<pre style="position:absolute;top:0;left:0;z-index:999;padding:10px;background:#33384b;width: 100%;">';
     print_r($obj);
     echo '</pre>';
 }
-
-function var_dump_pre($obj)
-{
-    echo '<pre>';
-    var_dump($obj);
-    echo '</pre>';
+function br() {
+    echo '<br>';
 }
 
-function print_pre_die($obj)
-{
-    echo '<pre>';
-    print_r($obj);
-    echo '</pre>';
-    die(-1);
+function searchDataInDataBase($search_string = '') {
+    if ( gettype($search_string) !== 'string' ) {
+        $search_string = (string) $search_string;
+    }
+
+    global $wpdb;
+
+    // Отримати список всіх таблиць та стовпців
+    $sql = "SELECT table_name, column_name FROM information_schema.columns";
+    $result = $wpdb->get_results($sql);
+
+    if (count($result) > 0) {
+        foreach ($result as $item) {
+
+            $table = $item->table_name;
+            $column = $item->column_name;
+
+            // Скористайтеся конструкцією LIKE для пошуку рядків, що містять вказаний термін
+            $search_query = "SELECT * FROM $table WHERE $column LIKE '%$search_string%'";
+            $search_result = $wpdb->get_results($search_query);
+
+            if ( count($search_result) > 0) {
+                foreach ($search_result as $res) {
+                    echo "Table: $table, <br>Column: $column<br><pre style='background:#fff;color:#000;'>" . print_r($res, true) . "</pre><br>";
+                }
+            }
+        }
+    } else {
+        echo "Немає таблиць у базі даних.";
+    }
 }
 
 

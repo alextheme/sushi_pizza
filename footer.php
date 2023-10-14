@@ -21,7 +21,35 @@
 			</ul>
 		<?php } ?>
 	</div>
-</footer>	
+</footer>
+
+
+<?php if (is_checkout()) { ?>
+
+<diw class="checkout_popup_delivery_info">
+
+	<?php
+	$description = 'Przepraszamy, nie wykonujemy dostawy w wybrane miejsce. Proszę wybrać adres zaznaczony w zonie dostawy niżej lub zamówić z odbiorem osobistym.';
+	$ok = 'Ok';
+	switch (get_locale()) {
+		case 'ua_UA':
+			$description = 'Вибачте, ми не здійснюємо доставку в обране місце. Будь ласка, оберіть адресу, позначену в зоні доставки нижче, або замовте з особистим вивезенням.';
+			$ok = 'Добре';
+			break;
+		case 'ru_RU':
+			$description = 'Извините, мы не осуществляем доставку в выбранное место. Пожалуйста, выберите адрес, отмеченный в зоне доставки ниже, или сделайте заказ с самовывозом.';
+			$ok = 'Ok';
+			break;
+	}
+	?>
+	<div class="checkout_popup_wrapper">
+		<div class="checkout_popup_info"><?php echo esc_html($description); ?></div>
+		<div>
+			<button type="button" class="checkout_popup_button"><?php echo esc_html($ok)?></button>
+		</div>
+	</div>
+</diw>
+<?php } ?>
 
 <?php wp_footer(); ?>
 

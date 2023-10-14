@@ -1723,6 +1723,7 @@ element.style {
 }
 
 .woocommerce-form-coupon-toggle .woocommerce-info {
+    padding: 0;
     background: transparent;
     border: none;
 }
@@ -1774,7 +1775,7 @@ element.style {
 }
 
 .paymeny-methods h3 {
-    margin-bottom: 15px;
+    margin-bottom: 0;
 }
 
 #order_review_heading {
@@ -1881,10 +1882,6 @@ element.style {
     display: none;
 }
 
-.woocommerce-order-received .lang-item, .woocommerce-info, .nav-bottom {
-    display: none;
-}
-
 .woocommerce .products div.product {
     margin-bottom: 30px;
 }
@@ -1941,7 +1938,8 @@ element.style {
 }
 
 .woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button {
-    min-height: auto;
+    /*min-height: auto;*/
+    color: var(--color_white, #ffffff);
 }
 
 .woocommerce-order p {
@@ -2500,14 +2498,6 @@ li[szbd="true"].activeDel {
 
     .woocommerce-form__label-for-checkbox .input-checkbox {
         width: 9px !important;
-    }
-
-    .woocommerce ul.order_details li {
-        width: 50%;
-        float: left;
-        margin-right: 0;
-        border: none;
-        margin-bottom: 15px;
     }
 
     .left-copy, .right-copy {

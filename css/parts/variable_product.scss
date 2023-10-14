@@ -65,6 +65,7 @@ body {
 
     @media (max-width: 992px) {
       margin-left: auto;
+      margin-right: 26px;
     }
   }
 
@@ -519,7 +520,7 @@ body {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 35px 0 26px;
+      margin: 0 35px 0 0;
       width: 29px;
       height: 30px;
 
@@ -1237,24 +1238,6 @@ body.body--preloader_show {
     background-position: top left !important;
   }
 }
-
-.breadcrumbs .button {
-  color: #fff !important;
-
-  background: url('../images/bg_100100.svg') repeat-x top 40px left !important;
-
-  transition: background-position 400ms ease-in-out, color 300ms ease-in-out;
-
-  &:hover {
-    color: #000 !important;
-    background-position: top left !important;
-
-    img {
-      filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(134deg) brightness(0%) contrast(100%);
-    }
-  }
-}
-
 
 // MENU CATEGORY LIST
 .shop-header-tabs {

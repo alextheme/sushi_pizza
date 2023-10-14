@@ -1,6 +1,7 @@
 $breakpoint_1: 375px;
 $breakpoint_2: 550px;
 $breakpoint_3: 767px;
+$breakpoint_4: 992px;
 
 .woocommerce-order {
 
@@ -16,7 +17,7 @@ $breakpoint_3: 767px;
   .woocommerce-order-overview.woocommerce-thankyou-order-details.order_details {
     display: flex;
 
-    @media screen and (min-width: $breakpoint_3 - 1) {
+    @media screen and (min-width: $breakpoint_4 - 1) {
       padding: 14px 0 10px;
       border-radius: 10px;
       background: rgba(255,255,255,.1);
@@ -31,15 +32,18 @@ $breakpoint_3: 767px;
         padding: 0 1.5em;
       }
 
-      @media screen and (min-width: $breakpoint_3 - 1) {
+      @media screen and (min-width: $breakpoint_4 - 1) {
         text-align: center;
       }
 
-      @media screen and (max-width: $breakpoint_3) {
+      @media screen and (max-width: $breakpoint_4) {
         position: relative;
         width: 100%;
         padding: 0 1.5em;
         clear: both;
+        margin-bottom: 15px;
+        margin-right: 0;
+        border: none;
 
         &:before {
           content: '';
@@ -55,7 +59,7 @@ $breakpoint_3: 767px;
       }
     }
 
-    @media (max-width: $breakpoint_3) {
+    @media (max-width: $breakpoint_4) {
       display: block;
       margin-bottom: 30px;
     }
@@ -63,7 +67,7 @@ $breakpoint_3: 767px;
 
   .woocommerce-order-details {
     .woocommerce-order-details__title {
-      @media (max-width: $breakpoint_3) {
+      @media (max-width: $breakpoint_4) {
         font-size: 22px;
         margin-bottom: 15px;
       }

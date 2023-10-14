@@ -27,11 +27,6 @@ form.checkout.woocommerce-checkout {
   }
 }
 
-// Button remove coupon
-.woocommerce-remove-coupon {
-  display: none;
-}
-
 .woocommerce-table.woocommerce-table--order-details.shop_table.order_details {
   tfoot {
     position: relative;
@@ -90,6 +85,231 @@ form.checkout.woocommerce-checkout {
   }
 }
 
+.woocommerce-shipping-totals {
+  position: relative;
+}
 
+.woocommerce ul#shipping_method {
+  position: initial;
 
+  li {
+    margin: 0;
 
+    .shipping_method {
+      display: none;
+
+      & + label {
+        display: none;
+      }
+
+      &:checked {
+        & + label {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
+
+    &:first-child {
+      label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #2D2C2C;
+        border-radius: 10px;
+        align-items: center;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .amount {
+    margin-left: 10px;
+  }
+}
+
+.wc_payment_method,
+.payment_method_cod {
+  display: block;
+}
+
+.checkout_popup_delivery_info {
+  .body--checkout_popup_delivery_info & {
+    display: flex;
+  }
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: rgb(0, 0, 0, .7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+
+  .checkout_popup_wrapper {
+    padding: 20px;
+    font-size: 18px;
+    color: var(--accent_color);
+    background: #1E1D1A;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .checkout_popup_info {
+    margin-bottom: 20px;
+  }
+
+  .checkout_popup_button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: var(--accent_color);
+    color: #1E1D1A;
+    cursor: pointer;
+  }
+}
+
+.woocommerce table.shop_table {
+  margin-bottom: 60px !important;
+}
+
+ul.payment_methods {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px!important;
+  margin-right: -20px!important;
+
+  @media screen and (max-width: 767px){
+    flex-wrap: wrap;
+  }
+
+  &:before {
+    display:none!important;
+  }
+
+  li {
+    width: 100%;
+    min-height: 60px;
+    margin-right: 20px!important;
+    margin-bottom: 14px !important;
+
+    @media screen and (max-width: 767px){
+      min-height: 40px;
+    }
+
+    input {
+      width: 1px;
+      height: 1px;
+      position: absolute;
+      opacity: 0;
+
+      &:checked + .pbutton {
+        background: var(--accent_color);
+        border: 1px solid var(--accent_color);
+      }
+    }
+  }
+
+  .pbutton {
+    float: inherit;
+
+    width: 100%;
+    min-width: 160px;
+    height: 100%;
+    min-height: 35px;
+    padding: 8px 20px;
+    margin-right: 0;
+    line-height: 1.5;
+
+    cursor: pointer;
+
+    &:hover, &:active {
+      background: var(--color_black, #000000);
+    }
+  }
+}
+
+.woocommerce-terms-and-conditions-wrapper {
+  .woocommerce-form__input {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    opacity: 0;
+
+    &:checked + .woocommerce-form__label {
+      svg {
+        path {
+          fill: var(--accent_color);
+        }
+
+        rect {
+          stroke: transparent;
+        }
+      }
+    }
+  }
+
+  .woocommerce-form__label {
+    display: flex!important;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+      width: 25px;
+      height: auto;
+      margin-right: 10px;
+      margin-bottom: 5px;
+
+      path {
+        fill: transparent;
+      }
+
+      rect {
+        stroke: var(--accent_color);
+      }
+    }
+  }
+}
+
+.woocommerce-invalid-required-field {
+  .woocommerce-form__label {
+    svg rect {
+      stroke: red;
+    }
+  }
+}
+
+.buttom_back_wrapper .button {
+  color: #fff !important;
+
+  background: url('../images/bg_100100.svg') repeat-x top 40px left !important;
+
+  transition: background-position 400ms ease-in-out, color 300ms ease-in-out;
+  svg {
+    margin-right: 10px;
+
+    line {
+      transition: stroke 300ms ease-in-out;
+    }
+  }
+
+  &:hover {
+    color: #000 !important;
+    background-position: top left !important;
+
+    svg line {
+      stroke: #000000;
+    }
+
+    //img {
+    //  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(134deg) brightness(0%) contrast(100%);
+    //}
+  }
+}

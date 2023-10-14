@@ -368,37 +368,48 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
     /**
      * Checkout page
      * - Coupon info
+     * woocommerce_before_checkout_form
      */
     add_action( 'woocommerce_before_checkout_form', 'add_button_back_to_menu' );
     function add_button_back_to_menu( $checkout ) {
         ?>
-            <div class="lg100 p-top-30 d-flex p-bottom-30 breadcrumbs">
-                <a class="button d-flex align-center" href="<?php echo esc_url( home_url('/') ); ?>"><img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/arrow_back.svg' ); ?>" alt="" loading="lazy"><?php echo pll__( 'Wróć do menu' ); ?></a>
+            <div class="lg100 p-top-30 d-flex p-bottom-30 buttom_back_wrapper">
+                <a class="button d-flex align-center" href="<?php echo esc_url( home_url('/') ); ?>">
+                    <svg width="8" height="10" viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="6.19678" y1="0.709609" x2="1.19678" y2="5.67428" stroke="#ffffff" stroke-width="2"/>
+                        <line x1="1.70711" y1="4.29289" x2="6.68948" y2="9.27526" stroke="#ffffff" stroke-width="2"/>
+                    </svg>
+                    <?php echo pll__( 'Wróć do menu' ); ?>
+                </a>
             </div>
+            <script>
+                const buttonBack = document.querySelector('.buttom_back_wrapper')
+                const parentButton = buttonBack.parentNode
+                parentButton.prepend(buttonBack);
+            </script>
         <?php
     }
 
     add_action('woocommerce_checkout_before_customer_details', 'check_for_coupon');
     function check_for_coupon() {
-        // Перевірка, чи був введений купон на сторінці оформлення замовлення
-        if (WC()->cart->has_discount()) {
-            // All coupons in active
-            $coupons = WC()->cart->get_applied_coupons();
+        global $wpdb;
 
-            // Info coupons
-            foreach ($coupons as $coupon_code) {
-                $coupon = new WC_Coupon($coupon_code);
-            } ?>
+        // Get an array of all existing coupon codes
+        $coupons = $wpdb->get_col("SELECT post_name FROM $wpdb->posts WHERE post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
+        $auto_coupon = get_field('coupon', 'options');
 
-            <div class="wrapper_customer_details coupon_active" data-coupons="<?php wp_json_encode( $coupons ) ?>">
+        $coupon = new WC_Coupon(get_field('coupon', 'options'));
+        $expiry_date     = $coupon->get_date_expires();
+        $today = date('Y-m-d');
 
-        <?php } else { ?>
+        $active_coupon = strtotime($today) < strtotime($expiry_date);
+        ?>
 
-            <div data-coupons="" class="wrapper_customer_details">
-
-        <?php } ?>
-
-        <div class="row row-margin">
+        <div class="wrapper_customer_details <?php if ($active_coupon) esc_attr_e('auto_coupon_active'); ?>"
+             data-auto_coupon="<?= get_field( 'coupon', 'options' ); ?>"
+             data-map-areas="<?= esc_attr(json_encode(get_field('shipping', 'options'))); ?>"
+        >
+            <div class="row row-margin">
 
     <?php }
 
@@ -439,6 +450,8 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
         }
     }
 
+
+    // brmsk
 
 
 }

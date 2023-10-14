@@ -350,3 +350,59 @@ function o10_remove_items_from_cart() {
 
     wp_die();
 }
+
+//
+//// calc delivery
+//add_action('wp_ajax_o10_calc_delivery', 'o10_calc_delivery_callback');
+//add_action('wp_ajax_nopriv_o10_calc_delivery', 'o10_calc_delivery_callback');
+//function o10_calc_delivery_callback() {
+//    if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) {
+//        die;
+//    }
+//
+//    $details = $_REQUEST['details'];
+//    $distance_meter = (int) $details['distance']['value']; // meter
+//    $distance_km = ceil($distance_meter / 1000);
+////    $duration = $details['duration']['text']; // minutes
+////    $delivery_address = $details['delivery_address'];
+//    $area = $details['area'];
+//
+//    $delivery_settings = get_field('shipping', 'options');
+//    $min_distance = (int) $delivery_settings['min_distance']; //5
+//    $max_distance = (int) $delivery_settings['max_distance']; //12
+//    $price = (int) $delivery_settings['price']; //2
+//
+//    // Розрахунок нової вартості доставки відповідно до відстані
+//    $shipping_cost = max($min_distance, $distance_km) * $price;
+//
+////    update_option_cost("71052", $new_shipping_cost);
+//
+////    if ($area && $area['last'] || !$area && $distance_km <= $max_distance) {
+////        echo $new_shipping_cost;
+////    } else {
+////        echo 'Pick-up only';
+////    }
+//
+//
+////    WC()->shipping();
+////    // Отримання загальної вартості
+////    $cart_total = WC()->cart->get_subtotal();
+////    $new_total_cost = $cart_total + $new_shipping_cost;
+//
+////    // Перевірка статусу сесій
+////    if (session_status() === 2) {
+////        $_SESSION['shipping_cost'] = $new_shipping_cost;
+////        $_SESSION['total_cost'] = $new_total_cost;
+////    }
+//
+//
+//    // Відправлення нової вартості доставки та загальної вартості на сторінку клієнта
+////    echo json_encode([
+////        'shipping_cost' => wc_price($new_shipping_cost),
+////        'total_cost' => wc_price($new_total_cost),
+////        'shipping_cost_value' => $_SESSION['shipping_cost'],
+////        'total_cost_value' => $_SESSION['total_cost'],
+////    ]);
+//
+//    wp_die();
+//}

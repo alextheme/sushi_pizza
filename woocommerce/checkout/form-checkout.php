@@ -35,9 +35,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
-        <div class="col1-set" id="customer_details"
-			 data-self-pickup-discount-coupon="<?= get_field( 'coupon', 'options' ); ?>"
-		>
+        <div class="col1-set">
             <div class="col-1">
                 <?php do_action( 'woocommerce_checkout_billing' ); ?>
             </div>

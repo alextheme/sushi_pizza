@@ -45,10 +45,7 @@ if ( isset($args) && is_array($args) && array_key_exists( 'id', $args ) ) {
 
 $blocked = is_blocked();
 
-$array_pages_hide_lang = [88888];
-
-$socials = get_field( 'socials', 'options' );
-
+$array_pages_hide_lang = [27, 269, 271];
 ?>
 <div class="header lg100">
   <div class="container">
@@ -77,6 +74,7 @@ $socials = get_field( 'socials', 'options' );
 						  <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.86603 7.5C5.48113 8.16667 4.51887 8.16667 4.13397 7.5L0.669874 1.5C0.284974 0.833333 0.7661 -8.94676e-07 1.5359 -8.27378e-07L8.4641 -2.21695e-07C9.2339 -1.54397e-07 9.71503 0.833333 9.33013 1.5L5.86603 7.5Z" fill="#FFF388"/></svg>
 					  </a>
 
+					  <?php $socials = get_field( 'socials', 'options' ); ?>
 					  <?php if ($socials) { ?>
 						  <ul class="menu_mobile__socials">
 
@@ -152,9 +150,11 @@ $socials = get_field( 'socials', 'options' );
 
 		  <div class="menu_mobile__handlers">
 
-			  <ul class="menu_mobile__lang_top">
-				<?php  pll_the_languages( array('display_names_as' => 'slug' ) ); ?>
-			  </ul>
+			  <?php if ( ! is_page( $array_pages_hide_lang )) { ?>
+				  <ul class="menu_mobile__lang_top">
+					<?php  pll_the_languages( array('display_names_as' => 'slug' ) ); ?>
+				  </ul>
+			  <?php } ?>
 
 			  <!-- Button open/close mobile menu -->
 			  <div id="burger" class="menu_mobile__button_switch">
