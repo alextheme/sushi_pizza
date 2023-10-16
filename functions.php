@@ -45,7 +45,7 @@ function mojeStyleiSkrypty()
     }
 
 //    if ( get_current_user_id() === 1 ) {
-//        wp_enqueue_style('themecss', get_template_directory_uri() . '/css/test_for_admin_login.css', false, '1.1', 'all');
+//        wp_enqueue_style('test_for_admin_login', get_template_directory_uri() . '/css/test_for_admin_login.css', false, '1.1', 'all');
 //    }
 }
 

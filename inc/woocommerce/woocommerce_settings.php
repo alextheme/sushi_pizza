@@ -222,23 +222,6 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
             'clear'     => true
         );
 
-        /*$fields['billing']['delivery_date'] = array(
-            'label'     => __('Czas dostawy', 'woocommerce'),
-        'placeholder'   => _x('Wprowadź', 'placeholder', 'woocommerce'),
-        'required'  => false,
-        'class'     => array('form-row-wide'),
-        'clear'     => true
-         );
-
-        $fields['billing']['delivery_time'] = array(
-            'label'     => __('Data i godzina', 'woocommerce'),
-        'placeholder'   => _x('Wprowadź', 'placeholder', 'woocommerce'),
-        'required'  => false,
-        'class'     => array('form-row-wide dtime'),
-        'id'     => 'flatpickr',
-        'clear'     => true
-         );*/
-
         $fields['billing']['delivery_date'] = array(
             'label'       => __('Czas dostawy', 'woocommerce'),
             'required'    => false,
@@ -246,7 +229,6 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
             'type'        => 'select',
             'options'     => array(
                 'Jak najszybciej' => __('Wybierz przedział czasowy', 'woocommerce', 'selected'),
-                '12-14h' => __('12-14h', 'woocommerce' ),
                 '14-17h' => __('14-17h', 'woocommerce' ),
                 '17-20h' => __('17-20h', 'woocommerce' ),
                 '20-21h' => __('20-21h', 'woocommerce' ),
@@ -459,11 +441,11 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
     Author: Your Name
     */
 
-    function add_custom_payment_gateway($methods) {
-        $methods[] = 'Custom_Payment_Method';
-        return $methods;
-    }
-    add_filter('woocommerce_payment_gateways', 'add_custom_payment_gateway');
+//    function add_custom_payment_gateway($methods) {
+//        $methods[] = 'Custom_Payment_Method';
+//        return $methods;
+//    }
+//    add_filter('woocommerce_payment_gateways', 'add_custom_payment_gateway');
 
 }
 

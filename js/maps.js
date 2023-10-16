@@ -13,6 +13,7 @@ let
     marker2,
     directionsRenderer,
     directionsService,
+    autocomplete,
     inputAddress = document.getElementById('billing_address_1')
 
 async function initMap() {
@@ -170,8 +171,10 @@ function searchAddressFromInput() {
 
     inputAddress.addEventListener('input', function (event) {
         if (this.value === '') {
-           clearDirection()
+           clearDirection();
         }
+
+        searchAddress();
     })
 
     // Select Odbiór osobisty
@@ -180,59 +183,32 @@ function searchAddressFromInput() {
     })
 
     function searchAddress() {
-
         clearDirection();
 
+        // Autocomplete init
 
-        // Autocomplete
+        // Create a bounding box with sides ~10km away from the center point
+        const defaultBounds = {
+            north: position.lat + 0.1,
+            south: position.lat - 0.1,
+            east: position.lng + 0.1,
+            west: position.lng - 0.1,
+        };
 
-        const searchBox = new google.maps.places.SearchBox(inputAddress);
+        const options = {
+            bounds: defaultBounds,
+            componentRestrictions: { country: "pl" },
+            fields: ["geometry", "name"],
+            strictBounds: false,
+            types: ["establishment"],
+        };
+        const autocomplete = new google.maps.places.Autocomplete(inputAddress, options);
 
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener("bounds_changed", () => {
-            searchBox.setBounds(map.getBounds());
+        autocomplete.addListener('place_changed', function () {
+            let place = autocomplete.getPlace();
+            console.log(place)
+            addMarker2(place.location)
         });
-
-        // Listen for the event fired when the user selects a prediction and retrieve more details for that place.
-        searchBox.addListener("places_changed", () => {
-            const places = searchBox.getPlaces();
-
-            if (places.length == 0) return;
-
-            // For each place, get the icon, name and location.
-            const bounds = new google.maps.LatLngBounds();
-            places.forEach((place) => {
-                calculateAndDisplayRoute(position, place.geometry.location)
-                errorAddressInfo({ remove: true });
-            });
-            map.fitBounds(bounds);
-        });
-
-
-
-        // Manual input Address
-
-        service = new google.maps.places.PlacesService(map);
-        service.findPlaceFromQuery(
-            {
-                query: inputAddress.value,
-                locationBias: map.getBounds(),
-                fields: ["name", "formatted_address", "geometry"],
-            },
-
-            (results, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-                    for (let i = 0; i < results.length; i++) {
-                        errorAddressInfo({ remove: true });
-                        map.setCenter(results[i].geometry.location);
-                        calculateAndDisplayRoute(position, results[i].geometry.location);
-                    }
-                } else {
-                    clearDirection();
-                    errorAddressInfo({ addressError: true, clearInput: true, addressText: inputAddress.value });
-                }
-            }
-        );
     }
 }
 

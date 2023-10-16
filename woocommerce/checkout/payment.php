@@ -29,34 +29,9 @@ if ( ! wp_doing_ajax() ) {
 		</div>
 
 		<ul class="wc_payment_methods payment_methods methods">
-
-			<!-- Оплата картою у кур'єра Payment by card to the courier -->
-<!--			<li class="wc_payment_method payment_method__card_to_the_courier">-->
-<!--				<input id="payment_method__card_to_the_courier" type="radio" class="input-radio" name="payment_method"-->
-<!--					   value="card_to_the_courier"-->
-<!--					   data-order_button_text="Payment by card to the courier" />-->
-<!---->
-<!--				<label for="payment_method__card_to_the_courier" class="pbutton cash">-->
-<!--					Płatność kartą u kuriera-->
-<!--				</label>-->
-<!--			</li>-->
-
-			<?php
-			$numb = 0;
-
-			if ( ! empty( $available_gateways ) ) { ?>
-
+			<?php if ( ! empty( $available_gateways ) ) { ?>
 				<?php foreach ( $available_gateways as $gateway ) {
-
 					wc_get_template('checkout/payment-method.php', array('gateway' => $gateway));
-
-//					if ($numb == 0) {
-//						wc_get_template('checkout/payment-method.php', array('gateway' => $gateway));
-//					} else {
-//						wc_get_template('checkout/payment-method.php', array('gateway' => $gateway));
-//					}
-
-					$numb++;
 				}
 			} else {
 				echo '<li class="woocommerce-notice woocommerce-notice--info woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__( 'Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) : esc_html__( 'Please fill in your details above to see available payment methods.', 'woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
