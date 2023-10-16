@@ -13,7 +13,6 @@ let
     marker2,
     directionsRenderer,
     directionsService,
-    autocomplete,
     inputAddress = document.getElementById('billing_address_1')
 
 async function initMap() {
@@ -157,15 +156,20 @@ function errorAddressInfo(data) {
 }
 
 function searchAddressFromInput() {
+    const addressSelected = [];
+
     inputAddress.addEventListener('blur', function (event) {
-        searchAddress()
+        setTimeout(function () {
+            if (!addressSelected.length) {
+                showPopupPickupOnly();
+                this.value = '';
+            }
+        }, 200)
     })
 
     inputAddress.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-
-            searchAddress()
         }
     })
 
@@ -173,7 +177,7 @@ function searchAddressFromInput() {
         if (this.value === '') {
            clearDirection();
         }
-
+        addressSelected.length = 0;
         searchAddress();
     })
 
@@ -185,29 +189,40 @@ function searchAddressFromInput() {
     function searchAddress() {
         clearDirection();
 
-        // Autocomplete init
+        // Autocomplete
 
-        // Create a bounding box with sides ~10km away from the center point
-        const defaultBounds = {
-            north: position.lat + 0.1,
-            south: position.lat - 0.1,
-            east: position.lng + 0.1,
-            west: position.lng - 0.1,
-        };
+        // Определение прямоугольника, заключающего в себе многоугольники
+        const bounds = new google.maps.LatLngBounds();
+        areas.forEach( area => {
+            area.getPath().forEach(function (point) {
+                bounds.extend(point);
+            });
+        })
 
-        const options = {
-            bounds: defaultBounds,
+        /**
+         * Автозаповнення
+         */
+        const autocomplete = new google.maps.places.Autocomplete( inputAddress, {
+            bounds: bounds,
             componentRestrictions: { country: "pl" },
-            fields: ["geometry", "name"],
-            strictBounds: false,
-            types: ["establishment"],
-        };
-        const autocomplete = new google.maps.places.Autocomplete(inputAddress, options);
+            fields: ["formatted_address", "geometry", "name"],
+            strictBounds: true,
+            types: ["address"],
+        });
 
         autocomplete.addListener('place_changed', function () {
-            let place = autocomplete.getPlace();
-            console.log(place)
-            addMarker2(place.location)
+            const place = autocomplete.getPlace();
+
+            if (!place.geometry || !place.geometry.location) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                console.log("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            addressSelected.push('selected address');
+
+            calculateAndDisplayRoute(position, place.geometry.location);
         });
     }
 }
@@ -316,24 +331,21 @@ function checkDistanceAndDeliveryArea (data) {
         if (data.area.last) {
             // calc
             selectMethodShipping(data)
-            errorAddressInfo({ remove: true })
         } else {
             // pickup only
             console.log( 'outside the delivery area' )
-            errorAddressInfo({ areaError: true, clearInput: true, addressText: inputAddress.value })
-
-            // showPopupPickupOnly(data.directions)
+            showPopupPickupOnly();
         }
 
     } else {
 
         if (data.currentDistance <= maxDistance) {
             // calc
-            selectMethodShipping(data)
+            selectMethodShipping(data);
         } else {
             // pickup only
-            console.log( 'beyond the maximum distance' )
-            // showPopupPickupOnly(data.directions)
+            console.log( 'beyond the maximum distance' );
+            showPopupPickupOnly();
         }
     }
 }
@@ -367,23 +379,25 @@ function selectMethodShipping(data) {
         if (data.pasteAddressInInputAddress) {
             pasteAddressIntoFields(data.directions.routes[0].legs[0].end_address)
         }
-        // directionsRenderer.setDirections(data.directions)
+        directionsRenderer.setDirections(data.directions)
     } else {
         // pickup only (в адмінці ліміт методів доставки)
         console.log( 'a: limit delivery methods' );
-        // showPopupPickupOnly(data.directions)
+        showPopupPickupOnly();
     }
 
 }
 
-function showPopupPickupOnly(directions) {
+function showPopupPickupOnly() {
     $('body').addClass('body--checkout_popup_delivery_info');
 
     $('.checkout_popup_delivery_info .checkout_popup_button').on('click', function (event) {
-        $('.switch-button.delivery-way.right-buttton').click()
-        $($('#shipping_method li')[0]).children('input').click()
-        clearDirection()
-        inputAddress.value = ''
+        // $('.switch-button.delivery-way.right-buttton').click()
+        // $($('#shipping_method li')[0]).children('input').click()
+        clearDirection();
+        map.setCenter(position);
+        map.setZoom(mapZoom);
+        inputAddress.value = '';
 
         $('body').removeClass('body--checkout_popup_delivery_info');
     })
