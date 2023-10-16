@@ -24,6 +24,8 @@ async function initMap() {
         selectAddressOnMap()
 
         searchAddressFromInput()
+
+        methodShippingDefault()
     } catch (e) {
         console.log(e)
     }
@@ -293,8 +295,8 @@ function calculateAndDisplayRoute(position, position2, pasteAddressInInputAddres
     const last_area = getDeliveryArea(position2, true)
 
     // Set marker
-    addMarker2(position2)
-    map.setCenter(position2)
+    // addMarker2(position2)
+    // map.setCenter(position2)
 
     // Calculate distance
     var request = {
@@ -401,5 +403,16 @@ function showPopupPickupOnly() {
 
         $('body').removeClass('body--checkout_popup_delivery_info');
     })
+}
+
+
+function methodShippingDefault() {
+    setTimeout(() => {
+        const buttonsWrapper = $('.switch-buttons');
+        buttonsWrapper.find('#d1').on('click', e => {
+            clearDirection();
+        });
+
+    }, 700);
 }
 

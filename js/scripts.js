@@ -118,10 +118,17 @@ jQuery(document).ready(function ($) {
     if ("#delivery_way_field .woocommerce-input-wrapper") {
 
         // id Shipping Method for default delivery settings
-        // const defaultMethodSippingId = 'shipping_method_0_flat_rate52'  // for PIZZA
-        const defaultMethodSippingId = 'shipping_method_0_flat_rate32' // for SUSHI
+        const shippingMethodInputs = $('#shipping_method li input[type="radio"]');
+        let defaultMethodSippingId = '';
 
-        $('#' + defaultMethodSippingId).click()
+        if (shippingMethodInputs.length > 1) {
+            const defaultMethodSipping = shippingMethodInputs[1];
+            defaultMethodSippingId = defaultMethodSipping.id;
+
+            setTimeout(() => {
+                defaultMethodSipping.click();
+            }, 300);
+        }
 
             $(`<div class="switch-buttons">
                 <label 
@@ -182,11 +189,9 @@ jQuery(document).ready(function ($) {
                 $('#apartment').val('-');
                 $('#square').val('-');
                 $('#floor').val('-');
-                $('#billing_address_1').val('Wrocław');
+                // $('#billing_address_1').val('Wrocław');
                 $("#shipping_method_0_local_pickup27").attr('checked', true);
                 $('#billing_address_1_field').hide();
-
-                // addCouponForDiscount()
 
             } else {
                 $(this).parent().removeClass('checked');
@@ -198,52 +203,9 @@ jQuery(document).ready(function ($) {
                 $('#billing_address_1_field').show();
                 $('.delivery-way2').parent().show();
                 $('.delivery-dat').parent().show();
-
-                // removeCouponForDiscount()
             }
         })
     }
-
-    /**
-     * **************** coupons ****************
-     */
-    const $wrapperCustomerDetails = $('.wrapper_customer_details')
-    const autoCoupon = $wrapperCustomerDetails?.data('auto_coupon');
-
-    function addCouponForDiscount() {
-        const $elem = $('.wrapper_customer_details')
-        const couponActive = $elem.hasClass('auto_coupon_active')
-        const couponName = $elem.data('auto_coupon')
-
-        if (couponActive && couponName && confirm('Add a discount coupon for pickup')) {
-            $('input[type="text"][name="coupon_code"]#coupon_code').val(couponName)
-
-            setTimeout(function () {
-                $('button[type="submit"][name="apply_coupon"].button')[0].click()
-            }, 500)
-        }
-    }
-    function removeCouponForDiscount() {
-        $('input[type="text"][name="coupon_code"]#coupon_code').val()
-        $('.cart-discount .woocommerce-remove-coupon').click()
-    }
-    /* *************** coupons **************** */
-
-    /** ************** delivery method **************** */
-    function changeDeliveryMethod(id) {
-        const radio_buttons = $("#shipping_method li input[type='radio']")
-
-        if (id === 'd1'){
-            radio_buttons[1].click()
-        }
-
-        if (id === 'd2'){
-            radio_buttons[0].click()
-        }
-    }
-    /* *************** delivery method **************** */
-
-
 
     if ("#after_deliver_field .woocommerce-input-wrapper") {
         $('<div class="switch-buttons"><span id="d3" class="switch-button delivery-way2 left-buttton" value="Zadzwonić w drzwi">' + ctd + '</span><span id="d4" class="switch-button delivery-way2 right-buttton" value="Zadzwonić do mnie">' + ctm + '</span></div>').appendTo('#after_deliver_field');
