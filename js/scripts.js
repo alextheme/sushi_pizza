@@ -186,7 +186,7 @@ jQuery(document).ready(function ($) {
                 $("#shipping_method_0_local_pickup27").attr('checked', true);
                 $('#billing_address_1_field').hide();
 
-                addCouponForDiscount()
+                // addCouponForDiscount()
 
             } else {
                 $(this).parent().removeClass('checked');
@@ -199,7 +199,7 @@ jQuery(document).ready(function ($) {
                 $('.delivery-way2').parent().show();
                 $('.delivery-dat').parent().show();
 
-                removeCouponForDiscount()
+                // removeCouponForDiscount()
             }
         })
     }

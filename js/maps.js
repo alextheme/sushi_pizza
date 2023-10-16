@@ -2,19 +2,18 @@
 const
     $ = jQuery,
     data_areas = $('.wrapper_customer_details').data('map-areas'),
-    zoom = 12,
-    title = 'SUSHIPAK, Żeromskiego 60, 50-312 Wrocław',
-    position = {lat: 51.12455718031603, lng: 17.049562143638372},// 51.12455718031603, 17.049562143638372
+    mapZoom = 12,
+    title = 'Holy Pizza, Zwycięska 14e/3, 53-033 Wrocław',
+    position = {lat: 51.0584822, lng: 17.0122301},
     areas = [],
     maxDistance = parseFloat(data_areas.max_distance) ? parseFloat(data_areas.max_distance) : 999999999999;
-
-console.log(maxDistance)
 
 let
     map,
     marker2,
     directionsRenderer,
-    directionsService;
+    directionsService,
+    inputAddress = document.getElementById('billing_address_1')
 
 async function initMap() {
     try {
@@ -32,26 +31,36 @@ async function initMap() {
 
 function registerMapAndServices() {
     map = new google.maps.Map(document.getElementById("map_field"), {
-        zoom: zoom,
+        zoom: mapZoom,
         center: position,
         streetViewControl: false,
         mapId: "CUSTOM_MAP_ID",
+        // mapTypeId: "roadmap",
     });
+
+    const icon = {
+        url: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png',
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25),
+    };
 
     // init shop marker
     new google.maps.Marker({
         map: map,
-        position: position,
+        icon,
         title: title,
+        position: position,
     });
 
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
     directionsService = new google.maps.DirectionsService();
 
-    map.addListener('click', () => map.setOptions({scrollwheel: true}));
-    map.addListener('drug', () => map.setOptions({scrollwheel: true}));
-    map.addListener('mouseout', () => map.setOptions({scrollwheel: false}));
+    // map.addListener('click', () => map.setOptions({scrollwheel: true}));
+    // map.addListener('drug', () => map.setOptions({scrollwheel: true}));
+    // map.addListener('mouseout', () => map.setOptions({scrollwheel: false}));
 }
 
 // Show delivery areas
@@ -102,60 +111,134 @@ function drawDeliveryAreas() {
     map.is_delivery_areas = data_areas.areas_for_map.length
 }
 
-function searchAddressFromInput() {
-    const input = document.getElementById('billing_address_1')
 
-    // Визначення прямокутника, що охоплює полігони
-    let bounds = {
-        north: position.lat + 0.2,
-        south: position.lat - 0.2,
-        east: position.lng + 0.2,
-        west: position.lng - 0.2,
-    };
+function errorAddressInfo(data) {
+    const className = 'addressDeliveryError';
 
-    if (map.is_delivery_areas) {
-        bounds = new google.maps.LatLngBounds();
-        areas.forEach(area => {
-            area.getPath().forEach(function (point) {
-                bounds.extend(point);
-            });
-        })
+    if (data && data.remove) {
+        removeErrorMessage();
+        return;
     }
 
-    // Показати випадаючий список для допомоги вибору адреси
-    const autocomplete = new google.maps.places.Autocomplete(input, {
-        bounds: bounds,
-        fields: ["address_components", "geometry", "icon", "name"],
-        componentRestrictions: {country: "pl"},
-        strictBounds: true,
-    });
+    if (data && data.addressError) {
+        const jqElement = $('<div class="no_address_search addressDeliveryError"><div>Nie znaleziono tego adresu</div><div>Tylko Odbiór osobisty</div></div>');
+        addErrorMessage(jqElement);
+        return;
+    }
 
-    // Слухач події вибору варіанта зі списку автозаповнення
-    autocomplete.addListener('place_changed', function () {
-        const place = autocomplete.getPlace();
+    if (data && data.areaError) {
+        const jqElement = $('<div class="no_address_search addressDeliveryError"><div>Adres znajduje się poza obszarem dostawy</div><div>Tylko Odbiór osobisty</div></div>');
+        addErrorMessage(jqElement);
+        return;
+    }
 
-        if (!place.geometry) return
 
-        calculateAndDisplayRoute(position, place.geometry.location)
-    });
+    function removeErrorMessage() {
+        $('.addressDeliveryError').remove();
+        $('#billing_address_1_field')
+            .addClass('woocommerce-validated')
+            .removeClass('woocommerce-invalid woocommerce-invalid-required-field')
+    }
 
-    input.addEventListener('input', function (event) {
-        if (this.value === '') {
-            directionsRenderer.setDirections({routes: []});
-            marker2.setMap(null);
+    function addErrorMessage(jqElement) {
+        removeErrorMessage()
+
+        $('.address-field .woocommerce-input-wrapper').append(jqElement);
+        $('#billing_address_1_field')
+            .removeClass('woocommerce-validated')
+            .addClass('woocommerce-invalid woocommerce-invalid-required-field')
+
+        if (data.clearInput) {
+            inputAddress.value = '';
+        }
+    }
+
+}
+
+function searchAddressFromInput() {
+    inputAddress.addEventListener('blur', function (event) {
+        searchAddress()
+    })
+
+    inputAddress.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            searchAddress()
         }
     })
 
-    $('.switch-button.delivery-way.left-buttton').on('click', function (event) {
-        directionsRenderer.setDirections({routes: []});
-        marker2.setMap(null);
+    inputAddress.addEventListener('input', function (event) {
+        if (this.value === '') {
+           clearDirection()
+        }
     })
 
+    // Select Odbiór osobisty
+    $('.switch-button.delivery-way.left-buttton').on('click', function (event) {
+        clearDirection()
+    })
+
+    function searchAddress() {
+
+        clearDirection();
+
+
+        // Autocomplete
+
+        const searchBox = new google.maps.places.SearchBox(inputAddress);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener("bounds_changed", () => {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        // Listen for the event fired when the user selects a prediction and retrieve more details for that place.
+        searchBox.addListener("places_changed", () => {
+            const places = searchBox.getPlaces();
+
+            if (places.length == 0) return;
+
+            // For each place, get the icon, name and location.
+            const bounds = new google.maps.LatLngBounds();
+            places.forEach((place) => {
+                calculateAndDisplayRoute(position, place.geometry.location)
+                errorAddressInfo({ remove: true });
+            });
+            map.fitBounds(bounds);
+        });
+
+
+
+        // Manual input Address
+
+        service = new google.maps.places.PlacesService(map);
+        service.findPlaceFromQuery(
+            {
+                query: inputAddress.value,
+                locationBias: map.getBounds(),
+                fields: ["name", "formatted_address", "geometry"],
+            },
+
+            (results, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                    for (let i = 0; i < results.length; i++) {
+                        errorAddressInfo({ remove: true });
+                        map.setCenter(results[i].geometry.location);
+                        calculateAndDisplayRoute(position, results[i].geometry.location);
+                    }
+                } else {
+                    clearDirection();
+                    errorAddressInfo({ addressError: true, clearInput: true, addressText: inputAddress.value });
+                }
+            }
+        );
+    }
 }
 
 function selectAddressOnMap() {
     google.maps.event.addListener(map, 'click', function (event) {
-        calculateAndDisplayRoute(position, event.latLng)
+        calculateAndDisplayRoute(position, event.latLng, true)
     });
 }
 
@@ -170,15 +253,14 @@ function getDeliveryArea(location, last_area = false) {
 }
 
 function pasteAddressIntoFields(value) {
-    document.getElementById('billing_address_1').value = value
+    inputAddress.value = value
     if (marker2) {
         marker2.title = value
     }
 }
 
-function addMarker2(position, position2) {
+function addMarker2(position2) {
     // clear marker
-    // marker2 ? marker2.setMap(null) : '';
     marker2?.setMap(null)
 
     // Set marker to delivery
@@ -197,28 +279,37 @@ function addMarker2(position, position2) {
         setTimeout(() => {
             marker2.setAnimation(null);
         }, 1000)
+
+        // infowindow.setContent(place.name || "");
+        // infowindow.open(map);
     })
 
     // Marker Drag to reCalc Route
     marker2.addListener('dragend', function (e) {
-        calculateAndDisplayRoute(position, e.latLng)
+        calculateAndDisplayRoute(position, e.latLng, true)
     })
 }
 
-function calculateAndDisplayRoute(position, position2) {
+function clearDirection() {
+    directionsRenderer.setDirections({routes: []});
+    marker2?.setMap(null);
+}
+
+function calculateAndDisplayRoute(position, position2, pasteAddressInInputAddress = false) {
 
     // Checking if the selected address is within the delivery area
     const area = getDeliveryArea(position2)
     const last_area = getDeliveryArea(position2, true)
 
     // Set marker
-    addMarker2(position, position2)
+    addMarker2(position2)
+    map.setCenter(position2)
 
     // Calculate distance
     var request = {
         origin: position,
         destination: position2,
-        travelMode: google.maps.TravelMode['DRIVING', 'WALKING', 'BICYCLING', 'TRANSIT'], // or 'WALKING', 'BICYCLING', 'TRANSIT'
+        travelMode: google.maps.TravelMode['DRIVING', 'WALKING', 'BICYCLING'], // DRIVING, WALKING, BICYCLING, TRANSIT
     };
 
     directionsService.route(request, function (response, status) {
@@ -230,6 +321,7 @@ function calculateAndDisplayRoute(position, position2) {
                     ? {'last': last_area?.key_area, 'current': area?.key_area, 'quantity': map.is_delivery_areas}
                     : undefined,
                 directions: response,
+                pasteAddressInInputAddress,
             }
 
             checkDistanceAndDeliveryArea(data)
@@ -248,10 +340,13 @@ function checkDistanceAndDeliveryArea (data) {
         if (data.area.last) {
             // calc
             selectMethodShipping(data)
+            errorAddressInfo({ remove: true })
         } else {
             // pickup only
             console.log( 'outside the delivery area' )
-            showPopupPickupOnly(data.directions)
+            errorAddressInfo({ areaError: true, clearInput: true, addressText: inputAddress.value })
+
+            // showPopupPickupOnly(data.directions)
         }
 
     } else {
@@ -262,7 +357,7 @@ function checkDistanceAndDeliveryArea (data) {
         } else {
             // pickup only
             console.log( 'beyond the maximum distance' )
-            showPopupPickupOnly(data.directions)
+            // showPopupPickupOnly(data.directions)
         }
     }
 }
@@ -283,7 +378,7 @@ function selectMethodShipping(data) {
                 methodSippingDistance = parseFloat(numbers[0]) // km
             }
 
-            if (data.currentDistance > prevDistance && data.currentDistance <= methodSippingDistance) {
+            if (data.currentDistance > prevDistance) {// && data.currentDistance <= methodSippingDistance) {
                 methodSippingElement = elem
             }
 
@@ -293,12 +388,14 @@ function selectMethodShipping(data) {
 
     if (methodSippingElement) {
         $(methodSippingElement).children('input').click()
-        pasteAddressIntoFields(data.directions.routes[0].legs[0].end_address)
-        directionsRenderer.setDirections(data.directions)
+        if (data.pasteAddressInInputAddress) {
+            pasteAddressIntoFields(data.directions.routes[0].legs[0].end_address)
+        }
+        // directionsRenderer.setDirections(data.directions)
     } else {
         // pickup only (в адмінці ліміт методів доставки)
         console.log( 'a: limit delivery methods' );
-        showPopupPickupOnly(data.directions)
+        // showPopupPickupOnly(data.directions)
     }
 
 }
@@ -309,11 +406,10 @@ function showPopupPickupOnly(directions) {
     $('.checkout_popup_delivery_info .checkout_popup_button').on('click', function (event) {
         $('.switch-button.delivery-way.right-buttton').click()
         $($('#shipping_method li')[0]).children('input').click()
-        directionsRenderer.setDirections({routes: []})
-        document.getElementById('billing_address_1').value = ''
-        marker2.setMap(null)
+        clearDirection()
+        inputAddress.value = ''
+
         $('body').removeClass('body--checkout_popup_delivery_info');
     })
 }
-
 

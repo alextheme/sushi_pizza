@@ -21,9 +21,10 @@ form.checkout.woocommerce-checkout {
 // Coupon messages
 .woocommerce {
   .woocommerce-form-coupon-toggle {}
+
   .woocommerce-message,
   .woocommerce-error {
-    display: none;
+    // display: none;
   }
 }
 
@@ -307,9 +308,17 @@ ul.payment_methods {
     svg line {
       stroke: #000000;
     }
-
-    //img {
-    //  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(134deg) brightness(0%) contrast(100%);
-    //}
   }
+}
+
+.no_address_search {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(12px, 100%);
+  color: red;
+}
+
+.woocommerce-order-overview__email {
+  display: none;
 }

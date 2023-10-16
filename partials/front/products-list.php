@@ -38,9 +38,9 @@ echo '<h3 class="category-name" id="category-name1">' . $categoryname . '</h3>';
     }
 
     if ($category) {
-        $args = array('post_type' => 'product', 'product_cat' => $category, 'lang' => $lang1, 'orderby' => 'menu_order', 'posts_per_page' => 20);
+        $args = array('post_type' => 'product', 'product_cat' => $category, 'lang' => $lang1, 'orderby' => 'menu_order', 'posts_per_page' => -1);
     } else {
-        $args = array('post_type' => 'product', 'product_cat' => $args['first_category'], 'orderby' => 'menu_order', 'posts_per_page' => 20);
+        $args = array('post_type' => 'product', 'product_cat' => $args['first_category'], 'orderby' => 'menu_order', 'posts_per_page' => -1);
     }
 
     $query = new WP_Query($args);

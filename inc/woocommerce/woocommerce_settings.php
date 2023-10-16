@@ -451,7 +451,31 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
     }
 
 
-    // brmsk
 
+    /*
+    Plugin Name: Custom Payment Method
+    Description: Add payment by card to the courier.
+    Version: 1.0
+    Author: Your Name
+    */
 
+    function add_custom_payment_gateway($methods) {
+        $methods[] = 'Custom_Payment_Method';
+        return $methods;
+    }
+    add_filter('woocommerce_payment_gateways', 'add_custom_payment_gateway');
+
+}
+
+class Custom_Payment_Method extends WC_Payment_Gateway {
+    public function __construct() {
+        $this->id = 'custom_payment_method';
+        $this->method_title = 'Custom Payment Method';
+        $this->title = 'Payment by Card to the Courier';
+        $this->has_fields = false;
+        $this->init_form_fields();
+        $this->init_settings();
+        $this->enabled = $this->get_option('enabled');
+        add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
+    }
 }

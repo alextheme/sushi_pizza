@@ -43,6 +43,10 @@ function mojeStyleiSkrypty()
         wp_enqueue_script('google_map_js');
         wp_enqueue_script('polyfill');
     }
+
+//    if ( get_current_user_id() === 1 ) {
+//        wp_enqueue_style('themecss', get_template_directory_uri() . '/css/test_for_admin_login.css', false, '1.1', 'all');
+//    }
 }
 
 function mojeStyleiSkryptyAdmin()

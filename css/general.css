@@ -1446,11 +1446,6 @@ form.checkout.woocommerce-checkout {
   padding-bottom: 50px;
 }
 
-.woocommerce .woocommerce-message,
-.woocommerce .woocommerce-error {
-  display: none;
-}
-
 .woocommerce-table.woocommerce-table--order-details.shop_table.order_details tfoot {
   position: relative;
   display: block;
@@ -1681,6 +1676,18 @@ ul.payment_methods .pbutton:hover, ul.payment_methods .pbutton:active {
 }
 .buttom_back_wrapper .button:hover svg line {
   stroke: #000000;
+}
+
+.no_address_search {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(12px, 100%);
+  color: red;
+}
+
+.woocommerce-order-overview__email {
+  display: none;
 }
 
 /* Blog */
