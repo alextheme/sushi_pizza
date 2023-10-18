@@ -110,13 +110,20 @@ body {
   }
 
   ul {
-    li {
-      &:not(:last-child) {
-        margin: 0 26px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 
-        @media (max-width: 1270px) {
-          margin: 0 18px 0 0;
-        }
+    max-width: 840px;
+    @media (max-width: 1270px) {
+      max-width: 640px;
+    }
+
+    li {
+      margin: 0 20px 8px;
+
+      @media (max-width: 1270px) {
+        margin: 0 15px 8px;
       }
 
       &.current-menu-item a,
@@ -155,6 +162,7 @@ body {
     color: var(--color_white);
     a {
       color: inherit;
+      white-space: nowrap;
     }
 
     &.current-menu-item {

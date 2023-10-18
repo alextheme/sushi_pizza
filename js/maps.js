@@ -1,44 +1,60 @@
 // Initialize and add the map
-const
+var
+// const
     $ = jQuery,
-    data_areas = $('.wrapper_customer_details').data('map-areas'),
+    data_areas_checkout_page = $('.wrapper_customer_details').data('map-areas'),
+    data_areas_shipping_page = $('#wrapper_map').data('map-areas'),
+    data_areas = data_areas_checkout_page || data_areas_shipping_page,
     mapZoom = 12,
     title = 'Holy Pizza, Zwycięska 14e/3, 53-033 Wrocław',
     position = {lat: 51.0584822, lng: 17.0122301},
     areas = [],
-    maxDistance = parseFloat(data_areas.max_distance) ? parseFloat(data_areas.max_distance) : 999999999999;
-
-let
+    maxDistance = parseFloat(data_areas.max_distance) ? parseFloat(data_areas.max_distance) : 999999999999,
+// let
     map,
     marker2,
     directionsRenderer,
     directionsService,
-    inputAddress = document.getElementById('billing_address_1')
+    inputAddress = $('#billing_address_1'),
+    addressCorrect = false,
+    checkboxTermsElement = null;
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 async function initMap() {
     try {
-        registerMapAndServices()
+        registerMapAndServices();
+        drawDeliveryAreas();
 
-        drawDeliveryAreas()
+        if (data_areas_checkout_page) {
+            searchAddressFromInput();
+            selectAddressOnMap();
+            checkCorrectAddress();
+            resetMapChangeMethodDelivery();
+        }
 
-        selectAddressOnMap()
-
-        searchAddressFromInput()
-
-        methodShippingDefault()
     } catch (e) {
         console.log(e)
     }
 }
 
 function registerMapAndServices() {
-    map = new google.maps.Map(document.getElementById("map_field"), {
+    // checkout page or dostawa page
+    const map_wrapper = document.getElementById("mapz") || document.getElementById("map_field");
+
+    map = new google.maps.Map(map_wrapper, {
         zoom: mapZoom,
         center: position,
         streetViewControl: false,
         mapId: "CUSTOM_MAP_ID",
         // mapTypeId: "roadmap",
     });
+
+    window.map = map;
 
     const icon = {
         url: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png',
@@ -77,10 +93,7 @@ function drawDeliveryAreas() {
     let zIndex = 100
     data_areas.areas_for_map.forEach((data_area, i) => {
         const paths = JSON
-            .parse(data_area.coordinates
-                .replace('<p>', '')
-                .replace('</p>', '')
-            )
+            .parse(data_area.coordinates.replace('<p>', '').replace('</p>', ''))
             .map(p => ({lat: +p.lat, lng: +p.lng}))
 
         // Створення полігону
@@ -113,85 +126,69 @@ function drawDeliveryAreas() {
     map.is_delivery_areas = data_areas.areas_for_map.length
 }
 
-
-function errorAddressInfo(data) {
+function errorAddressInfo(text) {
     const className = 'addressDeliveryError';
 
-    if (data && data.remove) {
-        removeErrorMessage();
+    if (!text) {
+        $(`.${className}`).remove();
         return;
     }
 
-    if (data && data.addressError) {
-        const jqElement = $('<div class="no_address_search addressDeliveryError"><div>Nie znaleziono tego adresu</div><div>Tylko Odbiór osobisty</div></div>');
-        addErrorMessage(jqElement);
-        return;
+    if (!$(`.${className}`).length) {
+        const jqElement = $(`<div class="no_address_search ${ className }">${ text }</div>`);
+        $('#billing_address_1').parent().append(jqElement);
     }
-
-    if (data && data.areaError) {
-        const jqElement = $('<div class="no_address_search addressDeliveryError"><div>Adres znajduje się poza obszarem dostawy</div><div>Tylko Odbiór osobisty</div></div>');
-        addErrorMessage(jqElement);
-        return;
-    }
-
-
-    function removeErrorMessage() {
-        $('.addressDeliveryError').remove();
-        $('#billing_address_1_field')
-            .addClass('woocommerce-validated')
-            .removeClass('woocommerce-invalid woocommerce-invalid-required-field')
-    }
-
-    function addErrorMessage(jqElement) {
-        removeErrorMessage()
-
-        $('.address-field .woocommerce-input-wrapper').append(jqElement);
-        $('#billing_address_1_field')
-            .removeClass('woocommerce-validated')
-            .addClass('woocommerce-invalid woocommerce-invalid-required-field')
-
-        if (data.clearInput) {
-            inputAddress.value = '';
-        }
-    }
-
 }
 
 function searchAddressFromInput() {
-    const addressSelected = [];
+    let searchAddressText = '';
 
-    inputAddress.addEventListener('blur', function (event) {
-        setTimeout(function () {
-            if (!addressSelected.length) {
-                showPopupPickupOnly();
-                this.value = '';
+    inputAddress.on('blur', function (event) {
+        const self = event.target;
+
+        const activeDeliveryCourier = !!$('.switch_delivery_methods').not('.checked').length;
+
+        setTimeout(function() {
+            if (!addressCorrect && activeDeliveryCourier && self.value !== '') {
+                searchAddressText = self.value;
+
+                const textPl = 'Proszę podać dokładny adres:<br><b>nazwę ulicy, numer budynku / numer lokalu,</b><br>a następnie wybrać lokalizację z rozwijanej listy.';
+                const textUa = 'Будь ласка, вкажіть точну адресу:<br><b>назву вулиці, номер будинку / номер квартири,</b><br>а потім виберіть місце розташування зі списку, що випадає.';
+                const textRu = 'Пожалуйста, укажите точный адрес:<br><b>название улицы, номер дома/номер квартиры,</b><br>а затем выберите местоположение из раскрывающегося списка.';
+                const lang = getCookie('pll_language');
+                const text = lang === 'pl' ? textPl : lang === 'ru' ? textRu : textUa;
+                errorAddressInfo(text);
+                self.value = '';
+
+                setTimeout(function() {
+                    self.value = searchAddressText;
+                    self.focus();
+                }, 100);
             }
-        }, 200)
+        }, 300);
     })
 
-    inputAddress.addEventListener('keydown', function (event) {
+    inputAddress.on('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
         }
     })
 
-    inputAddress.addEventListener('input', function (event) {
-        if (this.value === '') {
-           clearDirection();
-        }
-        addressSelected.length = 0;
-        searchAddress();
-    })
+    inputAddress.on('input', function (event) {
+        setAddressNotCorrect();
+        errorAddressInfo();
 
-    // Select Odbiór osobisty
-    $('.switch-button.delivery-way.left-buttton').on('click', function (event) {
-        clearDirection()
+        if (this.value === '') {
+           resetMap();
+        }
     })
 
     function searchAddress() {
-        clearDirection();
+        resetMap();
 
-        // Autocomplete
+        /**
+         * Автозаповнення
+         */
 
         // Определение прямоугольника, заключающего в себе многоугольники
         const bounds = new google.maps.LatLngBounds();
@@ -201,10 +198,7 @@ function searchAddressFromInput() {
             });
         })
 
-        /**
-         * Автозаповнення
-         */
-        const autocomplete = new google.maps.places.Autocomplete( inputAddress, {
+        const autocomplete = new google.maps.places.Autocomplete( inputAddress[0], {
             bounds: bounds,
             componentRestrictions: { country: "pl" },
             fields: ["formatted_address", "geometry", "name"],
@@ -222,11 +216,58 @@ function searchAddressFromInput() {
                 return;
             }
 
-            addressSelected.push('selected address');
-
+            addressCorrect = true;
+            errorAddressInfo();
             calculateAndDisplayRoute(position, place.geometry.location);
         });
     }
+
+    searchAddress();
+}
+
+function checkCorrectAddress() {
+    console.log('check correct address.');
+
+    // При зміні методу доставки завжди дивимось після оновлення
+    // html документа на актуальність кнопок
+    function checkRelevanceButton() {
+        let checkStart = false;
+        let checkEnd = false;
+
+        if (checkboxTermsElement) {
+            checkboxTermsElement.off('change');
+        }
+
+        const interval_id = setInterval(() => {
+            if ($('.blockUI.blockOverlay').length) {
+                if ( !checkStart ) {
+                    checkStart = true;
+                }
+            } else {
+                if ( checkStart ) {
+                    checkEnd = true;
+
+                    console.log( 'end interval');
+                    clearInterval(interval_id);
+
+                    $('#shipping_method input[type="radio"]').one('change', function(e) {
+                        console.log(e.type, 2);
+                        checkRelevanceButton();
+                    });
+
+                    checkboxTermsElement = $('#terms.woocommerce-form__input-checkbox');
+                    checkboxTermsElement.on('change', function() {
+                        if (!addressCorrect) {
+                            $(this).prop('checked', false);
+                            window.scrollTo(0, 0);
+                        }
+                    });
+                }
+            }
+            console.log('wait...')
+        }, 300);
+    }
+    checkRelevanceButton();
 }
 
 function selectAddressOnMap() {
@@ -246,7 +287,7 @@ function getDeliveryArea(location, last_area = false) {
 }
 
 function pasteAddressIntoFields(value) {
-    inputAddress.value = value
+    inputAddress.val(value)
     if (marker2) {
         marker2.title = value
     }
@@ -281,11 +322,6 @@ function addMarker2(position2) {
     marker2.addListener('dragend', function (e) {
         calculateAndDisplayRoute(position, e.latLng, true)
     })
-}
-
-function clearDirection() {
-    directionsRenderer.setDirections({routes: []});
-    marker2?.setMap(null);
 }
 
 function calculateAndDisplayRoute(position, position2, pasteAddressInInputAddress = false) {
@@ -332,10 +368,12 @@ function checkDistanceAndDeliveryArea (data) {
 
         if (data.area.last) {
             // calc
-            selectMethodShipping(data)
+            selectMethodShipping(data);
+            addressCorrect = true;
         } else {
             // pickup only
-            console.log( 'outside the delivery area' )
+            console.log( 'outside the delivery area' );
+            setAddressNotCorrect();
             showPopupPickupOnly();
         }
 
@@ -384,7 +422,7 @@ function selectMethodShipping(data) {
         directionsRenderer.setDirections(data.directions)
     } else {
         // pickup only (в адмінці ліміт методів доставки)
-        console.log( 'a: limit delivery methods' );
+        console.log( 'info: limit delivery methods' );
         showPopupPickupOnly();
     }
 
@@ -393,26 +431,39 @@ function selectMethodShipping(data) {
 function showPopupPickupOnly() {
     $('body').addClass('body--checkout_popup_delivery_info');
 
-    $('.checkout_popup_delivery_info .checkout_popup_button').on('click', function (event) {
-        // $('.switch-button.delivery-way.right-buttton').click()
-        // $($('#shipping_method li')[0]).children('input').click()
-        clearDirection();
-        map.setCenter(position);
-        map.setZoom(mapZoom);
-        inputAddress.value = '';
-
+    $('.checkout_popup_delivery_info .popup_info__button').on('click', function (event) {
+        resetMap();
         $('body').removeClass('body--checkout_popup_delivery_info');
     })
 }
 
+function resetMapChangeMethodDelivery() {
+    let elementLeftButton = null;
 
-function methodShippingDefault() {
-    setTimeout(() => {
-        const buttonsWrapper = $('.switch-buttons');
-        buttonsWrapper.find('#d1').on('click', e => {
-            clearDirection();
-        });
+    const intervalID = setInterval(() => {
+        elementLeftButton = $('.switch-button.delivery-way.left-button');
 
-    }, 700);
+        if (elementLeftButton.length) {
+            clearInterval(intervalID);
+
+            elementLeftButton.on('click', function (event) {
+                resetMap();
+            })
+        }
+    }, 300);
 }
 
+function resetMap() {
+    directionsRenderer.setDirections({routes: []});
+    marker2?.setMap(null);
+    map.setCenter(position);
+    map.setZoom(mapZoom);
+    inputAddress.val('');
+}
+
+function setAddressNotCorrect() {
+    addressCorrect = false;
+    if (checkboxTermsElement) {
+        checkboxTermsElement.prop('checked', false);
+    }
+}

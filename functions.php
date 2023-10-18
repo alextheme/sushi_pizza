@@ -44,6 +44,7 @@ function mojeStyleiSkrypty()
         wp_enqueue_script('polyfill');
     }
 
+//    // todo: TEST
 //    if ( get_current_user_id() === 1 ) {
 //        wp_enqueue_style('test_for_admin_login', get_template_directory_uri() . '/css/test_for_admin_login.css', false, '1.1', 'all');
 //    }

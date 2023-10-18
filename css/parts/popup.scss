@@ -1,0 +1,41 @@
+.popup_info {
+  .body--popup_select_menu_info &,
+  .body--checkout_popup_delivery_info & {
+    display: flex;
+  }
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: rgb(0, 0, 0, .7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+
+  .popup_info__wrapper {
+    padding: 20px;
+    font-size: 18px;
+    color: var(--accent_color);
+    background: #1E1D1A;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .popup_info__text {
+    margin-bottom: 20px;
+  }
+
+  .popup_info__button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: var(--accent_color);
+    color: #1E1D1A;
+    cursor: pointer;
+  }
+}

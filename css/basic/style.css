@@ -2027,7 +2027,7 @@ li[szbd="true"].activeDel {
 }
 
 .error404 .footer, .page-template-template-dostawa .footer {
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
 }
 

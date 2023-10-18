@@ -23,10 +23,36 @@
 	</div>
 </footer>
 
+<div class="popup_info popup_select_menu_info">
+	<?php
+	$acf_option = get_field('kontacts-' . pll_current_language(), 'options');
+	$work_time = '<br>' . $acf_option['work-time'];
+
+	$description = 'Realizacja Twojego zamówienia odbywa się w godzinach pracy lokalu' . $work_time;
+	$ok = 'Ok';
+	switch (get_locale()) {
+		case 'ua_UA':
+			$description = 'Ваше замовлення буде реалізовано в робочий час локаціі';
+			$ok = 'Добре';
+			break;
+		case 'ru_RU':
+			$description = 'Ваш заказ будет реализован в рабочее время заведения';
+			$ok = 'Ok';
+			break;
+	}
+	?>
+
+	<div class="popup_info__wrapper">
+		<div class="popup_info__text"><?= $description; ?></div>
+		<div>
+			<button type="button" class="popup_info__button"><?php echo esc_html($ok)?></button>
+		</div>
+	</div>
+</div>
 
 <?php if (is_checkout()) { ?>
 
-<diw class="checkout_popup_delivery_info">
+<diw class="popup_info checkout_popup_delivery_info">
 
 	<?php
 	$description = 'Przepraszamy, nie wykonujemy dostawy w wybrane miejsce. Proszę wybrać adres zaznaczony w zonie dostawy niżej lub zamówić z odbiorem osobistym.';
@@ -42,10 +68,10 @@
 			break;
 	}
 	?>
-	<div class="checkout_popup_wrapper">
-		<div class="checkout_popup_info"><?php echo esc_html($description); ?></div>
+	<div class="popup_info__wrapper">
+		<div class="popup_info__text"><?php echo esc_html($description); ?></div>
 		<div>
-			<button type="button" class="checkout_popup_button"><?php echo esc_html($ok)?></button>
+			<button type="button" class="popup_info__button"><?php echo esc_html($ok)?></button>
 		</div>
 	</div>
 </diw>
