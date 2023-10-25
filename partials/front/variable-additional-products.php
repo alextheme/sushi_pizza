@@ -279,6 +279,8 @@ $attributes = $product->get_variation_attributes();
                 $('.variable_product__btn_submit .single_add_to_cart_button').on('click', function (e) {
                     e.preventDefault();
 
+                    if (!window.workTime) return;
+
                     $.ajax({
                         type: 'POST',
                         url: ajax_data.ajaxUrl,

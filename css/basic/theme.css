@@ -612,3 +612,9 @@ h4{
       -o-transform:scale(1);
     }
 }
+
+.add_to_cart_button--blocked {
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+}

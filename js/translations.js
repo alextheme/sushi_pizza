@@ -40,8 +40,14 @@ if (url.indexOf("/ru") >= 0){
 	$('button[name="apply_coupon"]').html('Используйте купон');
 	$('.info-ack span').html('Ваши личные данные будут использоваться для обработки заказа, облегчения использования веб-сайта и других целей, описанных в нашей <a href="/ru/политика-конфиденциальности/" class="woocommerce-privacy-policy-link" target="_blank">политике конфиденциальности.</a>');	
 	$('.paymeny-methods h3').html('Способ оплаты');	
-	$('.cash').html('Наличные');	
-	$('.woocommerce-terms-and-conditions-checkbox-text').html('Я прочитал и принимаю правила <a href="https://americansushiexpress.pl/ru/регламент/" class="woocommerce-terms-and-conditions-link" target="_blank">регламент</a>');	
+	// $('.cash').html('Наличные');
+	$('.cash').each((i,el) => {
+		console.log(i, el)
+		if (i === 0) $(el).html('Заплатить картой у курьера');
+		if (i === 1) $(el).html('Наличные');
+		if (i === 2) $(el).html('Оплата быстрым переводом или BLIK');
+	})
+	$('.woocommerce-terms-and-conditions-checkbox-text').html('Я прочитал и принимаю правила <a href="https://americansushiexpress.pl/ru/регламент/" class="woocommerce-terms-and-conditions-link" target="_blank">регламент</a>');
 	$('#place_order').html('Покупаю и оплачиваю');
 	$('label[for="shipping_method_0_local_pickup27"]').html('Самовывоз');		
 	}, 1500);
@@ -81,7 +87,12 @@ if (url.indexOf("/ru") >= 0){
 	$('button[name="apply_coupon"]').html('Використовуйте купон');
 	$('.info-ack span').html('Ваші особисті дані будуть використані для обробки замовлення, полегшення використання веб-сайту та інших цілей, описаних у нашій <a href="/uk/політика-конфіденційності/" class="woocommerce-privacy-policy-link" target="_blank">політиці конфіденційності.</a>');	
 	$('.paymeny-methods h3').html('Спосіб оплати');	
-	$('.cash').html('Готівка');	
+	// $('.cash').html('Готівка');
+	$('.cash').each((i,el) => {
+		if (i === 0) $(el).html('Оплата карткою кур\'єру');
+		if (i === 1) $(el).html('Готівка');
+		if (i === 2) $(el).html('Оплата швидким переказом або BLIK');
+	})
 	$('.woocommerce-terms-and-conditions-checkbox-text').html('Я прочитав і приймаю <a href="https://americansushiexpress.pl/ua/регламент-2/" class="woocommerce-terms-and-conditions-link" target="_blank">регламент</a>');	
 	$('#place_order').html('Купую і оплачую');
 	$('label[for="shipping_method_0_local_pickup27"]').html('Самовывоз');	

@@ -106,8 +106,11 @@ echo '<h3 class="category-name" id="category-name1">' . $categoryname . '</h3>';
 
                 /* Open popup -- Variable + Additional Product */
                 $('.product_type_variable.add_to_cart_button').on('click', function (event) {
-                    event.preventDefault();
                     console.log('Var+AddProdPopUp');
+
+                    event.preventDefault();
+
+                    if (!window.workTime) return;
 
                     if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
@@ -156,6 +159,8 @@ echo '<h3 class="category-name" id="category-name1">' . $categoryname . '</h3>';
                     event.preventDefault();
                     console.log('simple add to cart')
 
+                    if (!window.workTime) return;
+
                     if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
                     let product_id = $(this).attr('data-product_id');
@@ -197,7 +202,7 @@ echo '<h3 class="category-name" id="category-name1">' . $categoryname . '</h3>';
 
                 // UPDATE Cart
                 function updateShoppingCartAjax() {
-                    console.log( 'upd cart prodListPhp')
+                    console.log( 'upd cart product list php')
 
                     $.ajax({
                         // url: wc_add_to_cart_params.ajax_url,

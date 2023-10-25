@@ -25,14 +25,7 @@ add_action('wp_enqueue_scripts', 'o10_ajax_theme');
  * Before Checkout. Ajax.
  */
 function o10_before_checkout() {
-    if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) {
-        die;
-    }
-
-    $lang = 'null';
-    if (isset($_REQUEST['lang'])) {
-        $lang = esc_html($_REQUEST['lang']);
-    }
+    if (!wp_verify_nonce($_REQUEST['nonce'], 'ajax-nonce-12345-string')) die;
 
     require_once get_template_directory() . '/partials/front/before-checkout.php';
 

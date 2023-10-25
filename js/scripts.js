@@ -191,6 +191,7 @@ jQuery(document).ready(function ($) {
                         $('#floor').val('-');
                         $('#billing_address_1').val('Wrocław');
                         $('#billing_address_1_field').hide();
+                        addressCorrect = true;
 
                     } else {
                         $(this).parent().removeClass('checked');
@@ -210,6 +211,7 @@ jQuery(document).ready(function ($) {
                         setTimeout(function () {
                             window.scrollTo(0, 0);
                         }, 10);
+                        addressCorrect = false;
                     }
                 });
 
@@ -218,6 +220,14 @@ jQuery(document).ready(function ($) {
                 $('.woocommerce-notices-wrapper').html('');
                 window.scrollTo(0, 0);
             }
+
+            // todo temp brmsk
+            $('#billing_first_name').val('test---test');
+            $('#billing_phone').val('0987743778');
+            $('#apartment').val('3');
+            $('#square').val('5');
+            $('#floor').val('7');
+            $('#order_comments').val('Будь ласка, зверніть увагу, що якщо порівняння db нечутливе до регістру ...');
 
         }, 100);
     }
@@ -508,12 +518,68 @@ jQuery(document).ready(function ($) {
         }
     })
 
-    /* Show a info when adding the first product to the cart */
-    let popup_select_menu_info_show = true;
-    $('.add_to_cart_button').on('click', function (e) {
-        console.log('*** add_to_cart_button ***')
+    /* WORK TIME */
+    window.workTime = false;
+    const dayStartW = 1, dayEndW = 5;
+    const timeStartW = '14:00', timeEndW = '22:00';
+    const timeStart = '14:00', timeEnd = '00:00';
+    function is_day_week_in_range(firstDay = 1, lastDay = 5, d) {
+        // 0-Sunday, 1-Monday, 2-Wednesday, 3-Thursday, 4-Friday, 5-Sunday, 6-Saturday
+        let dayOfWeek = 0;
+        if (typeof d === 'number') {
+            dayOfWeek = d;
+        } else {
+            const currentTime = new Date();
+            dayOfWeek = currentTime.getDay();
+        }
 
-        if (popup_select_menu_info_show) {
+        return (dayOfWeek >= firstDay && dayOfWeek <= lastDay);
+    }
+    function is_time_in_range(timeStart = '14:00', timeEnd = '22:00', H, m) {
+        const convertTime = (t, i) => {
+            if (i === 0 && (t === '00' || t === '0')) return 24;
+            else return +t;
+        }
+        const arrTimeStart = timeStart.split(':').map(convertTime);
+        const arrTimeEnd = timeEnd.split(':').map(convertTime);
+
+        // Устанавливаем верхний и нижний пределы временного диапазона
+        const startTime = arrTimeStart[0] * 60 + arrTimeStart[1];
+        const endTime = arrTimeEnd[0] * 60 + arrTimeEnd[1];
+
+        // Переводим текущее время в минуты
+        let currentTimeInMinutes = 0;
+        if (typeof H === 'number' && typeof m === 'number') {
+            currentTimeInMinutes = H * 60 + m;
+        } else {
+            const currentTime = new Date();
+            currentTimeInMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+        }
+
+        // Проверяем, находится ли текущее время в заданном диапазоне
+        return (currentTimeInMinutes >= startTime && currentTimeInMinutes <= endTime);
+    }
+
+    const dayWork = is_day_week_in_range(dayStartW, dayEndW);
+    if (dayWork) {
+        window.workTime = is_time_in_range(timeStartW, timeEndW);
+    } else {
+        window.workTime = is_time_in_range(timeStart, timeEnd);
+    }
+
+    // Blocked buttons
+    if (!window.workTime) {
+        $('.add_to_cart_button').addClass('add_to_cart_button--blocked');
+        $('#checkout1').addClass('add_to_cart_button--blocked');
+    } else {
+        $('.add_to_cart_button').removeClass('add_to_cart_button--blocked');
+        $('#checkout1').removeClass('add_to_cart_button--blocked');
+    }
+
+    function workTimeShowPopup(logTxt) {
+        console.log(logTxt);
+
+        if (popup_select_menu_info_show || !workTime) {
             $('body').addClass('body--popup_select_menu_info');
 
             $('.popup_select_menu_info .popup_info__button').on('click', function (event) {
@@ -522,6 +588,23 @@ jQuery(document).ready(function ($) {
         }
 
         popup_select_menu_info_show = false;
+    }
+
+    console.log(window.workTime)
+
+    /* WORK TIME SHOW POPUP */
+    let popup_select_menu_info_show = true;
+    $('.add_to_cart_button').on('click', function (event) {
+        workTimeShowPopup('* add_to_cart_button *');
+    });
+    $('.right-product-text').on('click', event => {
+        workTimeShowPopup('* right-product-text *');
+    });
+    $('.product-footer').on('click', event => {
+        workTimeShowPopup('* product-footer *');
+    });
+    $('.cproduct-footer').on('click', event => {
+        workTimeShowPopup('* cproduct-footer *');
     });
 
     /* Open popup -- Variable Product */
@@ -529,7 +612,10 @@ jQuery(document).ready(function ($) {
     /* Open popup -- Variable Product */
     // $('.product_type_variable.add_to_cart_button').on('click', function (event) {
     //     console.log('variable pop-up');
+    //
     //     event.preventDefault();
+
+    //    if (!window.workTime) return;
     //
     //
     //     if (blocked_shops === "calysklep") { alert(wecant);  return; }
@@ -574,8 +660,11 @@ jQuery(document).ready(function ($) {
 
         /* Open popup -- Variable + Additional Product */
         $('.product_type_variable.add_to_cart_button').on('click', function (event) {
-            event.preventDefault();
             console.log('Var+AddProdPopUp | script.js');
+
+            event.preventDefault();
+
+            if (!window.workTime) return;
 
             if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
@@ -626,7 +715,9 @@ jQuery(document).ready(function ($) {
     /* Add to from cart -- Simple Product */
     $('.product_type_simple.add_to_cart_button').on('click', function (event) {
         event.preventDefault();
-        console.log('simple.')
+        console.log('simple.');
+
+        if (!window.workTime) return;
 
         if (blocked_shops === "calysklep") { alert(wecant);  return; }
 

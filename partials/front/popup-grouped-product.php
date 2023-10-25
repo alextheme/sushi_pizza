@@ -83,6 +83,7 @@ switch ($lang) {
             (() => {
                 $('.variable_product__btn_submit .single_add_to_cart_button').on('click', function(e) {
                     e.preventDefault();
+                    if (!window.workTime) return;
 
                     var product_id = $('.variations_form').find('input[name="product_id"]').val();
                     var variation_id = $('.variations_form').find('input[name="variation_id"]').val();

@@ -38,7 +38,7 @@ if ($lang == 'ru') {
             <a href="<?php echo $url; ?>" class="before_checkout__header_btn button button2 button-before">
                 <span>
                     <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/icon_shop.svg' ); ?>" alt="" loading="lazy">
-                    <img src="<?php echo esc_url( get_template_directory_uri() . '/images/icons/basket_w.svg' ); ?>" alt="" loading="lazy">
+<!--                    <img src="--><?php //echo esc_url( get_template_directory_uri() . '/images/icons/basket_yellow.svg' ); ?><!--" alt="" loading="lazy">-->
                     <?php echo $order; ?>
                 </span>
             </a>
@@ -117,7 +117,9 @@ if ($lang == 'ru') {
             /* Add to from cart -- Simple Product */
             $('.product_type_simple.add_to_cart_button').on('click', function (event) {
                 event.preventDefault();
-                console.log('add to cart from pop-up')
+                console.log('simple... from pop-up');
+
+                if (!window.workTime) return;
 
                 if (blocked_shops === "calysklep") { alert(wecant);  return; }
 
@@ -142,7 +144,8 @@ if ($lang == 'ru') {
                     success: function (result) {
                         console.log( 'success' )
                         const trigger = $( '.add_to_cart_button[data-product_id="'+ trigger_product_id +'"]'  )
-                        trigger.addClass('added')
+                        trigger.addClass('added');
+                        updateShoppingCartAjax();
                     },
                     error: function (msg) {
                         console.error(msg);

@@ -81,10 +81,12 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
 
 
 
+    // Додаємо рядок до таблиці інформації про замовлення в листи
+    // https://misha.agency/woocommerce/dobavlyaem-informacziyu-o-zakaze-v-pisma.html
     add_filter( 'woocommerce_get_order_item_totals', 'bbloomer_add_recurring_row_email', 10, 2 );
     function bbloomer_add_recurring_row_email( $total_rows, $order ) {
 
-        printOrder($order, '6891', 'Online');
+        printOrder($order, '6995', 'Online');
 
         $total_rows['recurr_not'] = array(
             'label' => __( 'Addres:', 'woocommerce' ),
@@ -136,7 +138,8 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
     }
 
 
-
+    // Хук дії, що запускається після створення замовлення,
+    // використовується для додавання користувацького мета до замовлення.
     add_action( 'woocommerce_checkout_update_order_meta', 'custom_checkout_fields_update_order_meta' );
     function custom_checkout_fields_update_order_meta( $order_id ) {
 
@@ -261,6 +264,7 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
         echo '<p><strong>'.__('Piętro').':</strong> ' . get_post_meta( $order->get_id(), 'apartment', true ) . '</p>';
         echo '<p><strong>'.__('Klatka').':</strong> ' . get_post_meta( $order->get_id(), 'square', true ) . '</p>';
         echo '<p><strong>'.__('Numer mieszkania').':</strong> ' . get_post_meta( $order->get_id(), 'apartment', true ) . '</p>';
+        echo '<p><strong>My custom field data:</strong> test data in my field</p>';
     }
 
 
@@ -432,4 +436,7 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
         }
     }
 
+
+    // disable_add_to_cart
+//    add_filter('woocommerce_is_purchasable', function () { return false; });
 }

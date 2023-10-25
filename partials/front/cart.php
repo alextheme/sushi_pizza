@@ -322,6 +322,8 @@ if ($lang == 'ru' || get_locale() == "ru_RU") {
         $('#checkout1').on('click', function (e) {
             e.preventDefault();
 
+            if (!window.workTime) return;
+
             // Get Popup for select variant product
             $.ajax({
                 url: ajax_data.ajaxUrl,

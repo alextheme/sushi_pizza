@@ -153,13 +153,29 @@ function post_to_api($url, $post_data)
 
 function printOrder($order, $printer, $place)
 {
+//    print_pre($order);
+
     $order_id = $order->get_id();
-    $currency = 'PLN';
+    $currency = $order->get_currency() || 'PLN';
 
     $order_type = 'delivery';
     $payment_status = 'paid';
-    $payment_method = 'creditcard';
+
+    $payment_method = trim($order->get_payment_method_title()); //Płatność kartą u kuriera //Za pobraniem //////'creditcard';
+    switch ($payment_method) {
+        case 'Płatność kartą u kuriera':
+        case 'Za pobraniem':
+        case 'Оплата карткою кур\'єру':
+        case 'Готівка':
+        case 'Заплатить картой у курьера':
+        case 'Наличные':
+            $payment_status = 'not paid';
+    }
+
     $auth_code = '443AD453454'; //identification code of payment
+//    if ($payment_status == 'not paid') {
+//        $auth_code = '';
+//    }
 
     $order_time = date('Y-m-d H:i:s', strtotime($order->order_date)); //h:m dd-mm-yy
     $delivery_time = date('Y-m-d H:i:s', strtotime($order->order_date)); //h:m dd-mm-yy
@@ -174,6 +190,7 @@ function printOrder($order, $printer, $place)
     $square = get_post_meta($order->get_id(), 'square', true);
     $floor = get_post_meta($order->get_id(), 'floor', true);
     $after = get_post_meta($order->get_id(), 'after_deliver', true);
+    $after = $after == '' ? 'Zadzwonić w drzwi' : $after;
     $adnote = $order->get_customer_note();
     $cust_name = $order->get_billing_first_name();
     if (get_post_meta($order->get_id(), 'delivery_way', true) != "Odbiór osobisty" && $order->get_shipping_total() != 0) {
@@ -209,8 +226,8 @@ function printOrder($order, $printer, $place)
 // =============================
 // PART 4. API access credential - Find this in your MyPanel dashboard under My account > Edit Information.
 // =============================
-    $api_key = '0nm76s';
-    $api_password = 'Kjd1&d!@d1324rtfg#';
+    $api_key = 'z3zuh9';
+    $api_password = 'EK0gT6hp8U';
 
 
 // ============================
@@ -229,7 +246,7 @@ function printOrder($order, $printer, $place)
 // ==========================
 // PART 7. Notification URL - When an order is either accepted or rejected on the printer, this info will be sent to this URL.
 // ==========================
-    $notify_url = 'https://americansushiexpress.pl/';
+    $notify_url = 'https://holy-sushi.pl/';
 // Even if this will not be used, this is a mandatory field needed to send orders to the API
 
 
@@ -259,10 +276,15 @@ function printOrder($order, $printer, $place)
     } else if ($order_type == 'reservation') {
         $post_array['order_type'] = 3;
     }
+//    if ($cust_address !== 'Odbiór osobisty') {
+//        $post_array['order_type'] = 1;
+//    } else {
+//        $post_array['order_type'] = 2;
+//    }
 
 //6=paid, 7=not paid
     if ($payment_status == 'paid') {
-        $post_array['payment_status'] = 7;
+        $post_array['payment_status'] = 6;
     } else {
         $post_array['payment_status'] = 7;
     }
@@ -464,12 +486,6 @@ function block_shop_func()
     return "Zablokowano: " . $to_block;
 }
 
-
-/**
- * TGM Plugin Activation
- */
-require_once get_template_directory() . '/inc/tgm/options.php';
-
 /**
  * AJAX
  */
@@ -489,7 +505,7 @@ include_once get_template_directory() . '/inc/acf/acf-settings.php';
 
 
 /**
- * TEMP TODO
+ * TEMP TODO : Help functions
  */
 function print_pre($obj)
 {
@@ -503,8 +519,17 @@ function print_pre_a($obj)
     print_r($obj);
     echo '</pre>';
 }
-function br() {
-    echo '<br>';
+function br($text = '', $horizontal_space = 0) {
+    $i = $horizontal_space;
+    do {
+        echo '<br>';
+        $i--;
+    } while ($i > 0);
+
+    if ($text) {
+        echo $text;
+        echo '<br>';
+    }
 }
 
 function searchDataInDataBase($search_string = '') {

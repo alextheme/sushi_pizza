@@ -32,17 +32,17 @@
 	$ok = 'Ok';
 	switch (get_locale()) {
 		case 'ua_UA':
-			$description = 'Ваше замовлення буде реалізовано в робочий час локаціі';
+			$description = 'Ваше замовлення буде реалізовано в робочий час локаціі' . $work_time;
 			$ok = 'Добре';
 			break;
 		case 'ru_RU':
-			$description = 'Ваш заказ будет реализован в рабочее время заведения';
+			$description = 'Ваш заказ будет реализован в рабочее время заведения' . $work_time;
 			$ok = 'Ok';
 			break;
 	}
 	?>
 
-	<div class="popup_info__wrapper">
+	<div class="popup_info__wrapper" data-work-time="<?php echo strip_tags(get_field('kontacts-pl', 'options')['work-time']); ?>">
 		<div class="popup_info__text"><?= $description; ?></div>
 		<div>
 			<button type="button" class="popup_info__button"><?php echo esc_html($ok)?></button>

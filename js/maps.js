@@ -9,7 +9,7 @@ var
     title = 'Holy Pizza, Zwycięska 14e/3, 53-033 Wrocław',
     position = {lat: 51.0584822, lng: 17.0122301},
     areas = [],
-    maxDistance = parseFloat(data_areas.max_distance) ? parseFloat(data_areas.max_distance) : 999999999999,
+    maxDistance = data_areas && parseFloat(data_areas.max_distance) ? parseFloat(data_areas.max_distance) : 999999999999,
 // let
     map,
     marker2,
@@ -27,14 +27,17 @@ function getCookie(name) {
 
 async function initMap() {
     try {
-        registerMapAndServices();
-        drawDeliveryAreas();
 
-        if (data_areas_checkout_page) {
-            searchAddressFromInput();
-            selectAddressOnMap();
-            checkCorrectAddress();
-            resetMapChangeMethodDelivery();
+        if (data_areas) {
+            registerMapAndServices();
+            drawDeliveryAreas();
+
+            if (data_areas_checkout_page) {
+                searchAddressFromInput();
+                selectAddressOnMap();
+                checkCorrectAddress();
+                resetMapChangeMethodDelivery();
+            }
         }
 
     } catch (e) {
@@ -141,8 +144,6 @@ function errorAddressInfo(text) {
 }
 
 function searchAddressFromInput() {
-    let searchAddressText = '';
-
     inputAddress.on('blur', function (event) {
         const self = event.target;
 
@@ -150,21 +151,22 @@ function searchAddressFromInput() {
 
         setTimeout(function() {
             if (!addressCorrect && activeDeliveryCourier && self.value !== '') {
-                searchAddressText = self.value;
-
                 const textPl = 'Proszę podać dokładny adres:<br><b>nazwę ulicy, numer budynku / numer lokalu,</b><br>a następnie wybrać lokalizację z rozwijanej listy.';
                 const textUa = 'Будь ласка, вкажіть точну адресу:<br><b>назву вулиці, номер будинку / номер квартири,</b><br>а потім виберіть місце розташування зі списку, що випадає.';
                 const textRu = 'Пожалуйста, укажите точный адрес:<br><b>название улицы, номер дома/номер квартиры,</b><br>а затем выберите местоположение из раскрывающегося списка.';
                 const lang = getCookie('pll_language');
                 const text = lang === 'pl' ? textPl : lang === 'ru' ? textRu : textUa;
                 errorAddressInfo(text);
-                self.value = '';
 
                 setTimeout(function() {
-                    self.value = searchAddressText;
                     self.focus();
                 }, 100);
             }
+
+            if (self.value === '' || !addressCorrect) {
+                $('#billing_address_1_field').addClass('woocommerce-invalid');
+            }
+
         }, 300);
     })
 
@@ -177,9 +179,12 @@ function searchAddressFromInput() {
     inputAddress.on('input', function (event) {
         setAddressNotCorrect();
         errorAddressInfo();
+        if($('#billing_address_1_field').hasClass('woocommerce-invalid')) {
+            $('#billing_address_1_field').removeClass('woocommerce-invalid');
+        }
 
         if (this.value === '') {
-           resetMap();
+            resetMap();
         }
     })
 
@@ -259,6 +264,7 @@ function checkCorrectAddress() {
                     checkboxTermsElement.on('change', function() {
                         if (!addressCorrect) {
                             $(this).prop('checked', false);
+                            $('#billing_address_1_field').addClass('woocommerce-invalid');
                             window.scrollTo(0, 0);
                         }
                     });

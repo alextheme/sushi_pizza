@@ -64,6 +64,12 @@ $blocked = is_blocked();
 								<img src="<?php echo get_template_directory_uri() . '/images/icons/location_yellow.svg' ?>" alt="" loading="lazy">
 								<?= $acf_option['address'] ?>
 							</span>
+
+							<a href="tel:<?= esc_attr($acf_option['telefon']); ?>" id="telephone1" class="hero_box__schedule_info">
+								<img src="<?php echo get_template_directory_uri() . '/images/icons/tel_yellow.svg' ?>" alt="" loading="lazy">
+								<?= esc_attr($acf_option['telefon']); ?>
+							</a>
+
 						</div>
 					</div>
 				</div>
