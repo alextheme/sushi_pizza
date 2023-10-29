@@ -153,10 +153,8 @@ function post_to_api($url, $post_data)
 
 function printOrder($order, $printer, $place)
 {
-//    print_pre($order);
-
     $order_id = $order->get_id();
-    $currency = $order->get_currency() || 'PLN';
+    $currency = $order->get_currency() ? $order->get_currency() : 'PLN';
 
     $order_type = 'delivery';
     $payment_status = 'paid';
@@ -172,10 +170,12 @@ function printOrder($order, $printer, $place)
             $payment_status = 'not paid';
     }
 
+    echo $payment_method;
+
     $auth_code = '443AD453454'; //identification code of payment
-//    if ($payment_status == 'not paid') {
-//        $auth_code = '';
-//    }
+    if ($payment_status == 'not paid') {
+        $auth_code = '';
+    }
 
     $order_time = date('Y-m-d H:i:s', strtotime($order->order_date)); //h:m dd-mm-yy
     $delivery_time = date('Y-m-d H:i:s', strtotime($order->order_date)); //h:m dd-mm-yy
@@ -193,6 +193,7 @@ function printOrder($order, $printer, $place)
     $after = $after == '' ? 'Zadzwonić w drzwi' : $after;
     $adnote = $order->get_customer_note();
     $cust_name = $order->get_billing_first_name();
+    echo $cust_name;
     if (get_post_meta($order->get_id(), 'delivery_way', true) != "Odbiór osobisty" && $order->get_shipping_total() != 0) {
         $cust_address = 'Adres: ' . $order->billing_address_1 . ', Nr: ' . $apartment . ', Klatka: ' . $square . ', Piętro: ' . $floor;
     } else {
@@ -206,7 +207,7 @@ function printOrder($order, $printer, $place)
     }
 
     $isVarified = 'verified';
-    $cust_instruction = 'Kiedy:' . get_post_meta($order->get_id(), "delivery_date", true) . '%%Po dojechaniu: ' . $after;
+    $cust_instruction = 'Kiedy:' . get_post_meta($order->get_id(), "delivery_date", true) . '%%Po dojechaniu: ' . $after . '%%Metoda płatności: ' . $payment_method;
 
 // =============================================
 // Part 3. Save the items ordered into an array
@@ -269,18 +270,18 @@ function printOrder($order, $printer, $place)
     $post_array['currency'] = $currency;
 
 //1=Delivery, 2=Collection/Pickup, 3=Reservation
-    if ($order_type == 'delivery') {
-        $post_array['order_type'] = 1;
-    } else if ($order_type == 'collection' || $order_type == 'pickup') {
-        $post_array['order_type'] = 2;
-    } else if ($order_type == 'reservation') {
-        $post_array['order_type'] = 3;
-    }
-//    if ($cust_address !== 'Odbiór osobisty') {
+//    if ($order_type == 'delivery') {
 //        $post_array['order_type'] = 1;
-//    } else {
+//    } else if ($order_type == 'collection' || $order_type == 'pickup') {
 //        $post_array['order_type'] = 2;
+//    } else if ($order_type == 'reservation') {
+//        $post_array['order_type'] = 3;
 //    }
+    if ($cust_address !== 'Odbiór osobisty') {
+        $post_array['order_type'] = 1;
+    } else {
+        $post_array['order_type'] = 2;
+    }
 
 //6=paid, 7=not paid
     if ($payment_status == 'paid') {
@@ -321,7 +322,6 @@ function printOrder($order, $printer, $place)
     $printerco_api_url = 'https://mypanel.printerco.net/submitorderext.php';
     $response = post_to_api($printerco_api_url, $post_array);
 
-
 //do your necessary things here based on the response status
     if ($response['status'] == 'OK') {
         //order submitted successfully
@@ -329,7 +329,6 @@ function printOrder($order, $printer, $place)
         //order submission failed because of the following reason
     }
 }
-
 
 function sendSms($number, $sms)
 {

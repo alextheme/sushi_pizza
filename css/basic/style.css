@@ -731,6 +731,10 @@ img.floating {
     box-shadow: 0 4px 9px rgba(255, 255, 255, 0.27);
 }
 
+.header .container .row {
+    width: 100%;
+}
+
 .header ul {
     list-style: none;
     padding-left: 0;
@@ -774,7 +778,6 @@ img.floating {
     justify-content: space-between;
     overflow: hidden;
     opacity: 0;
-    position: absolute;
     left: -40px;
     right: -40px;
     top: 65px;
@@ -1649,7 +1652,7 @@ element.style {
 }
 
 .txt-content #apartment_field, .txt-content #square_field, .txt-content #floor_field {
-    width: 15%;
+    width: 26.5%;
 }
 
 #map_field {

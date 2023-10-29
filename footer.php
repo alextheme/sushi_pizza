@@ -42,7 +42,7 @@
 	}
 	?>
 
-	<div class="popup_info__wrapper" data-work-time="<?php echo strip_tags(get_field('kontacts-pl', 'options')['work-time']); ?>">
+	<div class="popup_info__wrapper" data-work_time="<?= esc_attr(get_field('work_time', 'options')); ?>">
 		<div class="popup_info__text"><?= $description; ?></div>
 		<div>
 			<button type="button" class="popup_info__button"><?php echo esc_html($ok)?></button>

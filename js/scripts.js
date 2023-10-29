@@ -222,12 +222,12 @@ jQuery(document).ready(function ($) {
             }
 
             // todo temp brmsk
-            $('#billing_first_name').val('test---test');
-            $('#billing_phone').val('0987743778');
-            $('#apartment').val('3');
-            $('#square').val('5');
-            $('#floor').val('7');
-            $('#order_comments').val('Будь ласка, зверніть увагу, що якщо порівняння db нечутливе до регістру ...');
+            // $('#billing_first_name').val('test---test');
+            // $('#billing_phone').val('0987743778');
+            // $('#apartment').val('3');
+            // $('#square').val('5');
+            // $('#floor').val('7');
+            // $('#order_comments').val('Будь ласка, зверніть увагу, що якщо порівняння db нечутливе до регістру ...');
 
         }, 100);
     }
@@ -519,53 +519,99 @@ jQuery(document).ready(function ($) {
     })
 
     /* WORK TIME */
-    window.workTime = false;
-    const dayStartW = 1, dayEndW = 5;
-    const timeStartW = '14:00', timeEndW = '22:00';
-    const timeStart = '14:00', timeEnd = '00:00';
-    function is_day_week_in_range(firstDay = 1, lastDay = 5, d) {
-        // 0-Sunday, 1-Monday, 2-Wednesday, 3-Thursday, 4-Friday, 5-Sunday, 6-Saturday
-        let dayOfWeek = 0;
-        if (typeof d === 'number') {
-            dayOfWeek = d;
-        } else {
-            const currentTime = new Date();
-            dayOfWeek = currentTime.getDay();
-        }
+    const dataWorkTime = $('.popup_info__wrapper').data('work_time');
 
-        return (dayOfWeek >= firstDay && dayOfWeek <= lastDay);
-    }
-    function is_time_in_range(timeStart = '14:00', timeEnd = '22:00', H, m) {
-        const convertTime = (t, i) => {
-            if (i === 0 && (t === '00' || t === '0')) return 24;
-            else return +t;
-        }
-        const arrTimeStart = timeStart.split(':').map(convertTime);
-        const arrTimeEnd = timeEnd.split(':').map(convertTime);
+    function isTimeInRange(timeStart, timeEnd, currentTime) {
+        const arrTimeStart = timeStart.split(':').map(t => +t);
+        const arrTimeEnd = timeEnd.split(':').map((t, i) => (i === 0 && /^0*$/.test(t)) ? 24 : +t);
 
         // Устанавливаем верхний и нижний пределы временного диапазона
         const startTime = arrTimeStart[0] * 60 + arrTimeStart[1];
         const endTime = arrTimeEnd[0] * 60 + arrTimeEnd[1];
 
         // Переводим текущее время в минуты
-        let currentTimeInMinutes = 0;
-        if (typeof H === 'number' && typeof m === 'number') {
-            currentTimeInMinutes = H * 60 + m;
-        } else {
-            const currentTime = new Date();
-            currentTimeInMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
-        }
+        let currentTimeInMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
 
         // Проверяем, находится ли текущее время в заданном диапазоне
         return (currentTimeInMinutes >= startTime && currentTimeInMinutes <= endTime);
     }
 
-    const dayWork = is_day_week_in_range(dayStartW, dayEndW);
-    if (dayWork) {
-        window.workTime = is_time_in_range(timeStartW, timeEndW);
-    } else {
-        window.workTime = is_time_in_range(timeStart, timeEnd);
+    function isWorkTime(data) {
+        // const currentTime = new Date('2023-10-26 00:59:00');
+        const currentTime = new Date();
+        const dayOfWeek = currentTime.getDay();
+
+        const args = data
+            .split('|')
+            .map(s => s.split(','))
+            .map((a,i) => i%2 === 0 ? a.map(s => +s) : a.map(s => s.split('-')));
+
+        let times = undefined;
+        for (let i = 0; i < args.length; i+=2) {
+            if (i%2 === 0 && args[i].includes(dayOfWeek)) {
+                times = args[i+1];
+            }
+        }
+
+        if (!(Array.isArray(times) && times.length !== 0)) {
+            console.log(dayOfWeek, 'no work day');
+            return false;
+        }
+
+        const result = [];
+        times.forEach(time => result.push(isTimeInRange(time[0], time[1], currentTime)));
+
+        return result.some(el => el === true)
     }
+
+    window.workTime = isWorkTime(dataWorkTime);
+
+    // const dayStartW = 1, dayEndW = 5;
+    // const timeStartW = '14:00', timeEndW = '22:00';
+    // const timeStart = '14:00', timeEnd = '00:00';
+    // function is_day_week_in_range(firstDay = 1, lastDay = 5, d) {
+    //     // 0-Sunday, 1-Monday, 2-Wednesday, 3-Thursday, 4-Friday, 5-Sunday, 6-Saturday
+    //     let dayOfWeek = 0;
+    //     if (typeof d === 'number') {
+    //         dayOfWeek = d;
+    //     } else {
+    //         const currentTime = new Date();
+    //         dayOfWeek = currentTime.getDay();
+    //     }
+    //
+    //     return (dayOfWeek >= firstDay && dayOfWeek <= lastDay);
+    // }
+    // function is_time_in_range(timeStart = '14:00', timeEnd = '22:00', H, m) {
+    //     const convertTime = (t, i) => {
+    //         if (i === 0 && (t === '00' || t === '0')) return 24;
+    //         else return +t;
+    //     }
+    //     const arrTimeStart = timeStart.split(':').map(convertTime);
+    //     const arrTimeEnd = timeEnd.split(':').map(convertTime);
+    //
+    //     // Устанавливаем верхний и нижний пределы временного диапазона
+    //     const startTime = arrTimeStart[0] * 60 + arrTimeStart[1];
+    //     const endTime = arrTimeEnd[0] * 60 + arrTimeEnd[1];
+    //
+    //     // Переводим текущее время в минуты
+    //     let currentTimeInMinutes = 0;
+    //     if (typeof H === 'number' && typeof m === 'number') {
+    //         currentTimeInMinutes = H * 60 + m;
+    //     } else {
+    //         const currentTime = new Date();
+    //         currentTimeInMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+    //     }
+    //
+    //     // Проверяем, находится ли текущее время в заданном диапазоне
+    //     return (currentTimeInMinutes >= startTime && currentTimeInMinutes <= endTime);
+    // }
+    //
+    // const dayWork = is_day_week_in_range(dayStartW, dayEndW);
+    // if (dayWork) {
+    //     window.workTime = is_time_in_range(timeStartW, timeEndW);
+    // } else {
+    //     window.workTime = is_time_in_range(timeStart, timeEnd);
+    // }
 
     // Blocked buttons
     if (!window.workTime) {

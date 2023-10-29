@@ -110,12 +110,12 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
                 'value'   =>   get_post_meta( $order->get_id(), 'apartment', true )
             );
         }
-        if( get_post_meta( $order->get_id(), 'square', true )){
-            $total_rows['recurr_not4'] = array(
-                'label' => __( 'Klatka:', 'woocommerce' ),
-                'value'   =>   get_post_meta( $order->get_id(), 'square', true )
-            );
-        }
+//        if( get_post_meta( $order->get_id(), 'square', true )){
+//            $total_rows['recurr_not4'] = array(
+//                'label' => __( 'Klatka:', 'woocommerce' ),
+//                'value'   =>   get_post_meta( $order->get_id(), 'square', true )
+//            );
+//        }
         if( get_post_meta( $order->get_id(), 'floor', true )){
             $total_rows['recurr_not5'] = array(
                 'label' => __( 'Piętro:', 'woocommerce' ),
@@ -145,7 +145,7 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
 
         update_post_meta( $order_id, 'delivery_way', sanitize_text_field( $_POST['delivery_way'] ) );
         update_post_meta( $order_id, 'apartment', sanitize_text_field( $_POST['apartment'] ) );
-        update_post_meta( $order_id, 'square', sanitize_text_field( $_POST['square'] ) );
+//        update_post_meta( $order_id, 'square', sanitize_text_field( $_POST['square'] ) );
         update_post_meta( $order_id, 'floor', sanitize_text_field( $_POST['floor'] ) );
         update_post_meta( $order_id, 'after_deliver', sanitize_text_field( $_POST['after_deliver'] ) );
         update_post_meta( $order_id, 'delivery_date', sanitize_text_field( $_POST['delivery_date'] ) );
@@ -191,13 +191,13 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
             'clear'     => true
         );
 
-        $fields['billing']['square'] = array(
-            'label'     => __('Klatka', 'woocommerce'),
-            'placeholder'   => _x('Wprowadź', 'placeholder', 'woocommerce'),
-            'required'  => true,
-            'class'     => array('form-row-add'),
-            'clear'     => true
-        );
+//        $fields['billing']['square'] = array(
+//            'label'     => __('Klatka', 'woocommerce'),
+//            'placeholder'   => _x('Wprowadź', 'placeholder', 'woocommerce'),
+//            'required'  => true,
+//            'class'     => array('form-row-add'),
+//            'clear'     => true
+//        );
 
         $fields['billing']['floor'] = array(
             'label'     => __('Piętro', 'woocommerce'),
@@ -262,7 +262,7 @@ if ( !in_array( 'woocommerce/woocommerce', apply_filters( 'active_plugins', get_
         echo '<p><strong>'.__('Po przybyciu').':</strong> ' . get_post_meta( $order->get_id(), 'after_deliver', true ) . '</p>';
         echo '<p><strong>'.__('Sposób dostawy').':</strong> ' . get_post_meta( $order->get_id(), 'delivery_way', true ) . '</p>';
         echo '<p><strong>'.__('Piętro').':</strong> ' . get_post_meta( $order->get_id(), 'apartment', true ) . '</p>';
-        echo '<p><strong>'.__('Klatka').':</strong> ' . get_post_meta( $order->get_id(), 'square', true ) . '</p>';
+//        echo '<p><strong>'.__('Klatka').':</strong> ' . get_post_meta( $order->get_id(), 'square', true ) . '</p>';
         echo '<p><strong>'.__('Numer mieszkania').':</strong> ' . get_post_meta( $order->get_id(), 'apartment', true ) . '</p>';
         echo '<p><strong>My custom field data:</strong> test data in my field</p>';
     }
