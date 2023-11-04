@@ -170,8 +170,6 @@ function printOrder($order, $printer, $place)
             $payment_status = 'not paid';
     }
 
-    echo $payment_method;
-
     $auth_code = '443AD453454'; //identification code of payment
     if ($payment_status == 'not paid') {
         $auth_code = '';
@@ -193,7 +191,7 @@ function printOrder($order, $printer, $place)
     $after = $after == '' ? 'Zadzwonić w drzwi' : $after;
     $adnote = $order->get_customer_note();
     $cust_name = $order->get_billing_first_name();
-    echo $cust_name;
+
     if (get_post_meta($order->get_id(), 'delivery_way', true) != "Odbiór osobisty" && $order->get_shipping_total() != 0) {
         $cust_address = 'Adres: ' . $order->billing_address_1 . ', Nr: ' . $apartment . ', Klatka: ' . $square . ', Piętro: ' . $floor;
     } else {
